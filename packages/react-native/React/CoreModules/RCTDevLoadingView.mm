@@ -114,11 +114,23 @@ RCT_EXPORT_MODULE()
   dispatch_async(dispatch_get_main_queue(), ^{
     self->_showDate = [NSDate date];
     if (!self->_window && !RCTRunningInTestEnvironment()) {
+#if TARGET_OS_VISION
+      UIWindow *window = RCTKeyWindow();
+#else
       UIWindow *window = RCTSharedApplication().keyWindow;
+#endif
       CGFloat windowWidth = window.bounds.size.width;
 
+#if TARGET_OS_VISION
+      self->_window =
+          [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, windowWidth, window.safeAreaInsets.top + 30)];
+      self->_label =
+          [[UILabel alloc] initWithFrame:CGRectMake(0, window.safeAreaInsets.top + 5, windowWidth, 20)];
+#else
       self->_window = [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, windowWidth, window.safeAreaInsets.top + 10)];
       self->_label = [[UILabel alloc] initWithFrame:CGRectMake(0, window.safeAreaInsets.top - 10, windowWidth, 20)];
+#endif
+      
       [self->_window addSubview:self->_label];
 
       self->_window.windowLevel = UIWindowLevelStatusBar + 1;
@@ -140,6 +152,7 @@ RCT_EXPORT_MODULE()
   });
 
   [self hideBannerAfter:15.0];
+
 }
 
 RCT_EXPORT_METHOD(showMessage
