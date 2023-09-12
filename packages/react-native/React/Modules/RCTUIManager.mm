@@ -271,16 +271,17 @@ static NSDictionary *deviceOrientationEventBody(UIDeviceOrientation orientation)
 #if TARGET_OS_IOS
 - (void)namedOrientationDidChange
 {
+#if !TARGET_OS_VISION
   NSDictionary *orientationEvent = deviceOrientationEventBody([UIDevice currentDevice].orientation);
   if (!orientationEvent) {
     return;
   }
-
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
   [[_moduleRegistry moduleForName:"EventDispatcher"] sendDeviceEventWithName:@"namedOrientationDidChange"
                                                                         body:orientationEvent];
 #pragma clang diagnostic pop
+#endif
 }
 #endif
 

@@ -77,7 +77,8 @@ NSString *RCTColorSchemePreference(UITraitCollection *traitCollection)
   UIUserInterfaceStyle systemStyle = sUseKeyWindowForSystemStyle ? RCTKeyWindow().traitCollection.userInterfaceStyle
                                                                  : traitCollection.userInterfaceStyle;
 
-  return appearances[@(systemStyle)] ?: RCTAppearanceColorSchemeLight;
+  // Fallback to dark mode on visionOS
+  return appearances[@(systemStyle)] ?: RCTAppearanceColorSchemeDark;
 }
 
 @interface RCTAppearance () <NativeAppearanceSpec>

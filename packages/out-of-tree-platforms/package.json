@@ -1,0 +1,27 @@
+{
+  "name": "@callstack/out-of-tree-platforms",
+  "version": "0.75.0-main",
+  "description": "Utils for React Native out of tree platforms.",
+  "keywords": ["out-of-tree", "react-native"],
+  "homepage": "https://github.com/callstack/react-native-visionos/tree/HEAD/packages/out-of-tree-platforms#readme",
+  "bugs": "https://github.com/callstack/react-native-visionos/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/callstack/react-native-visionos.git",
+    "directory": "packages/out-of-tree-platforms"
+  },
+  "license": "MIT",
+  "exports": { 
+    ".": "./src/index.js",
+    "./package.json": "./package.json" 
+  },
+  "files": [
+    "dist"
+  ],
+  "devDependencies": { 
+    "metro-resolver": "^0.80.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
