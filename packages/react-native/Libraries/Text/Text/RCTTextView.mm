@@ -249,6 +249,7 @@
     }
     return;
   }
+#if !TARGET_OS_VISION
   // TODO: Adopt showMenuFromRect (necessary for UIKitForMac)
   UIMenuController *menuController = [UIMenuController sharedMenuController];
 
@@ -262,6 +263,7 @@
 
   [menuController setTargetRect:self.bounds inView:self];
   [menuController setMenuVisible:YES animated:YES];
+#endif
 #endif
 }
 
