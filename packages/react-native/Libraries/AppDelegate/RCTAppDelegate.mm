@@ -40,14 +40,18 @@ using namespace facebook::react;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   self.reactNativeFactory = [[RCTReactNativeFactory alloc] initWithDelegate:self];
-
+  
+#if !TARGET_OS_VISION
   if (self.automaticallyLoadReactNativeWindow) {
     [self loadReactNativeWindow:launchOptions];
   }
+#endif
 
   return YES;
 }
 
+
+#if !TARGET_OS_VISION
 - (void)loadReactNativeWindow:(NSDictionary *)launchOptions
 {
   UIView *rootView = [self.rootViewFactory viewWithModuleName:self.moduleName
@@ -60,6 +64,7 @@ using namespace facebook::react;
   _window.rootViewController = rootViewController;
   [_window makeKeyAndVisible];
 }
+#endif
 
 - (RCTRootViewFactory *)rootViewFactory
 {

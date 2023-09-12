@@ -37,7 +37,11 @@ static NSString *const kFrameKeyPath = @"frame";
   if (self) {
     _isObserving = NO;
     UIView *mainWindow = RCTKeyWindow();
+#if TARGET_OS_VISION
+    _currentWindowSize = mainWindow.bounds.size;
+#else
     _currentWindowSize = mainWindow ? mainWindow.bounds.size : UIScreen.mainScreen.bounds.size;
+#endif
   }
   return self;
 }

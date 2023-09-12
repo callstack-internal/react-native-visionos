@@ -23,10 +23,11 @@
   }
 
   self.modalInPresentation = YES;
-
+#if !TARGET_OS_VISION
   _preferredStatusBarStyle = [RCTUIStatusBarManager() statusBarStyle];
   _preferredStatusBarHidden = [RCTUIStatusBarManager() isStatusBarHidden];
-
+#endif
+    
   return self;
 }
 

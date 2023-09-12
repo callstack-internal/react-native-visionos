@@ -148,6 +148,8 @@ export * from '../Libraries/Utilities/Dimensions';
 export * from '../Libraries/Utilities/PixelRatio';
 export * from '../Libraries/Utilities/Platform';
 export * from '../Libraries/Vibration/Vibration';
+export * from '../Libraries/XR/XR';
+export * from '../Libraries/WindowManager/WindowManager';
 export * from '../Libraries/vendor/core/ErrorUtils';
 export {
   EmitterSubscription,

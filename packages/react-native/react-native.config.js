@@ -47,10 +47,10 @@ try {
 }
 
 let ios;
+let apple;
 try {
-  ios = findCommunityPlatformPackage(
-    '@react-native-community/cli-platform-ios',
-  );
+  ios = findCommunityPlatformPackage('@react-native-community/cli-platform-ios');
+  apple = findCommunityPlatformPackage('@react-native-community/cli-platform-apple');
 } catch {
   if (verbose) {
     console.warn(
@@ -61,12 +61,13 @@ try {
 
 const commands = [];
 
+const localCommands = require('./local-cli/localCommands');
 const {
   bundleCommand,
   startCommand,
 } = require('@react-native/community-cli-plugin');
-commands.push(bundleCommand, startCommand);
 
+commands.push(bundleCommand, startCommand);
 const codegenCommand = {
   name: 'codegen',
   options: [
@@ -99,12 +100,18 @@ const codegenCommand = {
       args.source,
     ),
 };
-
 commands.push(codegenCommand);
+commands.push(...localCommands);
 
 const config = {
   commands,
-  platforms: {},
+  platforms: {
+    visionos: {
+      npmPackageName: '@callstack/react-native-visionos',
+      projectConfig: apple.getProjectConfig({platformName: 'visionos'}),
+      dependencyConfig: apple.getDependencyConfig({platformName: 'visionos'}),
+    },
+  },
 };
 
 if (ios != null) {

@@ -92,7 +92,7 @@ const InputAccessoryView: React.ComponentType<InputAccessoryViewProps> = (
 ) => {
   const {width} = useWindowDimensions();
 
-  if (Platform.OS === 'ios') {
+  if (Platform.OS === 'ios' && !Platform.isVision) {
     if (React.Children.count(props.children) === 0) {
       return null;
     }

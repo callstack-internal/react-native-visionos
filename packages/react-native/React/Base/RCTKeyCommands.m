@@ -127,7 +127,7 @@ RCT_NOT_IMPLEMENTED(-(instancetype)init)
   if ([event respondsToSelector:@selector(_isKeyDown)]) {
     isKeyDown = [event _isKeyDown];
   }
-
+  
   if (isKeyDown && modifiedInput.length > 0) {
     UIResponder *firstResponder = nil;
     for (UIWindow *window in [self allWindows]) {
