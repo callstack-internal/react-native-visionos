@@ -71,6 +71,17 @@ BaseViewProps::BaseViewProps(
                     "backgroundColor",
                     sourceProps.backgroundColor,
                     {})),
+#if TARGET_OS_VISION
+    visionos_hoverEffect(
+        CoreFeatures::enablePropIteratorSetter
+            ? sourceProps.visionos_hoverEffect
+            : convertRawProp(
+                  context,
+                  rawProps,
+                  "visionos_hoverEffect",
+                  sourceProps.visionos_hoverEffect,
+                  {})),
+#endif
       borderRadii(
           CoreFeatures::enablePropIteratorSetter ? sourceProps.borderRadii
                                                  : convertRawProp(

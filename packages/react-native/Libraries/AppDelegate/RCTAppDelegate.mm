@@ -15,6 +15,7 @@
 #import <react/renderer/graphics/ColorComponents.h>
 #import "RCTAppDelegate+Protected.h"
 #import "RCTAppSetupUtils.h"
+#import <React/RCTUtils.h>
 
 #if RN_DISABLE_OSS_PLUGIN_HEADER
 #import <RCTTurboModulePlugin/RCTTurboModulePlugin.h>
@@ -109,7 +110,11 @@
 
 - (UIViewController *)createRootViewController
 {
+#if TARGET_OS_VISION
+  return [GlassViewController new];
+#else
   return [UIViewController new];
+#endif
 }
 
 - (void)setRootView:(UIView *)rootView toRootViewController:(UIViewController *)rootViewController
