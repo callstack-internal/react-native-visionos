@@ -315,18 +315,23 @@ static CGFloat screenScale;
 
 void RCTComputeScreenScale(void)
 {
+#if !TARGET_OS_VISION
   dispatch_once(&onceTokenScreenScale, ^{
     screenScale = [UITraitCollection currentTraitCollection].displayScale;
   });
+#endif
 }
 
 CGFloat RCTScreenScale(void)
 {
+#if !TARGET_OS_VISION
   RCTUnsafeExecuteOnMainQueueOnceSync(&onceTokenScreenScale, ^{
     screenScale = [UITraitCollection currentTraitCollection].displayScale;
   });
-
   return screenScale;
+#endif
+
+  return 2;
 }
 
 CGFloat RCTFontSizeMultiplier(void)
@@ -361,9 +366,14 @@ CGSize RCTScreenSize(void)
 
   static CGSize size;
   static dispatch_once_t onceToken;
+
   dispatch_once(&onceToken, ^{
     RCTUnsafeExecuteOnMainQueueSync(^{
+#if TARGET_OS_VISION
+      size = RCTKeyWindow().bounds.size;
+#else
       size = [UIScreen mainScreen].bounds.size;
+#endif
     });
   });
 
@@ -578,6 +588,23 @@ UIWindow *__nullable RCTKeyWindow(void)
 
   return nil;
 }
+
+#if TARGET_OS_VISION
+UIWindow *__nullable RCTForegroundWindow(void)
+{
+    // React native only supports single scene apps.
+    NSSet *scenes = RCTSharedApplication().connectedScenes;
+    UIWindowScene *firstScene = [scenes anyObject];
+    return [[UIWindow alloc] initWithWindowScene:firstScene];
+}
+
+UIStatusBarManager *__nullable RCTUIStatusBarManager(void) {
+    NSSet *connectedScenes = RCTSharedApplication().connectedScenes;
+    UIWindowScene *windowScene = [connectedScenes anyObject];
+    return windowScene.statusBarManager;
+}
+
+#endif
 
 UIViewController *__nullable RCTPresentedViewController(void)
 {

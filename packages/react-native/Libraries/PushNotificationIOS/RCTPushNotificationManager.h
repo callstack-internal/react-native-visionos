@@ -17,7 +17,9 @@ typedef void (^RCTRemoteNotificationCallback)(UIBackgroundFetchResult result);
 + (void)didReceiveRemoteNotification:(NSDictionary *)notification;
 + (void)didReceiveRemoteNotification:(NSDictionary *)notification
               fetchCompletionHandler:(RCTRemoteNotificationCallback)completionHandler;
+#if !TARGET_OS_VISION
 + (void)didReceiveLocalNotification:(UILocalNotification *)notification;
+#endif
 + (void)didFailToRegisterForRemoteNotificationsWithError:(NSError *)error;
 
 @end

@@ -96,6 +96,7 @@ static NSString *kBundlePath = @"js/RNTesterApp.ios";
   [RCTPushNotificationManager didFailToRegisterForRemoteNotificationsWithError:error];
 }
 
+#if !TARGET_OS_VISION
 // Required for the remoteNotificationReceived event.
 - (void)application:(__unused UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)notification
 {
@@ -108,6 +109,7 @@ static NSString *kBundlePath = @"js/RNTesterApp.ios";
 {
   [RCTPushNotificationManager didReceiveLocalNotification:notification];
 }
+#endif
 
 #pragma mark - New Arch Enabled settings
 

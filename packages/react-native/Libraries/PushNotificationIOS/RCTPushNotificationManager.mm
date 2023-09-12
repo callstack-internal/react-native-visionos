@@ -96,6 +96,7 @@ RCT_ENUM_CONVERTER(
 
 @implementation RCTPushNotificationManager
 
+#if !TARGET_OS_VISION
 /** DEPRECATED. UILocalNotification was deprecated in iOS 10. Please don't add new callsites. */
 static NSDictionary *RCTFormatLocalNotification(UILocalNotification *notification)
 {
@@ -115,6 +116,7 @@ static NSDictionary *RCTFormatLocalNotification(UILocalNotification *notificatio
   formattedLocalNotification[@"remote"] = @NO;
   return formattedLocalNotification;
 }
+#endif
 
 /** For delivered notifications */
 static NSDictionary<NSString *, id> *RCTFormatUNNotification(UNNotification *notification)
@@ -247,12 +249,14 @@ RCT_EXPORT_MODULE()
                                                     userInfo:userInfo];
 }
 
+#if !TARGET_OS_VISION
 + (void)didReceiveLocalNotification:(UILocalNotification *)notification
 {
   [[NSNotificationCenter defaultCenter] postNotificationName:kLocalNotificationReceived
                                                       object:self
                                                     userInfo:RCTFormatLocalNotification(notification)];
 }
+#endif
 
 - (void)handleLocalNotificationReceived:(NSNotification *)notification
 {
@@ -508,15 +512,21 @@ RCT_EXPORT_METHOD(getInitialNotification
   NSMutableDictionary<NSString *, id> *initialNotification =
       [self.bridge.launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey] mutableCopy];
 
-  UILocalNotification *initialLocalNotification =
+#if !TARGET_OS_VISION
+    UILocalNotification *initialLocalNotification =
       self.bridge.launchOptions[UIApplicationLaunchOptionsLocalNotificationKey];
-
+#endif
+    
   if (initialNotification) {
     initialNotification[@"remote"] = @YES;
     resolve(initialNotification);
-  } else if (initialLocalNotification) {
+  } 
+#if !TARGET_OS_VISION
+  else if (initialLocalNotification) {
     resolve(RCTFormatLocalNotification(initialLocalNotification));
-  } else {
+  } 
+#endif
+  else {
     resolve((id)kCFNull);
   }
 }

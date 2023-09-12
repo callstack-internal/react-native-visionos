@@ -191,10 +191,12 @@ RCT_EXPORT_MODULE()
                                                object:[self->_bridge moduleForName:@"AccessibilityManager"
                                                              lazilyLoadIfNecessary:YES]];
   });
+#if !TARGET_OS_VISION
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(namedOrientationDidChange)
                                                name:UIDeviceOrientationDidChangeNotification
                                              object:nil];
+#endif
   [RCTLayoutAnimation initializeStatics];
 }
 
@@ -262,16 +264,17 @@ static NSDictionary *deviceOrientationEventBody(UIDeviceOrientation orientation)
 
 - (void)namedOrientationDidChange
 {
+#if !TARGET_OS_VISION
   NSDictionary *orientationEvent = deviceOrientationEventBody([UIDevice currentDevice].orientation);
   if (!orientationEvent) {
     return;
   }
-
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
   [[_moduleRegistry moduleForName:"EventDispatcher"] sendDeviceEventWithName:@"namedOrientationDidChange"
                                                                         body:orientationEvent];
 #pragma clang diagnostic pop
+#endif
 }
 
 - (dispatch_queue_t)methodQueue
