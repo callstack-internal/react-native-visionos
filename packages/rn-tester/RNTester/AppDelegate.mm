@@ -94,6 +94,7 @@
   [RCTPushNotificationManager didFailToRegisterForRemoteNotificationsWithError:error];
 }
 
+#if !TARGET_OS_VISION
 // Required for the remoteNotificationReceived event.
 - (void)application:(__unused UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)notification
 {
@@ -104,10 +105,16 @@
 - (void)application:(__unused UIApplication *)application
     didReceiveLocalNotification:(UILocalNotification *)notification
 {
-  [RCTPushNotificationManager didReceiveLocalNotification:notification];
+  [RCTPushNotificationManager didReceiveNotification:response.notification];
 }
-
 #endif
+
+#pragma mark - New Arch Enabled settings
+
+- (BOOL)bridgelessEnabled
+{
+  return [super bridgelessEnabled];
+}
 
 #pragma mark - RCTComponentViewFactoryComponentProvider
 

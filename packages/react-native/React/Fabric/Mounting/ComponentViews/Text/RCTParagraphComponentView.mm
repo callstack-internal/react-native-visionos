@@ -244,17 +244,16 @@ using namespace facebook::react;
     if (_editMenuInteraction) {
       [_editMenuInteraction presentEditMenuWithConfiguration:config];
     }
-    return;
-  }
-  // TODO: Adopt showMenuFromRect (necessary for UIKitForMac)
-  UIMenuController *menuController = [UIMenuController sharedMenuController];
+  } else {
+#if !TARGET_OS_VISION
+    UIMenuController *menuController = [UIMenuController sharedMenuController];
 
   if (menuController.isMenuVisible) {
     return;
   }
 
-  if (!self.isFirstResponder) {
-    [self becomeFirstResponder];
+    [menuController showMenuFromView:self rect:self.bounds];
+#endif
   }
 
   [menuController setTargetRect:self.bounds inView:self];
