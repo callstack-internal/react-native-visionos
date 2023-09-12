@@ -594,7 +594,12 @@ RCT_EXPORT_MODULE()
 #pragma clang diagnostic pop
 
     if (!self->_window) {
-      self->_window = [[RCTRedBoxWindow alloc] initWithFrame:[UIScreen mainScreen].bounds
+#if TARGET_OS_VISION
+      CGRect frame = RCTForegroundWindow().bounds;
+#else
+      CGRect frame = [UIScreen mainScreen].bounds;
+#endif
+      self->_window = [[RCTRedBoxWindow alloc] initWithFrame:frame
                                           customButtonTitles:self->_customButtonTitles
                                         customButtonHandlers:self->_customButtonHandlers];
       self->_window.actionDelegate = self;

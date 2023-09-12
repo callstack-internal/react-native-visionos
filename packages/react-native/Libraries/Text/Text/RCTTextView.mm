@@ -225,7 +225,7 @@
 - (void)handleLongPress:(UILongPressGestureRecognizer *)gesture
 {
   // TODO: Adopt showMenuFromRect (necessary for UIKitForMac)
-#if !TARGET_OS_UIKITFORMAC
+#if !TARGET_OS_UIKITFORMAC && !TARGET_OS_VISION
   UIMenuController *menuController = [UIMenuController sharedMenuController];
 
   if (menuController.isMenuVisible) {
