@@ -245,6 +245,7 @@ using namespace facebook::react;
     }
     return;
   }
+#if !TARGET_OS_VISION
   // TODO: Adopt showMenuFromRect (necessary for UIKitForMac)
   UIMenuController *menuController = [UIMenuController sharedMenuController];
 
@@ -258,6 +259,7 @@ using namespace facebook::react;
 
   [menuController setTargetRect:self.bounds inView:self];
   [menuController setMenuVisible:YES animated:YES];
+#endif
 #endif
 }
 
