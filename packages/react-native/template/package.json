@@ -5,13 +5,15 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
+    "visionos": "react-native run-visionos",
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest"
   },
   "dependencies": {
     "react": "18.2.0",
-    "react-native": "1000.0.0"
+    "react-native": "1000.0.0",
+    "@callstack/react-native-visionos": "1000.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
@@ -21,6 +23,7 @@
     "@react-native/eslint-config": "0.75.0-main",
     "@react-native/metro-config": "0.75.0-main",
     "@react-native/typescript-config": "0.75.0-main",
+    "@callstack/out-of-tree-platforms": "0.75.0-main",
     "@types/react": "^18.2.6",
     "@types/react-test-renderer": "^18.0.0",
     "babel-jest": "^29.6.3",

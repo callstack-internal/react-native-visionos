@@ -329,10 +329,13 @@ class TouchableHighlight extends React.Component<Props, State> {
         accessibilityElementsHidden={
           this.props['aria-hidden'] ?? this.props.accessibilityElementsHidden
         }
-        style={StyleSheet.compose(
-          this.props.style,
-          this.state.extraStyles?.underlay,
-        )}
+        style={[
+          styles.touchable,
+          StyleSheet.compose(
+            this.props.style,
+            this.state.extraStyles?.underlay,
+          ),
+        ]}
         onLayout={this.props.onLayout}
         hitSlop={this.props.hitSlop}
         hasTVPreferredFocus={this.props.hasTVPreferredFocus}
@@ -378,6 +381,12 @@ class TouchableHighlight extends React.Component<Props, State> {
     this.state.pressability.reset();
   }
 }
+
+const styles = StyleSheet.create({
+  touchable: {
+    cursor: 'pointer',
+  },
+});
 
 const Touchable: React.AbstractComponent<
   $ReadOnly<$Diff<Props, {|hostRef: React.Ref<typeof View>|}>>,
