@@ -286,9 +286,15 @@ static PointerEvent CreatePointerEventFromActivePointer(
 
   if (eventType == RCTPointerEventTypeCancel) {
     event.clientPoint = RCTPointFromCGPoint(CGPointZero);
+#if TARGET_OS_VISION
+    event.screenPoint =
+        RCTPointFromCGPoint([rootComponentView convertPoint:CGPointZero
+                                          toCoordinateSpace:rootComponentView.window.coordinateSpace]);
+#else
     event.screenPoint =
         RCTPointFromCGPoint([rootComponentView convertPoint:CGPointZero
                                           toCoordinateSpace:rootComponentView.window.screen.coordinateSpace]);
+#endif
     event.offsetPoint = RCTPointFromCGPoint([rootComponentView convertPoint:CGPointZero
                                                                      toView:activePointer.componentView]);
   } else {
@@ -329,7 +335,6 @@ static PointerEvent CreatePointerEventFromActivePointer(
   event.tangentialPressure = 0.0;
   event.twist = 0;
   event.isPrimary = activePointer.isPrimary;
-
   return event;
 }
 
@@ -374,8 +379,13 @@ static void UpdateActivePointerWithUITouch(
   activePointer.componentView = FindClosestFabricManagedTouchableView(hitTestedView);
 
   activePointer.clientPoint = [uiTouch locationInView:rootComponentView];
+#if TARGET_OS_VISION
+  activePointer.screenPoint = [rootComponentView convertPoint:activePointer.clientPoint
+                                            toCoordinateSpace:rootComponentView.window.coordinateSpace];
+#else
   activePointer.screenPoint = [rootComponentView convertPoint:activePointer.clientPoint
                                             toCoordinateSpace:rootComponentView.window.screen.coordinateSpace];
+#endif
   activePointer.offsetPoint = [uiTouch locationInView:activePointer.componentView];
 
   activePointer.timestamp = uiTouch.timestamp;
@@ -742,9 +752,13 @@ RCT_NOT_IMPLEMENTED(-(instancetype)initWithTarget : (id)target action : (SEL)act
 {
   UIView *listenerView = recognizer.view;
   CGPoint clientLocation = [recognizer locationInView:listenerView];
+#if TARGET_OS_VISION
+  CGPoint screenLocation = [listenerView convertPoint:clientLocation
+                                    toCoordinateSpace:listenerView.window.coordinateSpace];
+#else
   CGPoint screenLocation = [listenerView convertPoint:clientLocation
                                     toCoordinateSpace:listenerView.window.screen.coordinateSpace];
-
+#endif
   UIView *targetView = [listenerView hitTest:clientLocation withEvent:nil];
   targetView = FindClosestFabricManagedTouchableView(targetView);
 

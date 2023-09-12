@@ -157,6 +157,7 @@ fi
   --entry-file "$ENTRY_FILE" \
   --platform "$BUNDLE_PLATFORM" \
   --dev $DEV \
+  --resolver-option "platformExtension=visionos" \
   --reset-cache \
   --bundle-output "$BUNDLE_FILE" \
   --assets-dest "$DEST" \

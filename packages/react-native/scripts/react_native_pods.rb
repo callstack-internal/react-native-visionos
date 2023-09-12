@@ -31,11 +31,15 @@ def min_ios_version_supported
   return Helpers::Constants.min_ios_version_supported
 end
 
+def min_visionos_version_supported
+  return Helpers::Constants.min_visionos_version_supported
+end
+
 # This function returns the min supported OS versions supported by React Native
 # By using this function, you won't have to manually change your Podfile
 # when we change the minimum version supported by the framework.
 def min_supported_versions
-  return  { :ios => min_ios_version_supported }
+  return  { :ios => min_ios_version_supported, :visionos => min_visionos_version_supported }
 end
 
 # This function prepares the project for React Native, before processing
@@ -130,6 +134,9 @@ def use_react_native! (
   pod 'React-jserrorhandler', :path => "#{prefix}/ReactCommon/jserrorhandler"
   pod 'RCTDeprecation', :path => "#{prefix}/ReactApple/Libraries/RCTFoundation/RCTDeprecation"
   pod 'React-RCTFBReactNativeSpec', :path => "#{prefix}/React"
+  pod 'React-RCTSwiftExtensions', :path => "#{prefix}/Libraries/SwiftExtensions"
+  pod 'React-RCTXR', :path => "#{prefix}/Libraries/XR"
+  pod 'React-RCTWindowManager', :path => "#{prefix}/Libraries/WindowManager", :modular_headers => true
 
   if hermes_enabled
     setup_hermes!(:react_native_path => prefix)
@@ -158,7 +165,7 @@ def use_react_native! (
   pod 'glog', :podspec => "#{prefix}/third-party-podspecs/glog.podspec"
   pod 'boost', :podspec => "#{prefix}/third-party-podspecs/boost.podspec"
   pod 'fast_float', :podspec => "#{prefix}/third-party-podspecs/fast_float.podspec"
-  pod 'fmt', :podspec => "#{prefix}/third-party-podspecs/fmt.podspec"
+  pod 'fmt', :podspec => "#{prefix}/third-party-podspecs/fmt.podspec", :modular_headers => true
   pod 'RCT-Folly', :podspec => "#{prefix}/third-party-podspecs/RCT-Folly.podspec", :modular_headers => true
 
   folly_config = get_folly_config()

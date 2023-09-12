@@ -32,8 +32,10 @@ try {
 }
 
 let ios;
+let apple;
 try {
   ios = require('@react-native-community/cli-platform-ios');
+  apple = require('@react-native-community/cli-platform-apple');
 } catch {
   if (verbose) {
     console.warn(
@@ -44,28 +46,13 @@ try {
 
 const commands = [];
 
-try {
-  const {
-    bundleCommand,
-    startCommand,
-  } = require('@react-native/community-cli-plugin');
-  commands.push(bundleCommand, startCommand);
-} catch (e) {
-  const known =
-    e.code === 'MODULE_NOT_FOUND' &&
-    e.message.includes('@react-native-community/cli-server-api');
+const localCommands = require('./local-cli/localCommands');
+const {
+  bundleCommand,
+  startCommand,
+} = require('@react-native/community-cli-plugin');
 
-  if (!known) {
-    throw e;
-  }
-
-  if (verbose) {
-    console.warn(
-      '@react-native-community/cli-server-api not found, the react-native.config.js may be unusable.',
-    );
-  }
-}
-
+commands.push(bundleCommand, startCommand);
 const codegenCommand = {
   name: 'codegen',
   options: [
@@ -98,12 +85,18 @@ const codegenCommand = {
       args.source,
     ),
 };
-
 commands.push(codegenCommand);
+commands.push(...localCommands);
 
 const config = {
   commands,
-  platforms: {},
+  platforms: {
+    visionos: {
+      npmPackageName: '@callstack/react-native-visionos',
+      projectConfig: apple.getProjectConfig({platformName: 'visionos'}),
+      dependencyConfig: apple.getDependencyConfig({platformName: 'visionos'}),
+    },
+  },
 };
 
 if (ios != null) {

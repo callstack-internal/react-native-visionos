@@ -321,11 +321,13 @@ static inline UIViewAnimationOptions animationOptionsWithCurve(UIViewAnimationCu
       // Text field active region is below visible area with keyboard - update diff to bring into view
       contentDiff = endFrame.origin.y - focusEnd;
     } else {
+#if !TARGET_OS_VISION
       UIView *inputAccessoryView = _firstResponderViewOutsideScrollView.inputAccessoryView;
       if (inputAccessoryView) {
         // Text input view is within the inputAccessoryView.
         contentDiff = endFrame.origin.y - beginFrame.origin.y;
       }
+#endif
     }
   } else if (endFrame.origin.y <= beginFrame.origin.y) {
     // Keyboard opened for other reason
@@ -1078,7 +1080,9 @@ RCT_SET_AND_PRESERVE_OFFSET(setCanCancelContentTouches, canCancelContentTouches,
 RCT_SET_AND_PRESERVE_OFFSET(setDecelerationRate, decelerationRate, CGFloat)
 RCT_SET_AND_PRESERVE_OFFSET(setDirectionalLockEnabled, isDirectionalLockEnabled, BOOL)
 RCT_SET_AND_PRESERVE_OFFSET(setIndicatorStyle, indicatorStyle, UIScrollViewIndicatorStyle)
+#if !TARGET_OS_VISION
 RCT_SET_AND_PRESERVE_OFFSET(setKeyboardDismissMode, keyboardDismissMode, UIScrollViewKeyboardDismissMode)
+#endif
 RCT_SET_AND_PRESERVE_OFFSET(setMaximumZoomScale, maximumZoomScale, CGFloat)
 RCT_SET_AND_PRESERVE_OFFSET(setMinimumZoomScale, minimumZoomScale, CGFloat)
 RCT_SET_AND_PRESERVE_OFFSET(setScrollEnabled, isScrollEnabled, BOOL)

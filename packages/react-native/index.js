@@ -314,8 +314,14 @@ module.exports = {
   get Share(): Share {
     return require('./Libraries/Share/Share');
   },
-  get StyleSheet(): StyleSheet {
-    return require('./Libraries/StyleSheet/StyleSheet');
+  get XR() {
+    return require('./Libraries/XR/XR');
+  },
+  get WindowManager() {
+    return require('./Libraries/WindowManager/WindowManager');
+  },
+  get StyleSheet() {
+    return require('./Libraries/StyleSheet/StyleSheet').default;
   },
   get Systrace(): Systrace {
     return require('./Libraries/Performance/Systrace');
