@@ -361,9 +361,14 @@ CGSize RCTScreenSize(void)
 
   static CGSize size;
   static dispatch_once_t onceToken;
+
   dispatch_once(&onceToken, ^{
     RCTUnsafeExecuteOnMainQueueSync(^{
+#if TARGET_OS_VISION
+      size = RCTKeyWindow().bounds.size;
+#else
       size = [UIScreen mainScreen].bounds.size;
+#endif
     });
   });
 

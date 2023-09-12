@@ -17,6 +17,7 @@
 #import <react/renderer/graphics/ColorComponents.h>
 #import "RCTAppDelegate+Protected.h"
 #import "RCTAppSetupUtils.h"
+#import <objc/runtime.h>
 
 #if RN_DISABLE_OSS_PLUGIN_HEADER
 #import <RCTTurboModulePlugin/RCTTurboModulePlugin.h>
@@ -49,22 +50,10 @@
 
   self.rootViewFactory = [self createRCTRootViewFactory];
 
-  UIView *rootView = [self.rootViewFactory viewWithModuleName:self.moduleName
-                                            initialProperties:self.initialProps
-                                                launchOptions:launchOptions];
-
   if (self.newArchEnabled || self.fabricEnabled) {
     [RCTComponentViewFactory currentComponentViewFactory].thirdPartyFabricComponentsProvider = self;
   }
   [self _logWarnIfCreateRootViewWithBridgeIsOverridden];
-  [self customizeRootView:(RCTRootView *)rootView];
-
-  self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-  UIViewController *rootViewController = [self createRootViewController];
-  [self setRootView:rootView toRootViewController:rootViewController];
-  self.window.rootViewController = rootViewController;
-  self.window.windowScene.delegate = self;
-  [self.window makeKeyAndVisible];
 
   return YES;
 }

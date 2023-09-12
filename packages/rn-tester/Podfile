@@ -67,10 +67,15 @@ target 'RNTester' do
   pods('RNTester')
 end
 
+target('RNTester-visionOS') do
+  platform :visionos, min_visionos_version_supported
+  pods('RNTester-visionOS')
+end
+
 target 'RNTesterUnitTests' do
   pods('RNTesterUnitTests')
   pod 'React-RCTTest', :path => "./RCTTest"
-  pod 'OCMock', '~> 3.9.1'
+  pod 'OCMock', :git => 'https://github.com/erikdoe/ocmock.git', :tag => 'v3.9.2'
 end
 
 target 'RNTesterIntegrationTests' do

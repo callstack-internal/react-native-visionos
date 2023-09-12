@@ -51,8 +51,15 @@ RCT_EXPORT_MODULE()
                                            selector:@selector(didReceiveNewContentSizeMultiplier)
                                                name:RCTAccessibilityManagerDidUpdateMultiplierNotification
                                              object:[_moduleRegistry moduleForName:"AccessibilityManager"]];
+    
+#if !TARGET_OS_VISION
 
   _currentInterfaceOrientation = [RCTSharedApplication() statusBarOrientation];
+
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(interfaceOrientationDidChange)
+                                               name:UIApplicationDidChangeStatusBarOrientationNotification
+                                             object:nil];
 
   _currentInterfaceDimensions = [self _exportedDimensions];
 
@@ -100,7 +107,11 @@ RCT_EXPORT_MODULE()
   [[NSNotificationCenter defaultCenter] removeObserver:self
                                                   name:RCTAccessibilityManagerDidUpdateMultiplierNotification
                                                 object:[_moduleRegistry moduleForName:"AccessibilityManager"]];
-
+#if !TARGET_OS_VISION
+  [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                  name:UIApplicationDidChangeStatusBarOrientationNotification
+                                                object:nil];
+#endif
   [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
 
   [[NSNotificationCenter defaultCenter] removeObserver:self name:RCTUserInterfaceStyleDidChangeNotification object:nil];
@@ -115,15 +126,16 @@ RCT_EXPORT_MODULE()
 static BOOL RCTIsIPhoneNotched()
 {
   static BOOL isIPhoneNotched = NO;
-  static dispatch_once_t onceToken;
+#if !TARGET_OS_VISION
+    static dispatch_once_t onceToken;
 
-  dispatch_once(&onceToken, ^{
-    RCTAssertMainQueue();
+    dispatch_once(&onceToken, ^{
+      RCTAssertMainQueue();
 
-    // 20pt is the top safeArea value in non-notched devices
-    isIPhoneNotched = RCTSharedApplication().keyWindow.safeAreaInsets.top > 20;
-  });
-
+      // 20pt is the top safeArea value in non-notched devices
+      isIPhoneNotched = RCTSharedApplication().keyWindow.safeAreaInsets.top > 20;
+    });
+#endif
   return isIPhoneNotched;
 }
 
@@ -206,6 +218,7 @@ static NSDictionary *RCTExportedDimensions(CGFloat fontScale)
 
 - (void)_interfaceOrientationDidChange
 {
+#if !TARGET_OS_VISION
   UIApplication *application = RCTSharedApplication();
   UIInterfaceOrientation nextOrientation = [application statusBarOrientation];
 
@@ -235,6 +248,7 @@ static NSDictionary *RCTExportedDimensions(CGFloat fontScale)
     _isFullscreen = isRunningInFullScreen;
 #pragma clang diagnostic pop
   }
+#endif
 }
 
 - (void)interfaceFrameDidChange
