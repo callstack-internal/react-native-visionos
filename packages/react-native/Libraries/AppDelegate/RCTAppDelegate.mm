@@ -11,6 +11,7 @@
 #import <React/RCTSurfacePresenterBridgeAdapter.h>
 #import <react/renderer/runtimescheduler/RuntimeScheduler.h>
 #import "RCTAppSetupUtils.h"
+#import <React/RCTUtils.h>
 
 #if RN_DISABLE_OSS_PLUGIN_HEADER
 #import <RCTTurboModulePlugin/RCTTurboModulePlugin.h>
@@ -47,6 +48,23 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
   facebook::react::ContextContainer::Shared _contextContainer;
 }
 @end
+
+#endif
+
+#if TARGET_OS_VISION
+@interface GlassViewController : UIViewController
+
+@end
+
+@implementation GlassViewController
+
+- (UIContainerBackgroundStyle)preferredContainerBackgroundStyle {
+    return UIContainerBackgroundStyleGlass;
+}
+
+@end
+#endif
+
 
 static NSDictionary *updateInitialProps(NSDictionary *initialProps, BOOL isFabricEnabled)
 {
@@ -117,7 +135,13 @@ static NSDictionary *updateInitialProps(NSDictionary *initialProps, BOOL isFabri
     }
     rootView = [self createRootViewWithBridge:self.bridge moduleName:self.moduleName initProps:initProps];
   }
+
+#if TARGET_OS_VISION
+  self.window = [[UIWindow alloc] initWithFrame:RCTForegroundWindow().bounds];
+#else
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+#endif
+  
   UIViewController *rootViewController = [self createRootViewController];
   [self setRootView:rootView toRootViewController:rootViewController];
   self.window.rootViewController = rootViewController;
@@ -158,7 +182,11 @@ static NSDictionary *updateInitialProps(NSDictionary *initialProps, BOOL isFabri
 
 - (UIViewController *)createRootViewController
 {
+#if TARGET_OS_VISION
+  return [GlassViewController new];
+#else
   return [UIViewController new];
+#endif
 }
 
 - (void)setRootView:(UIView *)rootView toRootViewController:(UIViewController *)rootViewController
