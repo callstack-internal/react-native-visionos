@@ -515,6 +515,7 @@ static NSSet<NSNumber *> *returnKeyTypesSet;
 
 - (void)setDefaultInputAccessoryView
 {
+#if !TARGET_OS_VISION
   // InputAccessoryView component sets the inputAccessoryView when inputAccessoryViewID exists
   if (_backedTextInputView.inputAccessoryViewID) {
     if (_backedTextInputView.isFirstResponder) {
@@ -559,6 +560,7 @@ static NSSet<NSNumber *> *returnKeyTypesSet;
   if (_backedTextInputView.isFirstResponder) {
     [_backedTextInputView reloadInputViews];
   }
+#endif
 }
 
 - (void)handleInputAccessoryDoneButton

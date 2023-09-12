@@ -40,6 +40,15 @@ module.exports = {
     defaultPlatform: 'ios',
     platforms: ['ios', 'android'],
   },
+  moduleNameMapper: {
+    // These mappers allow out-of-tree platforms tests to seamlessly resolve RN imports
+    '^react-native/(.*)': '<rootDir>/packages/react-native/$1',
+    '^react-native$': '<rootDir>/packages/react-native/index.js',
+    // This module is internal to Meta and used by their custom React renderer.
+    // In tests, we can just use a mock.
+    '^ReactNativeInternalFeatureFlags$':
+      '<rootDir>/packages/react-native/jest/ReactNativeInternalFeatureFlagsMock.js',
+  },
   moduleFileExtensions: ['fb.js'].concat(defaults.moduleFileExtensions),
   modulePathIgnorePatterns: ['scripts/.*/__fixtures__/'],
   unmockedModulePathPatterns: [

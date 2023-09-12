@@ -32,8 +32,10 @@ try {
 }
 
 let ios;
+let apple;
 try {
   ios = require('@react-native-community/cli-platform-ios');
+  apple = require('@react-native-community/cli-platform-apple');
 } catch {
   if (verbose) {
     console.warn(
@@ -41,6 +43,8 @@ try {
     );
   }
 }
+
+const localCommands = require('./local-cli/localCommands');
 
 const {
   bundleCommand,
@@ -75,8 +79,14 @@ const codegenCommand = {
 };
 
 const config = {
-  commands: [bundleCommand, startCommand, codegenCommand],
-  platforms: {},
+  commands: [bundleCommand, startCommand, codegenCommand, ...localCommands],
+  platforms: {
+    visionos: {
+      npmPackageName: '@callstack/react-native-visionos',
+      projectConfig: apple.getProjectConfig({platformName: 'visionos'}),
+      dependencyConfig: apple.getDependencyConfig({platformName: 'visionos'}),
+    },
+  },
 };
 
 if (ios != null) {

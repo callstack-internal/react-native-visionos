@@ -271,6 +271,7 @@ using namespace facebook::react;
       [_editMenuInteraction presentEditMenuWithConfiguration:config];
     }
   } else {
+#if !TARGET_OS_VISION
     UIMenuController *menuController = [UIMenuController sharedMenuController];
 
     if (menuController.isMenuVisible) {
@@ -278,6 +279,7 @@ using namespace facebook::react;
     }
 
     [menuController showMenuFromView:self rect:self.bounds];
+#endif
   }
 }
 
