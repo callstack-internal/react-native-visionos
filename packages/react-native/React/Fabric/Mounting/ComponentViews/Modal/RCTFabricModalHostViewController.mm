@@ -44,7 +44,11 @@
 
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
+#if !TARGET_OS_VISION
   return [RCTSharedApplication() statusBarStyle];
+#else
+    return UIStatusBarStyleDefault;
+#endif
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -55,14 +59,23 @@
 
 - (BOOL)prefersStatusBarHidden
 {
+#if !TARGET_OS_VISION
   return [RCTSharedApplication() isStatusBarHidden];
+#else
+    return false;
+#endif
 }
 
 #if RCT_DEV
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
+#if !TARGET_OS_VISION
   UIInterfaceOrientationMask appSupportedOrientationsMask =
       [RCTSharedApplication() supportedInterfaceOrientationsForWindow:[RCTSharedApplication() keyWindow]];
+#else
+    UIInterfaceOrientationMask appSupportedOrientationsMask = UIInterfaceOrientationMaskPortrait;
+#endif
+  
   if (!(_supportedInterfaceOrientations & appSupportedOrientationsMask)) {
     RCTLogError(
         @"Modal was presented with 0x%x orientations mask but the application only supports 0x%x."
