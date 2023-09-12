@@ -21,7 +21,8 @@
 {
   if (_alertWindow == nil) {
     _alertWindow = [self getUIWindowFromScene];
-
+    
+#if !TARGET_OS_VISION
     if (_alertWindow == nil) {
       UIWindow *keyWindow = RCTSharedApplication().keyWindow;
       if (keyWindow) {
@@ -31,6 +32,7 @@
         NSLog(@"Unable to create alert window: keyWindow is nil");
       }
     }
+#endif
 
     if (_alertWindow) {
       _alertWindow.rootViewController = [UIViewController new];
