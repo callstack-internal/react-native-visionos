@@ -114,6 +114,8 @@ PODS:
     - React-RCTSettings (= 1000.0.0)
     - React-RCTText (= 1000.0.0)
     - React-RCTVibration (= 1000.0.0)
+    - React-RCTWindowManager (= 1000.0.0)
+    - React-RCTXR (= 1000.0.0)
   - React-callinvoker (1000.0.0)
   - React-Core (1000.0.0):
     - glog
@@ -130,7 +132,7 @@ PODS:
     - React-perflogger
     - React-runtimescheduler
     - React-utils
-    - SocketRocket (= 0.7.0)
+    - SocketRocket (= 0.7.0.1)
     - Yoga
   - React-Core/CoreModulesHeaders (1000.0.0):
     - glog
@@ -147,7 +149,7 @@ PODS:
     - React-perflogger
     - React-runtimescheduler
     - React-utils
-    - SocketRocket (= 0.7.0)
+    - SocketRocket (= 0.7.0.1)
     - Yoga
   - React-Core/Default (1000.0.0):
     - glog
@@ -163,7 +165,7 @@ PODS:
     - React-perflogger
     - React-runtimescheduler
     - React-utils
-    - SocketRocket (= 0.7.0)
+    - SocketRocket (= 0.7.0.1)
     - Yoga
   - React-Core/DevSupport (1000.0.0):
     - glog
@@ -181,7 +183,7 @@ PODS:
     - React-perflogger
     - React-runtimescheduler
     - React-utils
-    - SocketRocket (= 0.7.0)
+    - SocketRocket (= 0.7.0.1)
     - Yoga
   - React-Core/RCTActionSheetHeaders (1000.0.0):
     - glog
@@ -198,7 +200,7 @@ PODS:
     - React-perflogger
     - React-runtimescheduler
     - React-utils
-    - SocketRocket (= 0.7.0)
+    - SocketRocket (= 0.7.0.1)
     - Yoga
   - React-Core/RCTAnimationHeaders (1000.0.0):
     - glog
@@ -215,7 +217,7 @@ PODS:
     - React-perflogger
     - React-runtimescheduler
     - React-utils
-    - SocketRocket (= 0.7.0)
+    - SocketRocket (= 0.7.0.1)
     - Yoga
   - React-Core/RCTBlobHeaders (1000.0.0):
     - glog
@@ -232,7 +234,7 @@ PODS:
     - React-perflogger
     - React-runtimescheduler
     - React-utils
-    - SocketRocket (= 0.7.0)
+    - SocketRocket (= 0.7.0.1)
     - Yoga
   - React-Core/RCTImageHeaders (1000.0.0):
     - glog
@@ -249,7 +251,7 @@ PODS:
     - React-perflogger
     - React-runtimescheduler
     - React-utils
-    - SocketRocket (= 0.7.0)
+    - SocketRocket (= 0.7.0.1)
     - Yoga
   - React-Core/RCTLinkingHeaders (1000.0.0):
     - glog
@@ -266,7 +268,7 @@ PODS:
     - React-perflogger
     - React-runtimescheduler
     - React-utils
-    - SocketRocket (= 0.7.0)
+    - SocketRocket (= 0.7.0.1)
     - Yoga
   - React-Core/RCTNetworkHeaders (1000.0.0):
     - glog
@@ -283,7 +285,7 @@ PODS:
     - React-perflogger
     - React-runtimescheduler
     - React-utils
-    - SocketRocket (= 0.7.0)
+    - SocketRocket (= 0.7.0.1)
     - Yoga
   - React-Core/RCTPushNotificationHeaders (1000.0.0):
     - glog
@@ -300,7 +302,7 @@ PODS:
     - React-perflogger
     - React-runtimescheduler
     - React-utils
-    - SocketRocket (= 0.7.0)
+    - SocketRocket (= 0.7.0.1)
     - Yoga
   - React-Core/RCTSettingsHeaders (1000.0.0):
     - glog
@@ -317,7 +319,7 @@ PODS:
     - React-perflogger
     - React-runtimescheduler
     - React-utils
-    - SocketRocket (= 0.7.0)
+    - SocketRocket (= 0.7.0.1)
     - Yoga
   - React-Core/RCTTextHeaders (1000.0.0):
     - glog
@@ -334,7 +336,7 @@ PODS:
     - React-perflogger
     - React-runtimescheduler
     - React-utils
-    - SocketRocket (= 0.7.0)
+    - SocketRocket (= 0.7.0.1)
     - Yoga
   - React-Core/RCTVibrationHeaders (1000.0.0):
     - glog
@@ -351,7 +353,7 @@ PODS:
     - React-perflogger
     - React-runtimescheduler
     - React-utils
-    - SocketRocket (= 0.7.0)
+    - SocketRocket (= 0.7.0.1)
     - Yoga
   - React-Core/RCTWebSocket (1000.0.0):
     - glog
@@ -368,7 +370,41 @@ PODS:
     - React-perflogger
     - React-runtimescheduler
     - React-utils
-    - SocketRocket (= 0.7.0)
+    - SocketRocket (= 0.7.0.1)
+    - Yoga
+  - React-Core/RCTWindowManagerHeaders (1000.0.0):
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTDeprecation
+    - React-Core/Default
+    - React-cxxreact
+    - React-featureflags
+    - React-hermes
+    - React-jsi
+    - React-jsiexecutor
+    - React-jsinspector
+    - React-perflogger
+    - React-runtimescheduler
+    - React-utils
+    - SocketRocket (= 0.7.0.1)
+    - Yoga
+  - React-Core/RCTXRHeaders (1000.0.0):
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTDeprecation
+    - React-Core/Default
+    - React-cxxreact
+    - React-featureflags
+    - React-hermes
+    - React-jsi
+    - React-jsiexecutor
+    - React-jsinspector
+    - React-perflogger
+    - React-runtimescheduler
+    - React-utils
+    - SocketRocket (= 0.7.0.1)
     - Yoga
   - React-CoreModules (1000.0.0):
     - DoubleConversion
@@ -383,7 +419,7 @@ PODS:
     - React-RCTImage (= 1000.0.0)
     - ReactCodegen
     - ReactCommon
-    - SocketRocket (= 0.7.0)
+    - SocketRocket (= 0.7.0.1)
   - React-cxxreact (1000.0.0):
     - boost
     - DoubleConversion
@@ -1455,6 +1491,10 @@ PODS:
     - React-NativeModulesApple
     - ReactCodegen
     - ReactCommon
+  - React-RCTSwiftExtensions (1000.0.0):
+    - React-Core
+    - React-RCTWindowManager
+    - React-RCTXR
   - React-RCTTest (1000.0.0):
     - RCT-Folly (= 2024.01.01.00)
     - React-Core (= 1000.0.0)
@@ -1634,7 +1674,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - SocketRocket (0.7.0)
+  - SocketRocket (0.7.0.1)
   - Yoga (0.0.0)
 
 DEPENDENCIES:
@@ -1693,6 +1733,7 @@ DEPENDENCIES:
   - React-RCTNetwork (from `../react-native/Libraries/Network`)
   - React-RCTPushNotification (from `../react-native/Libraries/PushNotificationIOS`)
   - React-RCTSettings (from `../react-native/Libraries/Settings`)
+  - React-RCTSwiftExtensions (from `../react-native/Libraries/SwiftExtensions`)
   - React-RCTTest (from `./RCTTest`)
   - React-RCTText (from `../react-native/Libraries/Text`)
   - React-RCTVibration (from `../react-native/Libraries/Vibration`)
@@ -1709,12 +1750,8 @@ DEPENDENCIES:
   - ReactCommon-Samples (from `../react-native/ReactCommon/react/nativemodule/samples`)
   - ReactCommon/turbomodule/core (from `../react-native/ReactCommon`)
   - ScreenshotManager (from `NativeModuleExample`)
+  - SocketRocket (from `../react-native/third-party-podspecs/SocketRocket.podspec`)
   - Yoga (from `../react-native/ReactCommon/yoga`)
-
-SPEC REPOS:
-  trunk:
-    - OCMock
-    - SocketRocket
 
 EXTERNAL SOURCES:
   boost:
@@ -1822,6 +1859,8 @@ EXTERNAL SOURCES:
     :path: "../react-native/Libraries/PushNotificationIOS"
   React-RCTSettings:
     :path: "../react-native/Libraries/Settings"
+  React-RCTSwiftExtensions:
+    :path: "../react-native/Libraries/SwiftExtensions"
   React-RCTTest:
     :path: "./RCTTest"
   React-RCTText:
@@ -1854,6 +1893,8 @@ EXTERNAL SOURCES:
     :path: "../react-native/ReactCommon/react/nativemodule/samples"
   ScreenshotManager:
     :path: NativeModuleExample
+  SocketRocket:
+    :podspec: "../react-native/third-party-podspecs/SocketRocket.podspec"
   Yoga:
     :path: "../react-native/ReactCommon/yoga"
 

@@ -23,10 +23,11 @@
   }
 
   self.modalInPresentation = YES;
-
+#if !TARGET_OS_VISION
   _preferredStatusBarStyle = [RCTUIStatusBarManager() statusBarStyle];
   _preferredStatusBarHidden = [RCTUIStatusBarManager() isStatusBarHidden];
-
+#endif
+    
   return self;
 }
 
@@ -53,6 +54,7 @@
 #if RCT_DEV
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
+#if !TARGET_OS_VISION
   UIInterfaceOrientationMask appSupportedOrientationsMask =
       [RCTSharedApplication() supportedInterfaceOrientationsForWindow:RCTKeyWindow()];
   if (!(_supportedInterfaceOrientations & appSupportedOrientationsMask)) {
