@@ -47,7 +47,10 @@ RCT_EXPORT_MODULE()
   __block NSDictionary *constants;
   RCTUnsafeExecuteOnMainQueueSync(^{
 #if TARGET_OS_VISION
-      CGSize screenSize = CGSizeMake(100, 100);
+      UIApplication *app = [[UIApplication class] performSelector:@selector(sharedApplication)];
+      UIWindowScene *scene = (UIWindowScene*)[app.connectedScenes anyObject];
+      UIWindow *window = [[UIWindow alloc] initWithWindowScene:scene];
+      CGSize screenSize = window.bounds.size;
 #else
       UIScreen *mainScreen = UIScreen.mainScreen;
       CGSize screenSize = mainScreen.bounds.size;
