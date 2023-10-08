@@ -275,8 +275,6 @@ static NSDictionary *deviceOrientationEventBody(UIDeviceOrientation orientation)
                                                                         body:orientationEvent];
 #pragma clang diagnostic pop
 #endif
-    return;
-
 }
 
 - (dispatch_queue_t)methodQueue
