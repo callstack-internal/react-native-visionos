@@ -41,7 +41,7 @@ def min_ios_version_supported
 end
 
 def min_visionos_version_supported
-  return '1.0'
+  return Helpers::Constants.min_visionos_version_supported
 end
 
 # This function returns the min supported OS versions supported by React Native
