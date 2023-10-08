@@ -317,7 +317,7 @@ CGFloat RCTScreenScale(void)
   return screenScale;
 #endif
 
-  return 1;
+  return 2;
 }
 
 CGFloat RCTFontSizeMultiplier(void)
