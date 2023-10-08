@@ -32,7 +32,8 @@ if USE_FRAMEWORKS
   use_frameworks! :linkage => linkage.to_sym
 end
 
-$shouldUseFlipper = false # ENV['USE_FLIPPER'] ? ENV['USE_FLIPPER'] == '1' : !IN_CI && !USE_FRAMEWORKS
+# Flipper is not supported for VisionOS
+$shouldUseFlipper = false
 
 def pods(target_name, options = {}, use_flipper: $shouldUseFlipper)
   project 'RNTesterPods.xcodeproj'
