@@ -9,6 +9,7 @@
  */
 
 import type {ColorValue} from '../../StyleSheet/StyleSheet';
+import type {HoverStyle} from '../View/ViewPropTypes';
 import typeof TouchableWithoutFeedback from './TouchableWithoutFeedback';
 
 import View from '../../Components/View/View';
@@ -32,10 +33,15 @@ type IOSProps = $ReadOnly<{|
   hasTVPreferredFocus?: ?boolean,
 |}>;
 
+type VisionOSProps = $ReadOnly<{|
+  hoverStyle?: ?HoverStyle,
+|}>;
+
 type Props = $ReadOnly<{|
   ...React.ElementConfig<TouchableWithoutFeedback>,
   ...AndroidProps,
   ...IOSProps,
+  ...VisionOSProps,
 
   activeOpacity?: ?number,
   underlayColor?: ?ColorValue,
@@ -341,6 +347,7 @@ class TouchableHighlight extends React.Component<Props, State> {
         nextFocusLeft={this.props.nextFocusLeft}
         nextFocusRight={this.props.nextFocusRight}
         nextFocusUp={this.props.nextFocusUp}
+        visionos_hoverStyle={this.props.hoverStyle}
         focusable={
           this.props.focusable !== false && this.props.onPress !== undefined
         }

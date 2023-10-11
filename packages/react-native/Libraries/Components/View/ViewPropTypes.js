@@ -263,6 +263,21 @@ type AndroidDrawableRipple = $ReadOnly<{|
   rippleRadius?: ?number,
 |}>;
 
+export type HoverStyle = $ReadOnly<{|
+  /**
+   * If true the hover effect is enabled. Defaults to true.
+   */
+  enabled?: ?boolean,
+  /**
+   * Hover effect type to apply to the view.
+   */
+  effectType: 'automatic' | 'lift' | 'highlight',
+  /**
+   * Corner radius of the hover effect.
+   */
+  cornerRadius?: ?number,
+|}>;
+
 type AndroidDrawable = AndroidDrawableThemeAttr | AndroidDrawableRipple;
 
 type AndroidViewProps = $ReadOnly<{|
@@ -451,6 +466,11 @@ type IOSViewProps = $ReadOnly<{|
    * See https://reactnative.dev/docs/view#shouldrasterizeios
    */
   shouldRasterizeIOS?: ?boolean,
+
+  /**
+   * Hover style to apply to the view. Only supported on VisionOS.
+   */
+  visionos_hoverStyle?: ?HoverStyle,
 |}>;
 
 export type ViewProps = $ReadOnly<{|
