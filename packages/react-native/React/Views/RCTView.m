@@ -666,6 +666,38 @@ static CGFloat RCTDefaultIfNegativeTo(CGFloat defaultValue, CGFloat x)
   };
 }
 
+
+#if TARGET_OS_VISION
+- (void)setHoverStyleProperties:(NSDictionary *)hoverStyleProperties {
+    _hoverStyleProperties = hoverStyleProperties;
+    
+    BOOL enabled = _hoverStyleProperties[@"enabled"] != nil ? [_hoverStyleProperties[@"enabled"] boolValue] : YES;
+    
+    if (!enabled || hoverStyleProperties == nil) {
+        self.hoverStyle = nil;
+        return;
+    }
+    
+    NSString *effectType = (NSString *)[_hoverStyleProperties objectForKey:@"effectType"];
+    NSNumber *cornerRadius = (NSNumber *)[_hoverStyleProperties objectForKey:@"cornerRadius"];
+    
+    float cornerRadiusFloat = [cornerRadius floatValue];
+    
+    UIShape *shape = [UIShape rectShapeWithCornerRadius:cornerRadiusFloat];
+    id<UIHoverEffect> hoverEffect;
+    
+    if ([effectType isEqualToString:@"lift"]) {
+        hoverEffect = [UIHoverLiftEffect effect];
+    } else if ([effectType isEqualToString:@"highlight"]) {
+        hoverEffect = [UIHoverHighlightEffect effect];
+    } else if ([effectType isEqualToString:@"automatic"]) {
+        hoverEffect = [UIHoverAutomaticEffect effect];
+    }
+    
+    self.hoverStyle = [UIHoverStyle styleWithEffect:hoverEffect shape:shape];
+}
+#endif
+
 - (RCTCornerRadii)cornerRadii
 {
   const BOOL isRTL = _reactLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
