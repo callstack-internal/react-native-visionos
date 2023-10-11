@@ -20,6 +20,7 @@ import type {
   AccessibilityState,
   AccessibilityValue,
 } from '../View/ViewAccessibility';
+import type {HoverStyle} from '../View/ViewPropTypes';
 
 import {PressabilityDebugView} from '../../Pressability/PressabilityDebug';
 import usePressability from '../../Pressability/usePressability';
@@ -32,10 +33,18 @@ import useAndroidRippleForView, {
 import * as React from 'react';
 import {useMemo, useRef, useState} from 'react';
 
+const defaultHoverStyle: HoverStyle = {
+  effectType: 'automatic',
+};
+
 type ViewStyleProp = $ElementType<React.ElementConfig<typeof View>, 'style'>;
 
 export type StateCallbackType = $ReadOnly<{|
   pressed: boolean,
+|}>;
+
+type VisionOSProps = $ReadOnly<{|
+  visionos_hoverStyle?: ?HoverStyle,
 |}>;
 
 type Props = $ReadOnly<{|
@@ -193,6 +202,10 @@ type Props = $ReadOnly<{|
    * https://github.com/facebook/react-native/issues/34424
    */
   'aria-label'?: ?string,
+  /**
+   * Props needed for VisionOS.
+   */
+  ...VisionOSProps,
 |}>;
 
 /**
@@ -232,6 +245,7 @@ function Pressable(props: Props, forwardedRef): React.Node {
     style,
     testOnly_pressed,
     unstable_pressDelay,
+    visionos_hoverStyle = defaultHoverStyle,
     ...restProps
   } = props;
 
@@ -341,7 +355,8 @@ function Pressable(props: Props, forwardedRef): React.Node {
       {...eventHandlers}
       ref={mergedRef}
       style={typeof style === 'function' ? style({pressed}) : style}
-      collapsable={false}>
+      collapsable={false}
+      visionos_hoverStyle={visionos_hoverStyle}>
       {typeof children === 'function' ? children({pressed}) : children}
       {__DEV__ ? <PressabilityDebugView color="red" hitSlop={hitSlop} /> : null}
     </View>
