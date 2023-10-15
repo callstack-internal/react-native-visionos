@@ -11,7 +11,7 @@ import type * as React from 'react';
 import {Constructor} from '../../../types/private/Utilities';
 import {TimerMixin} from '../../../types/private/TimerMixin';
 import {NativeMethods} from '../../../types/public/ReactNativeTypes';
-import {HoverStyle, TVParallaxProperties} from '../View/ViewPropTypes';
+import {HoverEffect, TVParallaxProperties} from '../View/ViewPropTypes';
 import {TouchableMixin} from './Touchable';
 import {TouchableWithoutFeedbackProps} from './TouchableWithoutFeedback';
 
@@ -90,7 +90,7 @@ export interface TouchableOpacityProps
   /**
    * Hover style to apply to the view. Only supported on VisionOS.
    */
-  visionos_hoverStyle?: HoverStyle | undefined;
+  visionos_hoverEffect?: HoverEffect | undefined;
 }
 
 /**
