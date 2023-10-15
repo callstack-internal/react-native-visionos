@@ -263,20 +263,7 @@ type AndroidDrawableRipple = $ReadOnly<{|
   rippleRadius?: ?number,
 |}>;
 
-export type HoverStyle = $ReadOnly<{|
-  /**
-   * If true the hover effect is enabled. Defaults to true.
-   */
-  enabled?: ?boolean,
-  /**
-   * Hover effect type to apply to the view.
-   */
-  effectType: 'automatic' | 'lift' | 'highlight',
-  /**
-   * Corner radius of the hover effect.
-   */
-  cornerRadius?: ?number,
-|}>;
+export type HoverEffect = 'lift' | 'highlight';
 
 type AndroidDrawable = AndroidDrawableThemeAttr | AndroidDrawableRipple;
 
@@ -470,7 +457,7 @@ type IOSViewProps = $ReadOnly<{|
   /**
    * Hover style to apply to the view. Only supported on VisionOS.
    */
-  visionos_hoverStyle?: ?HoverStyle,
+  visionos_hoverEffect?: ?HoverEffect,
 |}>;
 
 export type ViewProps = $ReadOnly<{|
