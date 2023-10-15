@@ -668,33 +668,26 @@ static CGFloat RCTDefaultIfNegativeTo(CGFloat defaultValue, CGFloat x)
 
 
 #if TARGET_OS_VISION
-- (void)setHoverStyleProperties:(NSDictionary *)hoverStyleProperties {
-    _hoverStyleProperties = hoverStyleProperties;
+- (void)setHoverEffect:(NSString *)hoverEffect {
+    _hoverEffect = hoverEffect;
     
-    BOOL enabled = _hoverStyleProperties[@"enabled"] != nil ? [_hoverStyleProperties[@"enabled"] boolValue] : YES;
-    
-    if (!enabled || hoverStyleProperties == nil) {
+    if (hoverEffect == nil) {
         self.hoverStyle = nil;
         return;
     }
     
-    NSString *effectType = (NSString *)[_hoverStyleProperties objectForKey:@"effectType"];
-    NSNumber *cornerRadius = (NSNumber *)[_hoverStyleProperties objectForKey:@"cornerRadius"];
+    UIShape *shape = [UIShape rectShapeWithCornerRadius:_borderRadius];
+    id<UIHoverEffect> effect;
     
-    float cornerRadiusFloat = [cornerRadius floatValue];
-    
-    UIShape *shape = [UIShape rectShapeWithCornerRadius:cornerRadiusFloat];
-    id<UIHoverEffect> hoverEffect;
-    
-    if ([effectType isEqualToString:@"lift"]) {
-        hoverEffect = [UIHoverLiftEffect effect];
-    } else if ([effectType isEqualToString:@"highlight"]) {
-        hoverEffect = [UIHoverHighlightEffect effect];
-    } else if ([effectType isEqualToString:@"automatic"]) {
-        hoverEffect = [UIHoverAutomaticEffect effect];
+    if ([hoverEffect isEqualToString:@"lift"]) {
+        effect = [UIHoverLiftEffect effect];
+    } else if ([hoverEffect isEqualToString:@"highlight"]) {
+        effect = [UIHoverHighlightEffect effect];
     }
     
-    self.hoverStyle = [UIHoverStyle styleWithEffect:hoverEffect shape:shape];
+    if (hoverEffect != nil) {
+        self.hoverStyle = [UIHoverStyle styleWithEffect:effect shape:shape];
+    }
 }
 #endif
 
