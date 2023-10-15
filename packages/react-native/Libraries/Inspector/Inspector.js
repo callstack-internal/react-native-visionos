@@ -212,7 +212,7 @@ class Inspector extends React.Component<
     const panelContainerStyle =
       this.state.panelPos === 'bottom'
         ? {bottom: 0}
-        : {top: Platform.OS === 'ios' ? 20 : 0};
+        : {top: Platform.OS === 'ios' || Platform.OS === 'visionos' ? 20 : 0};
     return (
       <View style={styles.container} pointerEvents="box-none">
         {this.state.inspecting && (

@@ -25,7 +25,13 @@ import {
   initialNavigationState,
 } from './utils/testerStateUtils';
 import * as React from 'react';
-import {BackHandler, StyleSheet, View, useColorScheme} from 'react-native';
+import {
+  BackHandler,
+  StyleSheet,
+  View,
+  useColorScheme,
+  Platform,
+} from 'react-native';
 
 // RNTester App currently uses in memory storage for storing navigation state
 
@@ -155,7 +161,10 @@ const RNTesterApp = (): React.Node => {
       />
       <View
         style={StyleSheet.compose(styles.container, {
-          backgroundColor: theme.GroupedBackgroundColor,
+          backgroundColor:
+            Platform.OS === 'visionos'
+              ? 'transparent'
+              : theme.GroupedBackgroundColor,
         })}>
         {activeModule != null ? (
           <RNTesterModuleContainer

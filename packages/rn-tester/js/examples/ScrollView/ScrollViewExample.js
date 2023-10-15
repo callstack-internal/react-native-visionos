@@ -414,7 +414,7 @@ const examples = ([
   },
 ]: Array<RNTesterModuleExample>);
 
-if (Platform.OS === 'ios') {
+if (Platform.OS === 'ios' || Platform.OS === 'visionos') {
   examples.push({
     title: '<ScrollView> (centerContent = true)\n',
     description:
@@ -593,7 +593,7 @@ const SnapToOptions = () => {
         nestedScrollEnabled>
         {ITEMS.map(createItemRow)}
       </ScrollView>
-      {Platform.OS === 'ios' ? (
+      {Platform.OS === 'ios' || Platform.OS === 'visionos' ? (
         <>
           <Text style={styles.rowTitle}>Select Snap to Alignment Mode</Text>
           <View style={styles.row}>
@@ -873,7 +873,7 @@ const MaxMinZoomScale = () => {
         onChangeText={val => setMinZoomScale(val)}
         keyboardType="decimal-pad"
       />
-      {Platform.OS === 'ios' ? (
+      {Platform.OS === 'ios' || Platform.OS === 'visionos' ? (
         <>
           <Text style={styles.rowTitle}>Set Zoom Scale</Text>
           <TextInput
@@ -894,7 +894,7 @@ const KeyboardExample = () => {
     useState('never');
   const [textInputValue, setTextInputValue] = useState('Tap to open Keyboard');
   const dismissOptions =
-    Platform.OS === 'ios'
+    Platform.OS === 'ios' || Platform.OS === 'visionos'
       ? ['none', 'on-drag', 'interactive']
       : ['none', 'on-drag'];
   const persistOptions = ['never', 'always', 'handled'];
@@ -1067,7 +1067,7 @@ const DisableEnable = () => {
         {ITEMS.map(createItemRow)}
       </ScrollView>
       <View>
-        {Platform.OS === 'ios' ? (
+        {Platform.OS === 'ios' || Platform.OS === 'visionos' ? (
           <Button
             onPress={() => setDirectionalLockEnabled(!directionalLockEnabled)}
             label={
@@ -1145,7 +1145,7 @@ const ContentExample = () => {
         {ITEMS.map(createItemRow)}
       </ScrollView>
       <View>
-        {Platform.OS === 'ios' ? (
+        {Platform.OS === 'ios' || Platform.OS === 'visionos' ? (
           <>
             <Button
               onPress={() =>

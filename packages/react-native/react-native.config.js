@@ -34,5 +34,8 @@ module.exports = {
       projectConfig: android.projectConfig,
       dependencyConfig: android.dependencyConfig,
     },
+    visionos: {
+      npmPackageName: 'react-native-visionos',
+    },
   },
 };

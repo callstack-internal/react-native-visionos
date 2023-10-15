@@ -31,6 +31,7 @@ const config = {
     extraNodeModules: {
       'react-native': __dirname,
     },
+    platforms: ['ios', 'visionos', 'android'],
   },
 };
 

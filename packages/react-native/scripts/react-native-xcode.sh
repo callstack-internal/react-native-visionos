@@ -12,6 +12,8 @@
 set -x -e
 DEST=$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH
 
+echo $PLATFORM_NAME
+
 # Enables iOS devices to get the IP address of the machine running Metro
 if [[ ! "$SKIP_BUNDLING_METRO_IP" && "$CONFIGURATION" = *Debug* && ! "$PLATFORM_NAME" == *simulator ]]; then
   for num in 0 1 2 3 4 5 6 7 8; do
@@ -109,6 +111,9 @@ EXTRA_ARGS=
 case "$PLATFORM_NAME" in
   "macosx")
     BUNDLE_PLATFORM="macos"
+    ;;
+  "xrsimulator")  # Adding a new case for "visionOS"
+    BUNDLE_PLATFORM="visionos"
     ;;
   *)
     BUNDLE_PLATFORM="ios"

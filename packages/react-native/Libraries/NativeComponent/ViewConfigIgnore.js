@@ -37,7 +37,7 @@ export function DynamicallyInjectedByGestureHandler<T: {...}>(object: T): T {
 export function ConditionallyIgnoredEventHandlers<T: {[name: string]: true}>(
   value: T,
 ): T | void {
-  if (Platform.OS === 'ios') {
+  if (Platform.OS === 'ios' || Platform.OS === 'visionos') {
     return value;
   }
   return undefined;

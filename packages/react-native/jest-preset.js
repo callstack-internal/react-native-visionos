@@ -12,7 +12,7 @@
 module.exports = {
   haste: {
     defaultPlatform: 'ios',
-    platforms: ['android', 'ios', 'native'],
+    platforms: ['android', 'ios', 'visionos', 'native'],
   },
   transform: {
     '^.+\\.(js|ts|tsx)$': 'babel-jest',

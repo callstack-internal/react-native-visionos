@@ -242,7 +242,8 @@ export default class SectionList<
       ...restProps
     } = this.props;
     const stickySectionHeadersEnabled =
-      _stickySectionHeadersEnabled ?? Platform.OS === 'ios';
+      _stickySectionHeadersEnabled ??
+      (Platform.OS === 'ios' || Platform.OS === 'visionos');
     return (
       /* $FlowFixMe[incompatible-type] Error revealed after improved builtin
        * React utility types */

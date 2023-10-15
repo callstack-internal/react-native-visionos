@@ -32,4 +32,7 @@ module.exports = {
       packageName: 'com.facebook.react.uiapp',
     },
   },
+  resolver: {
+    platforms: ['ios', 'visionos', 'android'],
+  },
 };

@@ -111,7 +111,7 @@ class Share {
           ...result,
         }),
       );
-    } else if (Platform.OS === 'ios') {
+    } else if (Platform.OS === 'ios' || Platform.OS === 'visionos') {
       return new Promise((resolve, reject) => {
         const tintColor = processColor(options.tintColor);
 

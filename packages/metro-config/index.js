@@ -45,7 +45,7 @@ function getDefaultConfig(
   const config = {
     resolver: {
       resolverMainFields: ['react-native', 'browser', 'main'],
-      platforms: ['android', 'ios'],
+      platforms: ['android', 'visionos', 'ios'],
       unstable_conditionNames: ['require', 'import', 'react-native'],
     },
     serializer: {

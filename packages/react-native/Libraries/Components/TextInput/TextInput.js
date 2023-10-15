@@ -53,7 +53,7 @@ if (Platform.OS === 'android') {
   AndroidTextInput = require('./AndroidTextInputNativeComponent').default;
   AndroidTextInputCommands =
     require('./AndroidTextInputNativeComponent').Commands;
-} else if (Platform.OS === 'ios') {
+} else if (Platform.OS === 'ios' || Platform.OS === 'visionos') {
   RCTSinglelineTextInputView =
     require('./RCTSingelineTextInputNativeComponent').default;
   RCTSinglelineTextInputNativeCommands =
@@ -1408,7 +1408,10 @@ function InternalTextInput(props: Props): React.Node {
       },
       onPressIn: onPressIn,
       onPressOut: onPressOut,
-      cancelable: Platform.OS === 'ios' ? !rejectResponderTermination : null,
+      cancelable:
+        Platform.OS === 'ios' || Platform.OS === 'visionos'
+          ? !rejectResponderTermination
+          : null,
     }),
     [
       editable,
@@ -1452,7 +1455,7 @@ function InternalTextInput(props: Props): React.Node {
   // $FlowFixMe[underconstrained-implicit-instantiation]
   let style = flattenStyle(props.style);
 
-  if (Platform.OS === 'ios') {
+  if (Platform.OS === 'ios' || Platform.OS === 'visionos') {
     const RCTTextInputView =
       props.multiline === true
         ? RCTMultilineTextInputView
@@ -1572,7 +1575,10 @@ const inputModeToKeyboardTypeMap = {
   decimal: 'decimal-pad',
   numeric: 'number-pad',
   tel: 'phone-pad',
-  search: Platform.OS === 'ios' ? 'web-search' : 'default',
+  search:
+    Platform.OS === 'ios' || Platform.OS === 'visionos'
+      ? 'web-search'
+      : 'default',
   email: 'email-address',
   url: 'url',
 };
@@ -1713,7 +1719,7 @@ const ExportedForwardRef: React.AbstractComponent<
       textContentType={
         textContentType != null
           ? textContentType
-          : Platform.OS === 'ios' &&
+          : (Platform.OS === 'ios' || Platform.OS === 'visionos') &&
             autoComplete &&
             autoComplete in autoCompleteWebToTextContentTypeMap
           ? // $FlowFixMe[invalid-computed-prop]

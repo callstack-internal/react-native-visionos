@@ -49,7 +49,7 @@ import memoize from 'memoize-one';
 import nullthrows from 'nullthrows';
 import * as React from 'react';
 
-if (Platform.OS === 'ios') {
+if (Platform.OS === 'ios' || Platform.OS === 'visionos') {
   require('../../Renderer/shims/ReactNative'); // Force side effects to prevent T55744311
 }
 
@@ -1013,7 +1013,10 @@ class ScrollView extends React.Component<Props, State> {
     |},
     animated?: boolean, // deprecated, put this inside the rect argument instead
   ) => {
-    invariant(Platform.OS === 'ios', 'zoomToRect is not implemented');
+    invariant(
+      Platform.OS === 'ios' || Platform.OS === 'visionos',
+      'zoomToRect is not implemented',
+    );
     if ('animated' in rect) {
       this._animated = rect.animated;
       delete rect.animated;
@@ -1152,7 +1155,7 @@ class ScrollView extends React.Component<Props, State> {
       if (
         this.props.onScroll &&
         this.props.scrollEventThrottle == null &&
-        Platform.OS === 'ios'
+        (Platform.OS === 'ios' || Platform.OS === 'visionos')
       ) {
         console.log(
           'You specified `onScroll` on a <ScrollView> but not ' +
@@ -1820,7 +1823,7 @@ class ScrollView extends React.Component<Props, State> {
     );
 
     if (refreshControl) {
-      if (Platform.OS === 'ios') {
+      if (Platform.OS === 'ios' || Platform.OS === 'visionos') {
         // On iOS the RefreshControl is a child of the ScrollView.
         return (
           <NativeDirectionalScrollView {...props} ref={scrollViewRef}>

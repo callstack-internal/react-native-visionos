@@ -26,7 +26,11 @@
 #if BUNDLE_PATH
 NSString *kBundlePath = @"xplat/js/RKJSModules/EntryPoints/RNTesterTestBundle.js";
 #else
+#if !TARGET_OS_VISION
 NSString *kBundlePath = @"js/RNTesterApp.ios";
+#else 
+NSString *kBundlePath = @"js/RNTesterApp.visionos";
+#endif
 #endif
 
 @implementation AppDelegate

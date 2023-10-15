@@ -38,7 +38,7 @@ module.exports = {
   transformIgnorePatterns: ['node_modules/(?!@react-native/)'],
   haste: {
     defaultPlatform: 'ios',
-    platforms: ['ios', 'android'],
+    platforms: ['ios', 'android', 'visionos'],
   },
   moduleNameMapper: {
     // This module is internal to Meta and used by their custom React renderer.

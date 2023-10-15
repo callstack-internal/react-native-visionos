@@ -314,7 +314,7 @@ class Button extends React.Component<ButtonProps> {
     const buttonStyles: Array<ViewStyleProp> = [styles.button];
     const textStyles: Array<TextStyleProp> = [styles.text];
     if (color) {
-      if (Platform.OS === 'ios') {
+      if (Platform.OS === 'ios' || Platform.OS === 'visionos') {
         textStyles.push({color: color});
       } else {
         buttonStyles.push({backgroundColor: color});

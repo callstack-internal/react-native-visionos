@@ -60,7 +60,7 @@ class SampleLegacyModuleExample extends React.Component<{||}, State> {
   // Add calls to methods in TurboModule here
   // $FlowFixMe[missing-local-annot]
   _tests =
-    Platform.OS === 'ios'
+    Platform.OS === 'ios' || Platform.OS === 'visionos'
       ? {
           voidFunc: () => getSampleLegacyModule()?.voidFunc(),
           getBool: () => getSampleLegacyModule()?.getBool(true),

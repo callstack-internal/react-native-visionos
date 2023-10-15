@@ -177,7 +177,8 @@ const SectionList: AbstractComponent<Props<SectionBase<any>>, any> = forwardRef<
   any,
 >((props, ref) => {
   const propsWithDefaults = {
-    stickySectionHeadersEnabled: Platform.OS === 'ios',
+    stickySectionHeadersEnabled:
+      Platform.OS === 'ios' || Platform.OS === 'visionos',
     ...props,
   };
 

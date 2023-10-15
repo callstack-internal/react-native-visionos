@@ -467,7 +467,7 @@ export default ({
                 sparingly.
               </Text>
             </View>
-            {Platform.OS === 'ios' && (
+            {(Platform.OS === 'ios' || Platform.OS === 'visionos') && (
               <View
                 style={{
                   borderRadius: 20,

@@ -46,7 +46,7 @@ class Alert {
     buttons?: Buttons,
     options?: Options,
   ): void {
-    if (Platform.OS === 'ios') {
+    if (Platform.OS === 'ios' || Platform.OS === 'visionos') {
       Alert.prompt(
         title,
         message,
@@ -122,7 +122,7 @@ class Alert {
     keyboardType?: string,
     options?: Options,
   ): void {
-    if (Platform.OS === 'ios') {
+    if (Platform.OS === 'ios' || Platform.OS === 'visionos') {
       let callbacks: Array<?any> = [];
       const buttons = [];
       let cancelButtonKey;

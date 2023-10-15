@@ -86,7 +86,7 @@ export default class Animation {
     // an animating color may have been completed, resulting in a temporary red color
     // being rendered. So, for now, ignore AnimatedProps that use a vectorized animation.
     if (
-      Platform.OS === 'ios' &&
+      (Platform.OS === 'ios' || Platform.OS === 'visionos') &&
       (node instanceof AnimatedValueXY || node instanceof AnimatedColor)
     ) {
       return result;

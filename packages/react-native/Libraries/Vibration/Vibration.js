@@ -102,7 +102,7 @@ const Vibration = {
    * See https://reactnative.dev/docs/vibration#cancel
    */
   cancel: function () {
-    if (Platform.OS === 'ios') {
+    if (Platform.OS === 'ios' || Platform.OS === 'visionos') {
       _vibrating = false;
     } else {
       NativeVibration.cancel();

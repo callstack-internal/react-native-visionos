@@ -175,7 +175,7 @@ class KeyboardAvoidingView extends React.Component<Props, State> {
   }
 
   componentDidMount(): void {
-    if (Platform.OS === 'ios') {
+    if (Platform.OS === 'ios' || Platform.OS === 'visionos') {
       this._subscriptions = [
         Keyboard.addListener('keyboardWillChangeFrame', this._onKeyboardChange),
       ];

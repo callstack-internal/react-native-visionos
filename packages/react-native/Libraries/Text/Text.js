@@ -110,7 +110,7 @@ const Text: React.AbstractComponent<
               // the isHighlighted prop to false on all platforms except iOS.
               setHighlighted(
                 (suppressHighlighting == null || !suppressHighlighting) &&
-                  Platform.OS === 'ios',
+                  (Platform.OS === 'ios' || Platform.OS === 'visionos'),
               );
               onPressIn?.(event);
             },

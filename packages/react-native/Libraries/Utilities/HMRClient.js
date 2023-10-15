@@ -181,7 +181,7 @@ const HMRClient: HMRClientNativeInterface = {
 Try the following to fix the issue:
 - Ensure that Metro is running and available on the same network`;
 
-      if (Platform.OS === 'ios') {
+      if (Platform.OS === 'ios' || Platform.OS === 'visionos') {
         error += `
 - Ensure that the Metro URL is correctly set in AppDelegate`;
       } else {
@@ -323,7 +323,7 @@ function flushEarlyLogs(client: MetroHMRClient) {
 
 function dismissRedbox() {
   if (
-    Platform.OS === 'ios' &&
+    (Platform.OS === 'ios' || Platform.OS === 'visionos') &&
     NativeRedBox != null &&
     NativeRedBox.dismiss != null
   ) {

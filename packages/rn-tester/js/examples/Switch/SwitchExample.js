@@ -322,7 +322,7 @@ exports.examples = [
   },
 ];
 
-if (Platform.OS === 'ios') {
+if (Platform.OS === 'ios' || Platform.OS === 'visionos') {
   exports.examples.push({
     title: '[iOS Only] Custom background colors can be set',
     render(): React.Element<any> {

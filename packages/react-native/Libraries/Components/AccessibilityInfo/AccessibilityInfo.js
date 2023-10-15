@@ -351,7 +351,10 @@ const AccessibilityInfo = {
     eventType: AccessibilityEventTypes,
   ) {
     // iOS only supports 'focus' event types
-    if (Platform.OS === 'ios' && eventType === 'click') {
+    if (
+      (Platform.OS === 'ios' || Platform.OS === 'visionos') &&
+      eventType === 'click'
+    ) {
       return;
     }
     // route through React renderer to distinguish between Fabric and non-Fabric handles

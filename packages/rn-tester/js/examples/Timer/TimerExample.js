@@ -236,7 +236,7 @@ class TimerTester extends React.Component<TimerTesterProps> {
         e / this._ii +
         ' ms / iter';
       console.log(msg);
-      if (Platform.OS === 'ios') {
+      if (Platform.OS === 'ios' || Platform.OS === 'visionos') {
         Alert.alert(msg);
       } else if (Platform.OS === 'android') {
         ToastAndroid.show(msg, ToastAndroid.SHORT);

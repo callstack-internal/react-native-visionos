@@ -17,7 +17,7 @@ import NativePlatformConstantsIOS from './NativePlatformConstantsIOS';
 
 const Platform: PlatformType = {
   __constants: null,
-  OS: 'ios',
+  OS: 'visionos',
   // $FlowFixMe[unsafe-getters-setters]
   get Version(): string {
     // $FlowFixMe[object-this-reference]

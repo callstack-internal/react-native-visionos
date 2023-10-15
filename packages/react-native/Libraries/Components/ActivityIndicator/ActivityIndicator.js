@@ -64,7 +64,7 @@ type Props = $ReadOnly<{|
 const ActivityIndicator = (
   {
     animating = true,
-    color = Platform.OS === 'ios' ? GRAY : null,
+    color = Platform.OS === 'ios' || Platform.OS === 'visionos' ? GRAY : null,
     hidesWhenStopped = true,
     onLayout,
     size = 'small',

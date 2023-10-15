@@ -88,7 +88,10 @@ const UIManagerJS = {
     rootTag: RootTag,
     props: Object,
   ): void {
-    if (Platform.OS === 'ios' && viewManagerConfigs[viewName] === undefined) {
+    if (
+      (Platform.OS === 'ios' || Platform.OS === 'visionos') &&
+      viewManagerConfigs[viewName] === undefined
+    ) {
       // This is necessary to force the initialization of native viewManager
       // classes in iOS when using static ViewConfigs
       getViewManagerConfig(viewName);
@@ -155,7 +158,8 @@ function lazifyViewManagerConfig(viewName: string) {
  * only needed for iOS, which puts the constants in the ViewManager
  * namespace instead of UIManager, unlike Android.
  */
-if (Platform.OS === 'ios') {
+if (Platform.OS === 'ios' || Platform.OS === 'visionos') {
+  console.log(getConstants());
   Object.keys(getConstants()).forEach(viewName => {
     lazifyViewManagerConfig(viewName);
   });

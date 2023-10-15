@@ -112,7 +112,7 @@ class RNTesterExampleFilter<T> extends React.Component<Props<T>, State> {
                 styles.searchRow,
                 {
                   backgroundColor:
-                    Platform.OS === 'ios'
+                    Platform.OS === 'ios' || Platform.OS === 'visionos'
                       ? theme.SystemBackgroundColor
                       : theme.BackgroundColor,
                 },

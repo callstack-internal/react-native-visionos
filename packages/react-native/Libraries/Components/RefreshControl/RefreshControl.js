@@ -158,7 +158,7 @@ class RefreshControl extends React.Component<RefreshControlProps> {
   }
 
   render(): React.Node {
-    if (Platform.OS === 'ios') {
+    if (Platform.OS === 'ios' || Platform.OS === 'visionos') {
       const {enabled, colors, progressBackgroundColor, size, ...props} =
         this.props;
       return (
