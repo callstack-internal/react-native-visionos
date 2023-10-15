@@ -124,7 +124,7 @@ extern const UIAccessibilityTraits SwitchAccessibilityTrait;
 /**
  *  The hover style to apply to a view, including an effect and a shape to use for displaying that effect.
  */
-@property (nonatomic, copy) NSDictionary *hoverStyleProperties;
+@property (nonatomic, copy) NSString *hoverEffect;
 #endif
 
 /**
