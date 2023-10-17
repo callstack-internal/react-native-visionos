@@ -24,7 +24,7 @@ static NSString *const kRemoteNotificationRegistrationFailed = @"RemoteNotificat
 
 static NSString *const kErrorUnableToRequestPermissions = @"E_UNABLE_TO_REQUEST_PERMISSIONS";
 
-#if !TARGET_OS_UIKITFORMAC
+#if !TARGET_OS_UIKITFORMAC && !TARGET_OS_VISION
 @implementation RCTConvert (NSCalendarUnit)
 
 RCT_ENUM_CONVERTER(
@@ -81,13 +81,13 @@ RCT_ENUM_CONVERTER(
 
 @end
 #else
-@interface RCTPushNotificationManager () <NativePushNotificationManagerIOSSpec>
+@interface RCTPushNotificationManager ()
 @end
 #endif // TARGET_OS_UIKITFORMAC
 
 @implementation RCTPushNotificationManager
 
-#if !TARGET_OS_UIKITFORMAC
+#if !TARGET_OS_UIKITFORMAC && !TARGET_OS_VISION
 
 static NSDictionary *RCTFormatLocalNotification(UILocalNotification *notification)
 {
@@ -140,7 +140,7 @@ RCT_EXPORT_MODULE()
   return dispatch_get_main_queue();
 }
 
-#if !TARGET_OS_UIKITFORMAC
+#if !TARGET_OS_UIKITFORMAC && !TARGET_OS_VISION
 - (void)startObserving
 {
   [[NSNotificationCenter defaultCenter] addObserver:self

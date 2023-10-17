@@ -194,6 +194,7 @@ RCT_REMAP_VIEW_PROPERTY(onAccessibilityEscape, reactAccessibilityElement.onAcces
 RCT_REMAP_VIEW_PROPERTY(testID, reactAccessibilityElement.accessibilityIdentifier, NSString)
 
 RCT_EXPORT_VIEW_PROPERTY(backgroundColor, UIColor)
+RCT_REMAP_VISIONOS_VIEW_PROPERTY(visionos_hoverEffect, hoverEffect, NSString)
 RCT_REMAP_VIEW_PROPERTY(backfaceVisibility, layer.doubleSided, css_backface_visibility_t)
 RCT_REMAP_VIEW_PROPERTY(opacity, alpha, CGFloat)
 RCT_REMAP_VIEW_PROPERTY(shadowColor, layer.shadowColor, CGColor)
@@ -211,9 +212,13 @@ RCT_CUSTOM_VIEW_PROPERTY(overflow, YGOverflow, RCTView)
 }
 RCT_CUSTOM_VIEW_PROPERTY(shouldRasterizeIOS, BOOL, RCTView)
 {
-  view.layer.shouldRasterize = json ? [RCTConvert BOOL:json] : defaultView.layer.shouldRasterize;
-  view.layer.rasterizationScale =
-      view.layer.shouldRasterize ? [UIScreen mainScreen].scale : defaultView.layer.rasterizationScale;
+    view.layer.shouldRasterize = json ? [RCTConvert BOOL:json] : defaultView.layer.shouldRasterize;
+#if TARGET_OS_VISION
+    view.layer.rasterizationScale = defaultView.layer.rasterizationScale;
+#else
+    view.layer.rasterizationScale =
+    view.layer.shouldRasterize ? [UIScreen mainScreen].scale : defaultView.layer.rasterizationScale;
+#endif
 }
 
 RCT_REMAP_VIEW_PROPERTY(transform, reactTransform, CATransform3D)

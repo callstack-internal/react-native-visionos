@@ -252,7 +252,11 @@ using namespace facebook::react;
   // `shouldRasterize`
   if (oldViewProps.shouldRasterize != newViewProps.shouldRasterize) {
     self.layer.shouldRasterize = newViewProps.shouldRasterize;
+#if !TARGET_OS_VISION
     self.layer.rasterizationScale = newViewProps.shouldRasterize ? [UIScreen mainScreen].scale : 1.0;
+#else
+    self.layer.rasterizationScale =  1.0;
+#endif
   }
 
   // `pointerEvents`
@@ -289,6 +293,12 @@ using namespace facebook::react;
       oldViewProps.borderColors != newViewProps.borderColors) {
     needsInvalidateLayer = YES;
   }
+    
+#if TARGET_OS_VISION
+  if (oldViewProps.visionos_hoverEffect != newViewProps.visionos_hoverEffect) {
+    [self updateHoverEffect:[NSString stringWithUTF8String:newViewProps.visionos_hoverEffect.c_str()]];
+  }
+#endif
 
   // `nativeId`
   if (oldViewProps.nativeId != newViewProps.nativeId) {
@@ -508,6 +518,28 @@ using namespace facebook::react;
       return view != self ? view : nil;
   }
 }
+
+#if TARGET_OS_VISION
+- (void) updateHoverEffect:(NSString*)hoverEffect {
+    if (hoverEffect == nil || [hoverEffect isEqualToString:@""]) {
+        self.hoverStyle = nil;
+        return;
+    }
+    
+    UIShape *shape = [UIShape rectShapeWithCornerRadius:self.layer.cornerRadius];
+    id<UIHoverEffect> effect;
+    
+    if ([hoverEffect isEqualToString:@"lift"]) {
+        effect = [UIHoverLiftEffect effect];
+    } else if ([hoverEffect isEqualToString:@"highlight"]) {
+        effect = [UIHoverHighlightEffect effect];
+    }
+    
+    if (hoverEffect != nil) {
+        self.hoverStyle = [UIHoverStyle styleWithEffect:effect shape:shape];
+    }
+}
+#endif
 
 static RCTCornerRadii RCTCornerRadiiFromBorderRadii(BorderRadii borderRadii)
 {
