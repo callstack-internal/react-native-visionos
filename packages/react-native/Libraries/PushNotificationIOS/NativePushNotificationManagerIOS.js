@@ -21,7 +21,6 @@ type Permissions = {|
 type Notification = {|
   +alertTitle?: ?string,
   +alertBody?: ?string,
-  +alertAction?: ?string,
   +userInfo?: ?Object,
   /**
    * Identifier for the notification category. See the [Apple documentation](https://developer.apple.com/documentation/usernotifications/declaring_your_actionable_notification_types)
@@ -50,6 +49,11 @@ type Notification = {|
   +applicationIconBadgeNumber?: ?number,
   /** Whether to silence the notification sound. */
   +isSilent?: ?boolean,
+  /**
+   * Custom notification sound to play. Write-only: soundName will be null when
+   * accessing already created notifications using getScheduledLocalNotifications
+   * or getDeliveredNotifications.
+   */
   +soundName?: ?string,
   /** DEPRECATED. This was used for iOS's legacy UILocalNotification. */
   +alertAction?: ?string,
