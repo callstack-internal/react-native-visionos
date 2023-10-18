@@ -20,9 +20,11 @@
 - (UIWindow *)alertWindow
 {
   if (_alertWindow == nil) {
+#if TARGET_OS_VISION
+    _alertWindow = [[UIWindow alloc] initWithFrame:CGRectZero];
+#else
     _alertWindow = [self getUIWindowFromScene];
-    
-#if !TARGET_OS_VISION
+      
     if (_alertWindow == nil) {
       UIWindow *keyWindow = RCTSharedApplication().keyWindow;
       if (keyWindow) {
