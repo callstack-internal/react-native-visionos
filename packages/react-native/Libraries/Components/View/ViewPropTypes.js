@@ -455,7 +455,7 @@ type IOSViewProps = $ReadOnly<{|
   shouldRasterizeIOS?: ?boolean,
 
   /**
-   * Hover style to apply to the view. Only supported on VisionOS.
+   * Hover style to apply to the view. Only supported on visionOS.
    */
   visionos_hoverEffect?: ?HoverEffect,
 |}>;

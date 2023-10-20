@@ -125,7 +125,7 @@ export interface ViewPropsIOS extends TVViewPropsIOS {
    */
   shouldRasterizeIOS?: boolean | undefined;
   /**
-   * Hover style to apply to the view. Only supported on VisionOS.
+   * Hover style to apply to the view. Only supported on visionOS.
    */
   visionos_hoverEffect?: HoverEffect | undefined;
 }
