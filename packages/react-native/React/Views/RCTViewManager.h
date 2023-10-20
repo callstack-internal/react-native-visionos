@@ -81,7 +81,7 @@ typedef void (^RCTViewManagerUIBlock)(RCTUIManager *uiManager, NSDictionary<NSNu
 
 #if TARGET_OS_VISION
 /**
- * These macros allow properties to only be mapped in VisionOS.
+ * These macros allow properties to only be mapped in visionOS.
  */
 #define RCT_EXPORT_NOT_VISIONOS_VIEW_PROPERTY(name, type)
 #define RCT_EXPORT_VISIONOS_VIEW_PROPERTY(name, type) \
