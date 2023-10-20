@@ -201,7 +201,7 @@ type Props = $ReadOnly<{|
    */
   'aria-label'?: ?string,
   /**
-   * Props needed for VisionOS.
+   * Props needed for visionOS.
    */
   ...VisionOSProps,
 |}>;
