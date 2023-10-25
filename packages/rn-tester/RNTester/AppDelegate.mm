@@ -12,7 +12,7 @@
 #import <ReactCommon/RCTSampleTurboModule.h>
 #import <ReactCommon/SampleTurboCxxModule.h>
 
-#if !TARGET_OS_TV && !TARGET_OS_UIKITFORMAC && !TARGET_OS_VISION
+#if !TARGET_OS_TV && !TARGET_OS_UIKITFORMAC
 #import <React/RCTPushNotificationManager.h>
 #endif
 
@@ -86,7 +86,7 @@ NSString *kBundlePath = @"js/RNTesterApp.ios";
   return nullptr;
 }
 
-#if !TARGET_OS_TV && !TARGET_OS_UIKITFORMAC && !TARGET_OS_VISION
+#if !TARGET_OS_TV && !TARGET_OS_UIKITFORMAC
 
 // Required for the remoteNotificationsRegistered event.
 - (void)application:(__unused UIApplication *)application
@@ -102,6 +102,7 @@ NSString *kBundlePath = @"js/RNTesterApp.ios";
   [RCTPushNotificationManager didFailToRegisterForRemoteNotificationsWithError:error];
 }
 
+#if !TARGET_OS_VISION
 // Required for the remoteNotificationReceived event.
 - (void)application:(__unused UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)notification
 {
@@ -114,6 +115,7 @@ NSString *kBundlePath = @"js/RNTesterApp.ios";
 {
   [RCTPushNotificationManager didReceiveLocalNotification:notification];
 }
+#endif
 
 #endif
 
