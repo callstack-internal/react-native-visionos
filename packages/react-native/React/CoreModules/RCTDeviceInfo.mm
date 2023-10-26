@@ -89,14 +89,14 @@ static BOOL RCTIsIPhoneNotched()
 {
   static BOOL isIPhoneNotched = NO;
 #if !TARGET_OS_VISION
-    static dispatch_once_t onceToken;
+  static dispatch_once_t onceToken;
 
-    dispatch_once(&onceToken, ^{
-      RCTAssertMainQueue();
+  dispatch_once(&onceToken, ^{
+    RCTAssertMainQueue();
 
-      // 20pt is the top safeArea value in non-notched devices
-      isIPhoneNotched = RCTSharedApplication().keyWindow.safeAreaInsets.top > 20;
-    });
+  // 20pt is the top safeArea value in non-notched devices
+  isIPhoneNotched = RCTSharedApplication().keyWindow.safeAreaInsets.top > 20;
+});
 #endif
   return isIPhoneNotched;
 }
