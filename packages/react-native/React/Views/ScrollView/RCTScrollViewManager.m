@@ -12,8 +12,6 @@
 #import "RCTShadowView.h"
 #import "RCTUIManager.h"
 
-
-
 @implementation RCTConvert (UIScrollView)
 
 #if !TARGET_OS_VISION
