@@ -162,7 +162,7 @@ RCT_EXPORT_METHOD(setHidden : (BOOL)hidden withAnimation : (NSString *)withAnima
     } else {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-    [RCTSharedApplication() setStatusBarHidden:hidden withAnimation:animation];
+  [RCTSharedApplication() setStatusBarHidden:hidden withAnimation:animation];
 #pragma clang diagnostic pop
     }
   });
@@ -172,7 +172,9 @@ RCT_EXPORT_METHOD(setHidden : (BOOL)hidden withAnimation : (NSString *)withAnima
 RCT_EXPORT_METHOD(setNetworkActivityIndicatorVisible : (BOOL)visible)
 {
 #if !TARGET_OS_VISION
-    RCTSharedApplication().networkActivityIndicatorVisible = visible;
+    dispatch_async(dispatch_get_main_queue(), ^{
+      RCTSharedApplication().networkActivityIndicatorVisible = visible;
+    });
 #endif
 }
 
