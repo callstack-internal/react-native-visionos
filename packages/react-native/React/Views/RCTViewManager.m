@@ -214,7 +214,8 @@ RCT_CUSTOM_VIEW_PROPERTY(shouldRasterizeIOS, BOOL, RCTView)
 {
     view.layer.shouldRasterize = json ? [RCTConvert BOOL:json] : defaultView.layer.shouldRasterize;
 #if TARGET_OS_VISION
-    view.layer.rasterizationScale = defaultView.layer.rasterizationScale;
+    view.layer.rasterizationScale =
+    view.layer.shouldRasterize ? [UITraitCollection currentTraitCollection].displayScale : defaultView.layer.rasterizationScale;
 #else
     view.layer.rasterizationScale =
     view.layer.shouldRasterize ? [UIScreen mainScreen].scale : defaultView.layer.rasterizationScale;

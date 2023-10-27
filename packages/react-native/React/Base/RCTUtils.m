@@ -301,23 +301,25 @@ static CGFloat screenScale;
 
 void RCTComputeScreenScale(void)
 {
-#if !TARGET_OS_VISION
   dispatch_once(&onceTokenScreenScale, ^{
+#if TARGET_OS_VISION
+    screenScale = [UITraitCollection currentTraitCollection].displayScale;
+#else
     screenScale = [UIScreen mainScreen].scale;
-  });
 #endif
+  });
 }
 
 CGFloat RCTScreenScale(void)
 {
-#if !TARGET_OS_VISION
   RCTUnsafeExecuteOnMainQueueOnceSync(&onceTokenScreenScale, ^{
+#if TARGET_OS_VISION
+    screenScale = [UITraitCollection currentTraitCollection].displayScale;
+#else
     screenScale = [UIScreen mainScreen].scale;
+#endif
   });
   return screenScale;
-#endif
-
-  return 2;
 }
 
 CGFloat RCTFontSizeMultiplier(void)

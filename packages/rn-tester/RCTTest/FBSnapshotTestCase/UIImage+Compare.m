@@ -42,7 +42,11 @@
       CGImageGetColorSpace(image.CGImage),
       (CGBitmapInfo)kCGImageAlphaPremultipliedLast);
 
+#if TARGET_OS_VISION
+  CGFloat scaleFactor = [UITraitCollection currentTraitCollection].displayScale;
+#else
   CGFloat scaleFactor = [UIScreen mainScreen].scale;
+#endif
   CGContextScaleCTM(referenceImageContext, scaleFactor, scaleFactor);
   CGContextScaleCTM(imageContext, scaleFactor, scaleFactor);
 

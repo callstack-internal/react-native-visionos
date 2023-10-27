@@ -255,7 +255,7 @@ using namespace facebook::react;
 #if !TARGET_OS_VISION
     self.layer.rasterizationScale = newViewProps.shouldRasterize ? [UIScreen mainScreen].scale : 1.0;
 #else
-    self.layer.rasterizationScale =  1.0;
+      self.layer.rasterizationScale = newViewProps.shouldRasterize ? [UITraitCollection currentTraitCollection].displayScale : 1.0;
 #endif
   }
 
