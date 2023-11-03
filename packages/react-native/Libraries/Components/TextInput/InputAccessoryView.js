@@ -86,6 +86,12 @@ type Props = $ReadOnly<{|
 |}>;
 
 class InputAccessoryView extends React.Component<Props> {
+  componentDidMount() {
+    if (Platform.isVisionOS) {
+      console.warn('InputAccessoryView is not available on VisionOS platform.');
+    }
+  }
+
   render(): React.Node {
     if (Platform.OS === 'ios') {
       if (React.Children.count(this.props.children) === 0) {
