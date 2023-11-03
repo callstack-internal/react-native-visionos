@@ -96,7 +96,7 @@ RCT_ENUM_CONVERTER(
 
 @end
 #else
-@interface RCTPushNotificationManager () <NativePushNotificationManagerIOSSpec>
+@interface RCTPushNotificationManager ()
 @end
 #endif // TARGET_OS_UIKITFORMAC
 
