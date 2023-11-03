@@ -13,6 +13,7 @@ import StyleSheet, {
   type ViewStyleProp,
 } from '../../StyleSheet/StyleSheet';
 import Platform from '../../Utilities/Platform';
+import warnOnce from '../../Utilities/warnOnce';
 import RCTInputAccessoryViewNativeComponent from './RCTInputAccessoryViewNativeComponent';
 import * as React from 'react';
 
@@ -86,15 +87,18 @@ type Props = $ReadOnly<{|
 |}>;
 
 class InputAccessoryView extends React.Component<Props> {
-  // once the 'visionos' is implemented as a platform, we can remove this
+  // TODO: once the 'visionos' is implemented as a platform, we can remove this
   componentDidMount() {
     if (Platform.isVisionOS) {
-      console.warn('InputAccessoryView is not available on visionOS platform.');
+      warnOnce(
+        'component-unavailable',
+        'InputAccessoryView is not available on visionOS platform.',
+      );
     }
   }
 
   render(): React.Node {
-    // once the 'visionos' is implemented as a platform, we can remove this
+    // TODO: once the 'visionos' is implemented as a platform, we can remove this
     if (Platform.isVisionOS) {
       return null;
     }
