@@ -89,7 +89,7 @@ class InputAccessoryView extends React.Component<Props> {
   // once the 'visionos' is implemented as a platform, we can remove this
   componentDidMount() {
     if (Platform.isVisionOS) {
-      console.warn('InputAccessoryView is not available on VisionOS platform.');
+      console.warn('InputAccessoryView is not available on visionOS platform.');
     }
   }
 
