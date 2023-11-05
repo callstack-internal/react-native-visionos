@@ -176,6 +176,12 @@ class KeyboardAvoidingView extends React.Component<Props, State> {
 
   componentDidMount(): void {
     if (Platform.OS === 'ios') {
+      if (Platform.isVisionOS) {
+        console.warn(
+          'KeyboardAvoidingView is not supported on VisionOS. The system displays the keyboard in a separate window, leaving the app’s window unaffected by the keyboard’s appearance and disappearance',
+        );
+        return;
+      }
       this._subscriptions = [
         Keyboard.addListener('keyboardWillChangeFrame', this._onKeyboardChange),
       ];
@@ -205,6 +211,16 @@ class KeyboardAvoidingView extends React.Component<Props, State> {
       onLayout,
       ...props
     } = this.props;
+
+    if (Platform.isVisionOS) {
+      // KeyboardAvoidingView is not supported on VisionOS, so we return a simple View without the onLayout handler
+      return (
+        <View ref={this.viewRef} style={style} {...props}>
+          {children}
+        </View>
+      );
+    }
+
     const bottomHeight = enabled === true ? this.state.bottom : 0;
     switch (behavior) {
       case 'height':
