@@ -24,6 +24,7 @@ import AccessibilityInfo from '../AccessibilityInfo/AccessibilityInfo';
 import View from '../View/View';
 import Keyboard from './Keyboard';
 import * as React from 'react';
+import warnOnce from '../../Utilities/warnOnce';
 
 type Props = $ReadOnly<{|
   ...ViewProps,
@@ -177,8 +178,9 @@ class KeyboardAvoidingView extends React.Component<Props, State> {
   componentDidMount(): void {
     if (Platform.OS === 'ios') {
       if (Platform.isVisionOS) {
-        console.warn(
-          'KeyboardAvoidingView is not supported on VisionOS. The system displays the keyboard in a separate window, leaving the app’s window unaffected by the keyboard’s appearance and disappearance',
+        warnOnce(
+          'KeyboardAvoidingView-unavailable',
+          'KeyboardAvoidingView is not available on visionOS platform. The system displays the keyboard in a separate window, leaving the app’s window unaffected by the keyboard’s appearance and disappearance',
         );
         return;
       }
