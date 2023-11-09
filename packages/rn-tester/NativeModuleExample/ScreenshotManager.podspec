@@ -24,6 +24,7 @@ Pod::Spec.new do |s|
 
   install_modules_dependencies(s)
 
+  s.framework = ["UIKit", "CoreGraphics"]
   # s.dependency "..."
 
   # Enable codegen for this library
