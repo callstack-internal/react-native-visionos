@@ -960,7 +960,6 @@
 				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../react-native";
 				SDKROOT = xros;
-				USE_HERMES = true;
 				WARNING_CFLAGS = (
 					"-Wextra",
 					"-Wall",
@@ -1057,7 +1056,6 @@
 				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../react-native";
 				SDKROOT = xros;
-				USE_HERMES = true;
 				VALIDATE_PRODUCT = YES;
 				WARNING_CFLAGS = (
 					"-Wextra",
