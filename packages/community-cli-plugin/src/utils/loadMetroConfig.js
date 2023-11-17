@@ -51,6 +51,12 @@ function getOverrideConfig(
       ),
       config.resolver?.resolveRequest,
     );
+
+    outOfTreePlatforms.forEach(platform => {
+      resolver.sourceExts = projectConfig.config.resolver?.sourceExts?.flatMap(
+        ext => [`${platform}.${ext}`, ext],
+      );
+    });
   }
 
   return {
@@ -85,6 +91,7 @@ export default async function loadMetroConfig(
 ): Promise<ConfigT> {
   const cwd = ctx.root;
   const projectConfig = await resolveConfig(options.config, cwd);
+  const overrideConfig = getOverrideConfig(ctx, projectConfig);
 
   if (projectConfig.isEmpty) {
     throw new CLIError(`No Metro config found in ${cwd}`);

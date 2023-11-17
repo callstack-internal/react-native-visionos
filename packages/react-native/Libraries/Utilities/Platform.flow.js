@@ -13,6 +13,7 @@ export type PlatformSelectSpec<T> = {
   native?: T,
   ios?: T,
   android?: T,
+  visionos?: T,
   ...
 };
 
