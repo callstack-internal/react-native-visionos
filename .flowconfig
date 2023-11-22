@@ -46,6 +46,7 @@ module.file_ext=.json
 
 experimental.multi_platform=true
 experimental.multi_platform.extensions=.ios
+experimental.multi_platform.extensions=.ios.visionos
 experimental.multi_platform.extensions=.android
 
 munge_underscores=true
