@@ -42,11 +42,12 @@ exact_by_default=true
 format.bracket_spacing=false
 
 module.file_ext=.js
+module.file_ext=.visionos.js
 module.file_ext=.json
+module.file_ext=.visionos.json
 
 experimental.multi_platform=true
 experimental.multi_platform.extensions=.ios
-experimental.multi_platform.extensions=.ios.visionos
 experimental.multi_platform.extensions=.android
 
 munge_underscores=true

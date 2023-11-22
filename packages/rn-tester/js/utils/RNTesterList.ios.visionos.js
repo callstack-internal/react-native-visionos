@@ -101,7 +101,7 @@ const Components: Array<RNTesterModuleInfo> = [
   },
   {
     key: 'TextExample',
-    module: require('../examples/Text/TextExample.ios'),
+    module: require('../examples/Text/TextExample'),
     category: 'Basic',
   },
   {
