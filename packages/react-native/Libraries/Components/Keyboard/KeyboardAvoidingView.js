@@ -19,12 +19,12 @@ import type {KeyboardEvent, KeyboardMetrics} from './Keyboard';
 import LayoutAnimation from '../../LayoutAnimation/LayoutAnimation';
 import StyleSheet from '../../StyleSheet/StyleSheet';
 import Platform from '../../Utilities/Platform';
-import warnOnce from '../../Utilities/warnOnce';
 import {type EventSubscription} from '../../vendor/emitter/EventEmitter';
 import AccessibilityInfo from '../AccessibilityInfo/AccessibilityInfo';
 import View from '../View/View';
 import Keyboard from './Keyboard';
 import * as React from 'react';
+import warnOnce from '../../Utilities/warnOnce';
 
 type Props = $ReadOnly<{|
   ...ViewProps,
