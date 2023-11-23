@@ -49,8 +49,6 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 }
 @end
 
-#endif
-
 #if TARGET_OS_VISION
 @interface GlassViewController : UIViewController
 
