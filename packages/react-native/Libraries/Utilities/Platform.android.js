@@ -74,6 +74,10 @@ const Platform: PlatformType = {
     // $FlowFixMe[object-this-reference]
     return this.constants.uiMode === 'tv';
   },
+  // $FlowFixMe[unsafe-getters-setters] - please Flow for now, TODO fix later
+  get isVisionOS(): boolean {
+    return false;
+  },
   select: <T>(spec: PlatformSelectSpec<T>): T =>
     'android' in spec
       ? // $FlowFixMe[incompatible-return]

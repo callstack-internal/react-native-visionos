@@ -83,12 +83,16 @@ const Platform: PlatformType = {
   select: <T>(spec: PlatformSelectSpec<T>): T =>
     // $FlowFixMe[incompatible-return]
     'visionos' in spec
-      ? spec.visionos
+      ? // $FlowFixMe[incompatible-return]
+        spec.visionos
       : 'ios' in spec
-      ? spec.ios
+      ? // $FlowFixMe[incompatible-return]
+        spec.ios
       : 'native' in spec
-      ? spec.native
-      : spec.default,
+      ? // $FlowFixMe[incompatible-return]
+        spec.native
+      : // $FlowFixMe[incompatible-return]
+        spec.default,
 };
 
 module.exports = Platform;
