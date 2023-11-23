@@ -53,9 +53,13 @@ function getOverrideConfig(
     );
 
     outOfTreePlatforms.forEach(platform => {
-      resolver.sourceExts = projectConfig.config.resolver?.sourceExts?.flatMap(
-        ext => [`${platform}.${ext}`, ext],
-      );
+      if (typeof projectConfig.config !== 'function') {
+        resolver.sourceExts =
+          projectConfig.config.resolver?.sourceExts?.flatMap(ext => [
+            `${platform}.${ext}`,
+            ext,
+          ]);
+      }
     });
   }
 
