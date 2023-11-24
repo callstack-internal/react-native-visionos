@@ -81,8 +81,6 @@ type AndroidPlatform = {
   get isVisionOS(): boolean,
   // $FlowFixMe[unsafe-getters-setters]
   get isTV(): boolean,
-  // $FlowFixMe[unsafe-getters-setters] - please Flow for now, TODO fix later
-  get isVisionOS(): boolean,
   // $FlowFixMe[unsafe-getters-setters]
   get isTesting(): boolean,
   // $FlowFixMe[unsafe-getters-setters]
