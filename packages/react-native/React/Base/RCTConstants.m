@@ -10,8 +10,6 @@
 NSString *const RCTPlatformName = @"ios";
 #if TARGET_OS_VISION
 NSString *const RCTPlatformVariant = @"visionos";
-#else 
-NSString *const RCTPlatformVariant = @"";
 #endif
 
 NSString *const RCTUserInterfaceStyleDidChangeNotification = @"RCTUserInterfaceStyleDidChangeNotification";
