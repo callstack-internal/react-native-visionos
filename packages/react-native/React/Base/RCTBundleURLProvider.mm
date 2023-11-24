@@ -308,6 +308,7 @@ static NSURL *serverRootWithHostPort(NSString *hostPort, NSString *scheme)
   BOOL lazy = enableDev;
   NSArray<NSURLQueryItem *> *queryItems = @[
     [[NSURLQueryItem alloc] initWithName:@"platform" value:RCTPlatformName],
+    [[NSURLQueryItem alloc] initWithName:@"resolver.variant" value:RCTPlatformVariant],
     [[NSURLQueryItem alloc] initWithName:@"dev" value:enableDev ? @"true" : @"false"],
     [[NSURLQueryItem alloc] initWithName:@"lazy" value:lazy ? @"true" : @"false"],
     [[NSURLQueryItem alloc] initWithName:@"minify" value:enableMinification ? @"true" : @"false"],

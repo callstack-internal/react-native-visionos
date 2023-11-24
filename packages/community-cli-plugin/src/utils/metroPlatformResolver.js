@@ -32,13 +32,14 @@ export function reactNativePlatformResolver(
   customResolver: ?CustomResolver,
 ): CustomResolver {
   return (context, moduleName, platform) => {
+    let platformOrVariant = context.customResolverOptions.variant || platform;
     let modifiedModuleName = moduleName;
-    if (platform != null && platformImplementations[platform]) {
+    if (platform != null && platformImplementations[platformOrVariant]) {
       if (moduleName === 'react-native') {
-        modifiedModuleName = platformImplementations[platform];
+        modifiedModuleName = platformImplementations[platformOrVariant];
       } else if (moduleName.startsWith('react-native/')) {
         modifiedModuleName = `${
-          platformImplementations[platform]
+          platformImplementations[platformOrVariant]
         }/${modifiedModuleName.slice('react-native/'.length)}`;
       }
     }
