@@ -13,8 +13,15 @@ import type {CustomResolver} from 'metro-resolver';
 
 /**
  * This is an implementation of a metro resolveRequest option which will remap react-native imports
- * to different npm packages based on the platform requested.  This allows a single metro instance/config
+ * to different npm packages based on the platform requested. This allows a single metro instance/config
  * to produce bundles for multiple out of tree platforms at a time.
+ *
+ * This resolver also supports custom `variant` option, which is intended to be used for resolving
+ * different variants of the same platform, like visionOS or tvOS based on iOS.
+ *
+ * Ex:
+ * - `?resolve.variant=visionos`
+ * - `?resolve.variant=tvos`
  *
  * @param platformImplementations
  * A map of platform to npm package that implements that platform
