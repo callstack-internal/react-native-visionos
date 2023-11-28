@@ -8,9 +8,6 @@
 #import "RCTConstants.h"
 
 NSString *const RCTPlatformName = @"ios";
-#if TARGET_OS_VISION
-NSString *const RCTPlatformVariant = @"visionos";
-#endif
 
 NSString *const RCTUserInterfaceStyleDidChangeNotification = @"RCTUserInterfaceStyleDidChangeNotification";
 NSString *const RCTUserInterfaceStyleDidChangeNotificationTraitCollectionKey = @"traitCollection";

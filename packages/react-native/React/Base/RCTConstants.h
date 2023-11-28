@@ -8,9 +8,6 @@
 #import <React/RCTDefines.h>
 
 RCT_EXTERN NSString *const RCTPlatformName;
-#if TARGET_OS_VISION
-RCT_EXTERN NSString *const RCTPlatformVariant;
-#endif
 
 RCT_EXTERN NSString *const RCTUserInterfaceStyleDidChangeNotification;
 RCT_EXTERN NSString *const RCTUserInterfaceStyleDidChangeNotificationTraitCollectionKey;
