@@ -32,8 +32,16 @@ bundle install
 bundle exec pod install
 ```
 
-6. Open `YourApp/visionos/YourApp.xcworkspace` using Xcode 15 Beta.
-7. Build the app by clicking the "Run" button in Xcode.
+6. If you want to use Hermes, you need to install CMake from source (v3.28.0)
+
+```sh
+brew install cmake --HEAD
+```
+
+If not, remember to disable it in `Podfile`.
+
+8. Open `YourApp/visionos/YourApp.xcworkspace` using Xcode 15 Beta.
+9. Build the app by clicking the "Run" button in Xcode.
 
 ## Contributing
 
