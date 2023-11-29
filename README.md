@@ -11,7 +11,8 @@
 
 React Native Vision OS allows you to write visionOS with full support for platform SDK. This is a full fork of the main repository with changes needed to support visionOS.
 
-This project is still at an early stage of development and is not ready for production use.
+> [!CAUTION]
+> This project is still at an early stage of development and is not ready for production use.
 
 ## New project creation
 
