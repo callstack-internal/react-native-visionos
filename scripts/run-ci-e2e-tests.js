@@ -133,7 +133,7 @@ try {
     exitCode = 1;
     throw Error(exitCode);
   }
-  exec('rm -rf ./node_modules/react-native/template');
+  exec('rm -rf ./node_modules/@callstack/react-native-visionos/template');
 
   if (argv.android) {
     describe('Install end-to-end framework');
