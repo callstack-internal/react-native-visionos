@@ -40,9 +40,6 @@ const config = {
     resolveRequest: getPlatformResolver({
       platformNameMap: [{visionos: '@callstack/react-native-vision'}],
     }),
-    sourceExts: getDefaultConfig(__dirname).resolver.sourceExts?.flatMap(
-      ext => [`visionos.${ext}`, ext],
-    ),
   },
 };
 
