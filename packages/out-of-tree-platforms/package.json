@@ -5,10 +5,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/facebook/react-native.git",
+    "url": "https://github.com/callstack/react-native-visionos.git",
     "directory": "packages/out-of-tree-platforms"
   },
-  "homepage": "https://github.com/facebook/react-native/tree/HEAD/packages/out-of-tree-platforms#readme",
+  "homepage": "https://github.com/callstack/react-native-visionos/tree/HEAD/packages/out-of-tree-platforms#readme",
   "keywords": [
     "out-of-tree",
     "react-native"
