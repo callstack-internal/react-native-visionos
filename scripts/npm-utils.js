@@ -19,10 +19,7 @@ const {exec} = require('shelljs');
 
 // Get `next` version from npm and +1 on the minor for `main` version
 function getMainVersion() {
-  const versionStr = getPackageVersionStrByTag(
-    '@callstack/react-native-visionos',
-    'next',
-  );
+  const versionStr = getPackageVersionStrByTag('react-native', 'next');
   const {major, minor} = parseVersion(versionStr, 'release');
   return `${major}.${parseInt(minor, 10) + 1}.0`;
 }

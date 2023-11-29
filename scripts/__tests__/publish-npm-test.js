@@ -105,7 +105,7 @@ describe('publish-npm', () => {
         'nightly',
       );
       expect(execMock.mock.calls[0][0]).toBe(
-        `npm view @callstack/react-native-visionos@next version`,
+        `npm view react-native@next version`,
       );
       expect(execMock.mock.calls[1][0]).toBe('npm publish --tag nightly');
       expect(echoMock).toHaveBeenCalledWith(
@@ -126,7 +126,7 @@ describe('publish-npm', () => {
       expect(removeNewArchFlags).not.toHaveBeenCalled();
       expect(publishAndroidArtifactsToMavenMock).not.toBeCalled();
       expect(execMock.mock.calls[0][0]).toBe(
-        `npm view @callstack/react-native-visionos@next version`,
+        `npm view react-native@next version`,
       );
       expect(consoleErrorMock).toHaveBeenCalledWith(
         `Failed to set version number to ${expectedVersion}`,

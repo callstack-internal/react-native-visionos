@@ -81,7 +81,7 @@ try {
 
   const REACT_NATIVE_PACKAGE = path.join(
     REACT_NATIVE_PACKAGE_DIR,
-    'callstack-react-native-visionos-*.tgz',
+    'react-native-*.tgz',
   );
 
   describe('Set up Verdaccio');
@@ -133,7 +133,7 @@ try {
     exitCode = 1;
     throw Error(exitCode);
   }
-  exec('rm -rf ./node_modules/@callstack/react-native-visionos/template');
+  exec('rm -rf ./node_modules/react-native/template');
 
   if (argv.android) {
     describe('Install end-to-end framework');
