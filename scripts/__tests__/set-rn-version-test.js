@@ -93,7 +93,7 @@ describe('set-rn-version', () => {
 
     expect(updateTemplatePackageMock).toHaveBeenCalledWith({
       '@react-native/package-a': '0.81.0-nightly-29282302-abcd1234',
-      'react-native': version,
+      '@callstack/react-native-visionos': version,
     });
   });
 
@@ -131,7 +131,7 @@ describe('set-rn-version', () => {
     );
 
     expect(updateTemplatePackageMock).toHaveBeenCalledWith({
-      'react-native': version,
+      '@callstack/react-native-visionos': version,
     });
   });
 
@@ -195,7 +195,7 @@ describe('set-rn-version', () => {
 
     expect(updateTemplatePackageMock).toHaveBeenCalledWith({
       '@react-native/package-a': '0.0.0-prealpha-2023100415',
-      'react-native': version,
+      '@callstack/react-native-visionos': version,
     });
   });
 });

@@ -81,7 +81,7 @@ try {
 
   const REACT_NATIVE_PACKAGE = path.join(
     REACT_NATIVE_PACKAGE_DIR,
-    'react-native-*.tgz',
+    'callstack-react-native-visionos-*.tgz',
   );
 
   describe('Set up Verdaccio');
