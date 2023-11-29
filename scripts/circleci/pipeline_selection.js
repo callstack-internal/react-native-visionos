@@ -161,7 +161,7 @@ function _computeAndSavePipelineParameters(
       run_all: false,
       run_ios: false,
       run_android: false,
-      run_js: false,
+      run_js: true,
       run_e2e: false,
     };
 
