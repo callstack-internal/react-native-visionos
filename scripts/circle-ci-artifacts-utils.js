@@ -165,7 +165,7 @@ async function artifactURLForReactNative() {
     .slice(0, 9);
   return _findUrlForJob(
     'build_npm_package',
-    `react-native-1000.0.0-${shortCommit}.tgz`,
+    `callstack-react-native-visionos-1000.0.0-${shortCommit}.tgz`,
   );
 }
 
