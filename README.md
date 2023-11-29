@@ -37,4 +37,4 @@ bundle exec pod install
 ## Contributing
 
 1. Follow the same steps as in the `New project creation` section.
-2. Checkout `rn-tester` [packages/rn-tester/README.md](./packages/rn-tester/README.md) to build React Native from source.
+2. Checkout `rn-tester` [README.md](./packages/rn-tester/README.md) to build React Native from source.
