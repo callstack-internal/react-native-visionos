@@ -83,8 +83,6 @@ export default async function loadMetroConfig(
   ctx: ConfigLoadingContext,
   options: YargArguments = {},
 ): Promise<ConfigT> {
-  const overrideConfig = getOverrideConfig(ctx);
-
   const cwd = ctx.root;
   const projectConfig = await resolveConfig(options.config, cwd);
 
