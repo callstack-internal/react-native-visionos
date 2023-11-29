@@ -9,28 +9,10 @@
 
 'use strict';
 
+const {getPlatformResolver} = require('@callstack/out-of-tree-platforms');
 const {getDefaultConfig} = require('@react-native/metro-config');
 const {mergeConfig} = require('metro-config');
 const path = require('path');
-
-// todo: extract to package
-const PlatformResolver = (config = {}) => {
-  const platformName =
-    config.platformName ?? '@callstack/react-native-visionos';
-
-  return (context, moduleName, platform) => {
-    let modifiedModuleName = moduleName;
-    if (moduleName === 'react-native') {
-      modifiedModuleName = platformName;
-    } else if (moduleName.startsWith('react-native/')) {
-      modifiedModuleName = `${platformName}/${modifiedModuleName.slice(
-        'react-native/'.length,
-      )}`;
-    }
-
-    return context.resolveRequest(context, modifiedModuleName, platform);
-  };
-};
 
 /**
  * This cli config is needed for development purposes, e.g. for running
@@ -55,7 +37,9 @@ const config = {
     extraNodeModules: {
       'react-native': path.resolve(__dirname, '../react-native'),
     },
-    resolveRequest: PlatformResolver(),
+    resolveRequest: getPlatformResolver({
+      platformNameMap: [{visionos: '@callstack/react-native-vision'}],
+    }),
     sourceExts: getDefaultConfig(__dirname).resolver.sourceExts?.flatMap(
       ext => [`visionos.${ext}`, ext],
     ),
