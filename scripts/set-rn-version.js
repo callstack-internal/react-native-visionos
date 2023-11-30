@@ -157,7 +157,7 @@ function setReactNativeVersion(argVersion, dependencyVersions, buildType) {
   setPackage(version, dependencyVersions);
 
   const templateDependencyVersions = {
-    '@callstack/react-native-visionos': version.version,
+    'react-native': version.version,
     ...(dependencyVersions != null ? dependencyVersions : {}),
   };
   updateTemplatePackage(templateDependencyVersions);

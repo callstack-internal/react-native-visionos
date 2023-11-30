@@ -16,17 +16,18 @@
  * and to make it more accessible for other devs to play around with.
  */
 
+const {exec, pushd, popd, pwd, cd, sed} = require('shelljs');
+const updateTemplatePackage = require('./update-template-package');
+const yargs = require('yargs');
+const path = require('path');
+
 const {
   checkPackagerRunning,
-  launchPackagerInSeparateWindow,
   maybeLaunchAndroidEmulator,
-  prepareArtifacts,
+  launchPackagerInSeparateWindow,
   setupCircleCIArtifacts,
+  prepareArtifacts,
 } = require('./testing-utils');
-const updateTemplatePackage = require('./update-template-package');
-const path = require('path');
-const {cd, exec, popd, pushd, pwd, sed} = require('shelljs');
-const yargs = require('yargs');
 
 const argv = yargs
   .option('t', {
@@ -196,7 +197,7 @@ async function testRNTestProject(circleCIArtifacts) {
   // Prepare some variables for later use
   const repoRoot = pwd();
   const reactNativePackagePath = `${repoRoot}/packages/react-native`;
-  const localNodeTGZPath = `${reactNativePackagePath}/callstack-react-native-visionos-${releaseVersion}.tgz`;
+  const localNodeTGZPath = `${reactNativePackagePath}/react-native-${releaseVersion}.tgz`;
 
   const mavenLocalPath =
     circleCIArtifacts != null
@@ -213,7 +214,7 @@ async function testRNTestProject(circleCIArtifacts) {
   );
 
   updateTemplatePackage({
-    '@callstack/react-native-visionos': `file://${localNodeTGZPath}`,
+    'react-native': `file://${localNodeTGZPath}`,
   });
 
   pushd('/tmp/');
