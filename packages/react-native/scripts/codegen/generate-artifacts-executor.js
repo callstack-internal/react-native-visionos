@@ -37,7 +37,7 @@ const CORE_LIBRARIES_WITH_OUTPUT_FOLDER = {
   rncore: path.join(REACT_NATIVE_PACKAGE_ROOT_FOLDER, 'ReactCommon'),
   FBReactNativeSpec: null,
 };
-const REACT_NATIVE_DEPENDENCY_NAME = 'react-native';
+const REACT_NATIVE_DEPENDENCY_NAME = '@callstack/react-native-visionos';
 
 // HELPERS
 
