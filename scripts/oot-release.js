@@ -1,4 +1,5 @@
 /**
+ * Based on `scripts/trigger-react-native-release.js` and `set-rn-version.js`
  *
  * @format
  */
