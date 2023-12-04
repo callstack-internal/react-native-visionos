@@ -24,6 +24,10 @@ packages:
   '@react-native/*':
     access: $all
     publish: $all
+    proxy: npmjs
+  '@callstack/*':
+    access: $all
+    publish: $all
   '@*/*':
     access: $all
     publish: $authenticated
