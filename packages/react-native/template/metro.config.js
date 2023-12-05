@@ -10,11 +10,11 @@ const {getPlatformResolver} = require('@callstack/out-of-tree-platforms');
 
 
 const config = {
-    resolver: {
-        resolveRequest: getPlatformResolver({
-            platformNameMap: [{visionos: '@callstack/react-native-visionos'}],
-        }),
-    },
+  resolver: {
+    resolveRequest: getPlatformResolver({
+      platformNameMap: {visionos: '@callstack/react-native-visionos'},
+    }),
+  },
 };
 
 module.exports = mergeConfig(getDefaultConfig(__dirname), config);
