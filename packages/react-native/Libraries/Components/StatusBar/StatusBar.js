@@ -12,6 +12,7 @@ import type {ColorValue} from '../../StyleSheet/StyleSheet';
 
 import processColor from '../../StyleSheet/processColor';
 import Platform from '../../Utilities/Platform';
+import warnOnce from '../../Utilities/warnOnce';
 import NativeStatusBarManagerAndroid from './NativeStatusBarManagerAndroid';
 import NativeStatusBarManagerIOS from './NativeStatusBarManagerIOS';
 import invariant from 'invariant';
@@ -417,6 +418,14 @@ class StatusBar extends React.Component<Props> {
    * Updates the native status bar with the props from the stack.
    */
   static _updatePropsStack = () => {
+    if (Platform.isVisionOS) {
+      warnOnce(
+        'StatusBar-unavailable',
+        'StatusBar is not available on visionOS platform.',
+      );
+      return;
+    }
+
     // Send the update to the native module only once at the end of the frame.
     clearImmediate(StatusBar._updateImmediate);
     StatusBar._updateImmediate = setImmediate(() => {
