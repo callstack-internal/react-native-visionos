@@ -42,14 +42,12 @@
   [_touchHandler attachToView:self.view];
 }
 
+#if !TARGET_OS_VISION
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
-#if !TARGET_OS_VISION
-  return [RCTSharedApplication() statusBarStyle];
-#else
-    return UIStatusBarStyleDefault;
-#endif
+  return UIStatusBarStyleDefault;
 }
+#endif
 
 - (void)viewDidDisappear:(BOOL)animated
 {
@@ -57,14 +55,12 @@
   _lastViewBounds = CGRectZero;
 }
 
+#if !TARGET_OS_VISION
 - (BOOL)prefersStatusBarHidden
 {
-#if !TARGET_OS_VISION
   return [RCTSharedApplication() isStatusBarHidden];
-#else
-    return false;
-#endif
 }
+#endif
 
 #if RCT_DEV
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
