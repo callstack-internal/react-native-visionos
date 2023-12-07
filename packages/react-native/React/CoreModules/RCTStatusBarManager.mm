@@ -91,7 +91,9 @@ RCT_EXPORT_MODULE()
 
 - (void)stopObserving
 {
+#if !TARGET_OS_VISION
   [[NSNotificationCenter defaultCenter] removeObserver:self];
+#endif
 }
 
 - (dispatch_queue_t)methodQueue
