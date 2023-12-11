@@ -16,6 +16,7 @@ import type {
 } from '../../types/RNTesterTypes';
 import type {KeyboardType} from 'react-native/Libraries/Components/TextInput/TextInput';
 
+const {RNTesterThemeContext} = require('../../components/RNTesterTheme');
 const TextInputSharedExamples = require('./TextInputSharedExamples.js');
 const React = require('react');
 const {
@@ -648,66 +649,71 @@ const examples: Array<RNTesterModuleExample> = [
     title: 'TextInput Intrinsic Size',
     render: function (): React.Node {
       return (
-        <View>
-          <Text>Singleline TextInput</Text>
-          <View style={{height: 80}}>
-            <TextInput
-              style={{
-                position: 'absolute',
-                fontSize: 16,
-                backgroundColor: '#eeeeee',
-                borderColor: '#666666',
-                borderWidth: 5,
-                borderTopWidth: 20,
-                borderRadius: 10,
-                borderBottomRightRadius: 20,
-                padding: 10,
-                paddingTop: 20,
-              }}
-              testID="singleline_textinput"
-              placeholder="Placeholder defines intrinsic size"
-            />
-          </View>
-          <Text>Multiline TextInput</Text>
-          <View style={{height: 130}}>
-            <TextInput
-              style={{
-                position: 'absolute',
-                fontSize: 16,
-                backgroundColor: '#eeeeee',
-                borderColor: '#666666',
-                borderWidth: 5,
-                borderTopWidth: 20,
-                borderRadius: 10,
-                borderBottomRightRadius: 20,
-                padding: 10,
-                paddingTop: 20,
-                maxHeight: 100,
-              }}
-              testID="multiline_textinput"
-              multiline={true}
-              placeholder="Placeholder defines intrinsic size"
-            />
-          </View>
+        <RNTesterThemeContext.Consumer>
+        {theme => (  
           <View>
-            <TextInput
-              style={{
-                fontSize: 16,
-                backgroundColor: '#eeeeee',
-                borderColor: '#666666',
-                borderWidth: 5,
-                borderTopWidth: 20,
-                borderRadius: 10,
-                borderBottomRightRadius: 20,
-                padding: 10,
-                paddingTop: 20,
-              }}
-              testID="multiline_textinput_with_flex"
-              multiline={true}
-              placeholder="Placeholder defines intrinsic size"
-            />
+            <Text>Singleline TextInput</Text>
+            <View style={{height: 80}}>
+              <TextInput
+                style={{
+                  position: 'absolute',
+                  fontSize: 16,
+                  backgroundColor: theme.BackgroundColor,
+                  borderColor: theme.BorderColor,
+                  borderWidth: 5,
+                  borderTopWidth: 20,
+                  borderRadius: 10,
+                  borderBottomRightRadius: 20,
+                  padding: 10,
+                  paddingTop: 20,                  
+                }} 
+                placeholderTextColor={theme.PlaceholderTextColor}               
+                testID="singleline_textinput"
+                placeholder="Placeholder defines intrinsic size"
+              />
+            </View>
+            <Text>Multiline TextInput</Text>
+            <View style={{height: 130}}>
+              <TextInput
+                style={{
+                  position: 'absolute',
+                  fontSize: 16,
+                  backgroundColor: theme.BackgroundColor,
+                  borderColor: theme.BorderColor,
+                  borderWidth: 5,
+                  borderTopWidth: 20,
+                  borderRadius: 10,
+                  borderBottomRightRadius: 20,
+                  padding: 10,
+                  paddingTop: 20,
+                  maxHeight: 100,
+                }}
+                testID="multiline_textinput"
+                multiline={true}
+                placeholder="Placeholder defines intrinsic size"
+              />
+            </View>
+            <View>
+              <TextInput
+                style={{
+                  fontSize: 16,
+                  backgroundColor: theme.BackgroundColor,
+                  borderColor: theme.BorderColor,
+                  borderWidth: 5,
+                  borderTopWidth: 20,
+                  borderRadius: 10,
+                  borderBottomRightRadius: 20,
+                  padding: 10,
+                  paddingTop: 20,
+                }}
+                testID="multiline_textinput_with_flex"
+                multiline={true}
+                placeholder="Placeholder defines intrinsic size"
+              />
+            </View>
           </View>
-        </View>
+        )}
+      </RNTesterThemeContext.Consumer>
       );
     },
   },
