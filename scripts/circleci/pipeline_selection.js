@@ -144,6 +144,25 @@ async function _computeAndSavePipelineParameters(pipelineType, outputPath) {
     return;
   }
 
+  // Custom config for visionOS
+  if (pipelineType === 'VISION_OS') {
+    const params = {
+      run_all: false,
+      run_ios: false,
+      run_visionos: true,
+      run_android: false,
+      run_js: true,
+      run_e2e: false,
+    };
+
+    const stringifiedParams = JSON.stringify(params, null, 2);
+    fs.writeFileSync(filePath, stringifiedParams);
+    console.info(`Generated params:\n${stringifiedParams}`);
+
+    return;
+  }
+
+  console.log(`Should run e2e? ${shouldRunE2E}`);
   if (pipelineType === 'ALL') {
     fs.writeFileSync(filePath, JSON.stringify({run_all: true}, null, 2));
     return;
@@ -179,6 +198,7 @@ function createConfigs(inputPath, outputPath, configFile) {
   const baseFolder = 'test_workflows';
   const testConfigs = {
     run_ios: ['testIOS.yml'],
+    run_visionos: ['testVisionOS.yml'],
     run_android: ['testAndroid.yml'],
     run_e2e: ['testE2E.yml'],
     run_all: ['testE2E.yml', 'testJS.yml', 'testAll.yml'],
