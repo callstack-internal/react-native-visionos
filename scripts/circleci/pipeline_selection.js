@@ -155,6 +155,24 @@ function _computeAndSavePipelineParameters(
     return;
   }
 
+  // Custom config for visionOS
+  if (pipelineType === 'VISION_OS') {
+    const params = {
+      run_all: false,
+      run_ios: false,
+      run_visionos: true,
+      run_android: false,
+      run_js: true,
+      run_e2e: false,
+    };
+
+    const stringifiedParams = JSON.stringify(params, null, 2);
+    fs.writeFileSync(filePath, stringifiedParams);
+    console.info(`Generated params:\n${stringifiedParams}`);
+
+    return;
+  }
+
   console.log(`Should run e2e? ${shouldRunE2E}`);
   if (pipelineType === 'ALL') {
     fs.writeFileSync(
@@ -167,6 +185,7 @@ function _computeAndSavePipelineParameters(
   const params = {
     run_all: false,
     run_ios: pipelineType === 'RUN_IOS',
+    run_visionos: true,
     run_android: pipelineType === 'RUN_ANDROID',
     run_js: pipelineType === 'RUN_JS',
     run_e2e: shouldRunE2E,
@@ -194,6 +213,7 @@ function createConfigs(inputPath, outputPath, configFile) {
   const baseFolder = 'test_workflows';
   const testConfigs = {
     run_ios: ['testIOS.yml'],
+    run_visionos: ['testVisionOS.yml'],
     run_android: ['testAndroid.yml'],
     run_e2e: ['testE2E.yml'],
     run_all: ['testJS.yml', 'testAll.yml'],
@@ -243,5 +263,5 @@ function filterJobs(outputPath) {
       return;
     }
   }
-  _computeAndSavePipelineParameters('ALL', outputPath, shouldRunE2E);
+  _computeAndSavePipelineParameters('VISION_OS', outputPath, shouldRunE2E);
 }
