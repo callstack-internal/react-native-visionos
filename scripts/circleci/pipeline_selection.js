@@ -171,6 +171,7 @@ async function _computeAndSavePipelineParameters(pipelineType, outputPath) {
   const params = {
     run_all: false,
     run_ios: pipelineType === 'RUN_IOS',
+    run_visionos: true,
     run_android: pipelineType === 'RUN_ANDROID',
     run_js: pipelineType === 'RUN_JS',
     run_e2e: pipelineType === 'RUN_E2E' || pipelineType === 'RUN_JS',
