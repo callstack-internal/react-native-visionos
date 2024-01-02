@@ -1069,6 +1069,7 @@ PODS:
     - React-jsi
     - React-NativeModulesApple
     - ReactCommon
+  - React-RCTSwiftExtensions (1000.0.0)
   - React-RCTTest (1000.0.0):
     - RCT-Folly (= 2024.01.01.00)
     - React-Core (= 1000.0.0)
@@ -1265,6 +1266,7 @@ DEPENDENCIES:
   - React-RCTNetwork (from `../react-native/Libraries/Network`)
   - React-RCTPushNotification (from `../react-native/Libraries/PushNotificationIOS`)
   - React-RCTSettings (from `../react-native/Libraries/Settings`)
+  - React-RCTSwiftExtensions (from `../react-native/Libraries/SwiftExtensions`)
   - React-RCTTest (from `./RCTTest`)
   - React-RCTText (from `../react-native/Libraries/Text`)
   - React-RCTVibration (from `../react-native/Libraries/Vibration`)
@@ -1375,6 +1377,8 @@ EXTERNAL SOURCES:
     :path: "../react-native/Libraries/PushNotificationIOS"
   React-RCTSettings:
     :path: "../react-native/Libraries/Settings"
+  React-RCTSwiftExtensions:
+    :path: "../react-native/Libraries/SwiftExtensions"
   React-RCTTest:
     :path: "./RCTTest"
   React-RCTText:
