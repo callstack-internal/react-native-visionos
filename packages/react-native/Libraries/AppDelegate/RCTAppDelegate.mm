@@ -49,21 +49,6 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 }
 @end
 
-#if TARGET_OS_VISION
-@interface GlassViewController : UIViewController
-
-@end
-
-@implementation GlassViewController
-
-- (UIContainerBackgroundStyle)preferredContainerBackgroundStyle {
-    return UIContainerBackgroundStyleGlass;
-}
-
-@end
-#endif
-
-
 static NSDictionary *updateInitialProps(NSDictionary *initialProps, BOOL isFabricEnabled)
 {
   NSMutableDictionary *mutableProps = [initialProps mutableCopy] ?: [NSMutableDictionary new];
@@ -180,11 +165,7 @@ static NSDictionary *updateInitialProps(NSDictionary *initialProps, BOOL isFabri
 
 - (UIViewController *)createRootViewController
 {
-#if TARGET_OS_VISION
-  return [GlassViewController new];
-#else
   return [UIViewController new];
-#endif
 }
 
 - (void)setRootView:(UIView *)rootView toRootViewController:(UIViewController *)rootViewController
