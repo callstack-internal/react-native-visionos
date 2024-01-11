@@ -292,15 +292,17 @@ using namespace facebook::react;
     needsInvalidateLayer = YES;
   }
     // 'borderRadii'
-    if (oldViewProps.borderRadii != newViewProps.borderRadii) {
-        needsInvalidateLayer = YES;
-        CGFloat borderRadius = newViewProps.borderRadii.all ?newViewProps.borderRadii.all.value() : 0.0;
-        [self updateHoverEffect:[NSString stringWithUTF8String:newViewProps.visionos_hoverEffect.c_str()] withCornerRadius: borderRadius];
+  if (oldViewProps.borderRadii != newViewProps.borderRadii) {
+    needsInvalidateLayer = YES;
+#if TARGET_OS_VISION
+    CGFloat borderRadius = newViewProps.borderRadii.all ? newViewProps.borderRadii.all.value() : 0.0;
+    [self updateHoverEffect:[NSString stringWithUTF8String:newViewProps.visionos_hoverEffect.c_str()] withCornerRadius:borderRadius];
+#endif
     }
 #if TARGET_OS_VISION
   if (oldViewProps.visionos_hoverEffect != newViewProps.visionos_hoverEffect) {
     CGFloat borderRadius = newViewProps.borderRadii.all ? newViewProps.borderRadii.all.value() : 0.0;
-      [self updateHoverEffect:([NSString stringWithUTF8String:newViewProps.visionos_hoverEffect.c_str()]) withCornerRadius: borderRadius];
+    [self updateHoverEffect:[NSString stringWithUTF8String:newViewProps.visionos_hoverEffect.c_str()] withCornerRadius:borderRadius];
   }
 #endif
 
@@ -526,7 +528,7 @@ using namespace facebook::react;
         return;
     }
     
-    UIShape *shape = [UIShape rectShapeWithCornerRadius: cornerRadius];
+    UIShape *shape = [UIShape rectShapeWithCornerRadius:cornerRadius];
     id<UIHoverEffect> effect;
     
     if ([hoverEffect isEqualToString:@"lift"]) {
