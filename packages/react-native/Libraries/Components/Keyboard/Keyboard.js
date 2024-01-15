@@ -14,8 +14,8 @@ import NativeEventEmitter from '../../EventEmitter/NativeEventEmitter';
 import LayoutAnimation from '../../LayoutAnimation/LayoutAnimation';
 import dismissKeyboard from '../../Utilities/dismissKeyboard';
 import Platform from '../../Utilities/Platform';
-import NativeKeyboardObserver from './NativeKeyboardObserver';
 import warnOnce from '../../Utilities/warnOnce';
+import NativeKeyboardObserver from './NativeKeyboardObserver';
 
 export type KeyboardEventName = $Keys<KeyboardEventDefinitions>;
 
@@ -116,10 +116,6 @@ class Keyboard {
 
   constructor() {
     if (Platform.isVisionOS) {
-      warnOnce(
-        'Keyboard-unavailable',
-        'Keyboard is not available on visionOS platform. The system displays the keyboard in a separate window, leaving the app’s window unaffected by the keyboard’s appearance and disappearance',
-      );
       return;
     }
 
@@ -161,7 +157,11 @@ class Keyboard {
     context?: mixed,
   ): EventSubscription {
     if (Platform.isVisionOS) {
-      return;
+      warnOnce(
+        'Keyboard-unavailable',
+        'Keyboard API is not available on visionOS platform. The system displays the keyboard in a separate window, leaving the app’s window unaffected by the keyboard’s appearance and disappearance',
+      );
+      return {remove() {}};
     }
 
     return this._emitter.addListener(eventType, listener);
