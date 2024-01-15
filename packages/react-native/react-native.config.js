@@ -9,8 +9,13 @@
 
 'use strict';
 
-const ios = require('@react-native-community/cli-platform-ios');
+const localCommands = require('./local-cli/localCommands');
 const android = require('@react-native-community/cli-platform-android');
+const {
+  getDependencyConfig,
+  getProjectConfig,
+} = require('@react-native-community/cli-platform-apple');
+const ios = require('@react-native-community/cli-platform-ios');
 const {
   bundleCommand,
   ramBundleCommand,
@@ -24,12 +29,14 @@ module.exports = {
     bundleCommand,
     ramBundleCommand,
     startCommand,
+    codegenCommand,
+    ...localCommands,
   ],
   platforms: {
     visionos: {
       npmPackageName: '@callstack/react-native-visionos',
-      projectConfig: ios.projectConfig,
-      dependencyConfig: ios.dependencyConfig,
+      projectConfig: getProjectConfig({platformName: 'visionos'}),
+      dependencyConfig: getDependencyConfig({platformName: 'visionos'}),
     },
     ios: {
       projectConfig: ios.projectConfig,
