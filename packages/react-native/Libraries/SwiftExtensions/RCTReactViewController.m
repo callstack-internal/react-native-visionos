@@ -1,4 +1,5 @@
 #import "RCTReactViewController.h"
+#import <React/RCTConstants.h>
 
 @protocol RCTRootViewFactoryProtocol <NSObject>
 
@@ -14,6 +15,10 @@
         _initialProps = initProps;
     }
     return self;
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+  [[NSNotificationCenter defaultCenter] postNotificationName:RCTWindowFrameDidChangeNotification object:self];
 }
 
 // TODO: Temporary solution for creating RCTRootView on demand. This should be done through factory pattern, see here: https://github.com/facebook/react-native/pull/42263

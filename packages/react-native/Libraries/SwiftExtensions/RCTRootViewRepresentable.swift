@@ -1,20 +1,23 @@
 import SwiftUI
 
-/*
- * Use this struct in SwiftUI context to present React Native rootView.
- *
- * Example:
- * ```
- *  WindowGroup {
- *    RCTRootViewRepresentable(moduleName: "RNTesterApp", initialProps: [:])
- *  }
- * ```
- */
+/**
+ SwiftUI view enclosing `RCTReactViewController`. Its main purpose is to display React Native views inside of SwiftUI lifecycle.
+
+ Use it create new windows in your app:
+ Example:
+ ```swift
+  WindowGroup {
+    RCTRootViewRepresentable(moduleName: "YourAppName", initialProps: [:])
+  }
+ ```
+*/
 public struct RCTRootViewRepresentable: UIViewControllerRepresentable {
-  var moduleName: String
-  var initialProps: [AnyHashable: Any]?
+  public typealias InitialPropsType = [AnyHashable: Any]?
   
-  public init(moduleName: String, initialProps: [AnyHashable : Any]?) {
+  var moduleName: String
+  var initialProps: InitialPropsType
+  
+  public init(moduleName: String, initialProps: InitialPropsType = nil) {
     self.moduleName = moduleName
     self.initialProps = initialProps
   }

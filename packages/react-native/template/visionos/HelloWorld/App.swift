@@ -7,8 +7,6 @@ struct HelloWorldApp: App {
   @UIApplicationDelegateAdaptor var delegate: AppDelegate
   
   var body: some Scene {
-    WindowGroup {
-      RCTRootViewRepresentable(moduleName: "HelloWorld", initialProps: nil)
-    }
+    RCTMainWindow(moduleName: "HelloWorld")
   }
 }

@@ -7,8 +7,6 @@ struct RNTesterApp: App {
   @UIApplicationDelegateAdaptor var delegate: AppDelegate
   
   var body: some Scene {
-    WindowGroup {
-      RCTRootViewRepresentable(moduleName: "RNTesterApp", initialProps: nil)
-    }
+    RCTMainWindow(moduleName: "RNTesterApp")
   }
 }

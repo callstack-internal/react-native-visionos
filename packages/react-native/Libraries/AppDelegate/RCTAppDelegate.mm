@@ -312,6 +312,9 @@ static NSDictionary *updateInitialProps(NSDictionary *initialProps, BOOL isFabri
 
 - (void)createReactHost
 {
+  if (_reactHost != nil) {
+    return;
+  }
   __weak __typeof(self) weakSelf = self;
   _reactHost = [[RCTHost alloc] initWithBundleURL:[self bundleURL]
                                      hostDelegate:nil

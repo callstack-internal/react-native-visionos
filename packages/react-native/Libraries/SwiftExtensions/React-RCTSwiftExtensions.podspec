@@ -22,4 +22,6 @@ Pod::Spec.new do |s|
   s.source                 = source
   s.source_files           = "*.{swift,h,m}"
   s.frameworks = ["UIKit", "SwiftUI"]
+
+  s.dependency "React-Core"
 end
