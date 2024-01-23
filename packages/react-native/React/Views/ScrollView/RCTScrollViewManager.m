@@ -12,7 +12,7 @@
 #import "RCTShadowView.h"
 #import "RCTUIManager.h"
 
-#if !TARGET_OS_VISION
+
 
 @implementation RCTConvert (UIScrollView)
 
@@ -53,7 +53,6 @@ RCT_ENUM_CONVERTER(
 
 @end
 
-#endif
 
 @implementation RCTScrollViewManager
 

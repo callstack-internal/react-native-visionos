@@ -22,7 +22,7 @@ RCTDimensions RCTGetDimensions(CGFloat fontScale)
   CGSize windowSize = mainWindow ? mainWindow.bounds.size : screenSize;
   CGFloat scale;
 #if TARGET_OS_VISION
-    scale = 1;
+    scale = 2;
 #else
     scale = mainScreen.scale;
 #endif
