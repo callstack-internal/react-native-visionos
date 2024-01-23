@@ -668,37 +668,33 @@ static CGFloat RCTDefaultIfNegativeTo(CGFloat defaultValue, CGFloat x)
 
 
 #if TARGET_OS_VISION
-- (void)setHoverEffect:(NSString *)hoverEffect {
-    _hoverEffect = hoverEffect;
+- (void)setHoverStyleProperties:(NSDictionary *)hoverStyleProperties {
+    _hoverStyleProperties = hoverStyleProperties;
     
-    if (hoverEffect == nil) {
+    BOOL enabled = _hoverStyleProperties[@"enabled"] != nil ? [_hoverStyleProperties[@"enabled"] boolValue] : YES;
+    
+    if (!enabled || hoverStyleProperties == nil) {
         self.hoverStyle = nil;
         return;
     }
     
-    CGFloat cornerRadius = 0.0;
-    RCTCornerRadii cornerRadii = [self cornerRadii];
+    NSString *effectType = (NSString *)[_hoverStyleProperties objectForKey:@"effectType"];
+    NSNumber *cornerRadius = (NSNumber *)[_hoverStyleProperties objectForKey:@"cornerRadius"];
     
-    if (RCTCornerRadiiAreEqual(cornerRadii)) {
-      cornerRadius = cornerRadii.topLeft;
-
-    } else {
-      // TODO: Handle a case when corner radius is different for each corner.
-      cornerRadius = cornerRadii.topLeft;
+    float cornerRadiusFloat = [cornerRadius floatValue];
+    
+    UIShape *shape = [UIShape rectShapeWithCornerRadius:cornerRadiusFloat];
+    id<UIHoverEffect> hoverEffect;
+    
+    if ([effectType isEqualToString:@"lift"]) {
+        hoverEffect = [UIHoverLiftEffect effect];
+    } else if ([effectType isEqualToString:@"highlight"]) {
+        hoverEffect = [UIHoverHighlightEffect effect];
+    } else if ([effectType isEqualToString:@"automatic"]) {
+        hoverEffect = [UIHoverAutomaticEffect effect];
     }
     
-    UIShape *shape = [UIShape rectShapeWithCornerRadius:cornerRadius];
-    id<UIHoverEffect> effect;
-    
-    if ([hoverEffect isEqualToString:@"lift"]) {
-        effect = [UIHoverLiftEffect effect];
-    } else if ([hoverEffect isEqualToString:@"highlight"]) {
-        effect = [UIHoverHighlightEffect effect];
-    }
-    
-    if (hoverEffect != nil) {
-        self.hoverStyle = [UIHoverStyle styleWithEffect:effect shape:shape];
-    }
+    self.hoverStyle = [UIHoverStyle styleWithEffect:hoverEffect shape:shape];
 }
 #endif
 
