@@ -56,8 +56,8 @@ NSString *RCTColorSchemePreference(UITraitCollection *traitCollection)
     // Return the default if the app doesn't allow different color schemes.
     return RCTAppearanceColorSchemeLight;
   }
-
-  return appearances[@(traitCollection.userInterfaceStyle)] ?: RCTAppearanceColorSchemeLight;
+  // Fallback to dark mode on visionOS
+  return appearances[@(traitCollection.userInterfaceStyle)] ?: RCTAppearanceColorSchemeDark;
 }
 
 @interface RCTAppearance () <NativeAppearanceSpec>
@@ -70,7 +70,8 @@ NSString *RCTColorSchemePreference(UITraitCollection *traitCollection)
 - (instancetype)init
 {
   if ((self = [super init])) {
-    UITraitCollection *traitCollection = RCTSharedApplication().delegate.window.traitCollection;
+    // TODO: Remove this after merging this PR upstream: https://github.com/facebook/react-native/pull/42231
+    UITraitCollection *traitCollection = RCTKeyWindow().traitCollection;
     _currentColorScheme = RCTColorSchemePreference(traitCollection);
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(appearanceChanged:)

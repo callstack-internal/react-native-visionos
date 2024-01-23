@@ -136,6 +136,7 @@ def use_react_native! (
   pod 'React-Mapbuffer', :path => "#{prefix}/ReactCommon"
   pod 'React-jserrorhandler', :path => "#{prefix}/ReactCommon/jserrorhandler"
   pod "React-nativeconfig", :path => "#{prefix}/ReactCommon"
+  pod 'React-RCTSwiftExtensions', :path => "#{prefix}/Libraries/SwiftExtensions"
 
   if hermes_enabled
     setup_hermes!(:react_native_path => prefix)
