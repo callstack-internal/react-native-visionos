@@ -7,7 +7,7 @@ import SwiftUI
  Example:
  ```swift
   WindowGroup {
-    RCTRootViewRepresentable(moduleName: "YourAppName", initialProps: [:])
+    RCTRootViewRepresentable(moduleName: "YourAppName")
   }
  ```
 */
