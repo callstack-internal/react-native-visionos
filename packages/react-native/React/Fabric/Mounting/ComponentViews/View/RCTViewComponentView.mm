@@ -287,14 +287,10 @@ using namespace facebook::react;
   }
 
   // `border`
-  if (oldViewProps.borderStyles != newViewProps.borderStyles ||
+  if (oldViewProps.borderStyles != newViewProps.borderStyles || oldViewProps.borderRadii != newViewProps.borderRadii ||
       oldViewProps.borderColors != newViewProps.borderColors) {
     needsInvalidateLayer = YES;
   }
-    // 'borderRadii'
-  if (oldViewProps.borderRadii != newViewProps.borderRadii) {
-    needsInvalidateLayer = YES;
-    }
 #if TARGET_OS_VISION
   if (oldViewProps.visionos_hoverEffect != newViewProps.visionos_hoverEffect) {
       needsInvalidateLayer = YES;
@@ -690,14 +686,7 @@ static RCTBorderStyle RCTBorderStyleFromBorderStyle(BorderStyle borderStyle)
         _borderLayer.contentsCenter = CGRect{CGPoint{0.0, 0.0}, CGSize{1.0, 1.0}};
       }
     }
-      // HoverEffect borderRadius for visionos
-      if(TARGET_OS_VISION){
-          const RCTCornerInsets cornerInsets =
-              RCTGetCornerInsets(RCTCornerRadiiFromBorderRadii(borderMetrics.borderRadii), UIEdgeInsetsZero);
-          CGPathRef cornerRadiusPath = RCTPathCreateWithRoundedRect(self.bounds, cornerInsets, nil);
-          const char *vision_hoverstyle = _props->visionos_hoverEffect.c_str();
-          [self updateHoverEffect:[NSString stringWithUTF8String:vision_hoverstyle] withPathRef:cornerRadiusPath];
-      }
+      
       
     // Stage 2.5. Custom Clipping Mask
     CAShapeLayer *maskLayer = nil;
@@ -721,6 +710,14 @@ static RCTBorderStyle RCTBorderStyleFromBorderStyle(BorderStyle borderStyle)
 
     layer.cornerRadius = cornerRadius;
     layer.mask = maskLayer;
+  }
+  // Creating path for HoverEffect for visionos using cornerinsets
+  if(TARGET_OS_VISION){
+    const RCTCornerInsets cornerInsets =
+        RCTGetCornerInsets(RCTCornerRadiiFromBorderRadii(borderMetrics.borderRadii), UIEdgeInsetsZero);
+    CGPathRef cornerRadiusPath = RCTPathCreateWithRoundedRect(self.bounds, cornerInsets, nil);
+    const char *vision_hoverstyle = _props->visionos_hoverEffect.c_str();
+    [self updateHoverEffect:[NSString stringWithUTF8String:vision_hoverstyle] withPathRef:cornerRadiusPath];
   }
 }
 
