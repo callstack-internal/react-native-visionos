@@ -9,7 +9,7 @@
  */
 
 import type {ViewStyleProp} from '../../StyleSheet/StyleSheet';
-import type {HoverStyle} from '../View/ViewPropTypes';
+import type {HoverEffect} from '../View/ViewPropTypes';
 import typeof TouchableWithoutFeedback from './TouchableWithoutFeedback';
 
 import Animated from '../../Animated/Animated';
@@ -22,9 +22,7 @@ import flattenStyle from '../../StyleSheet/flattenStyle';
 import Platform from '../../Utilities/Platform';
 import * as React from 'react';
 
-const defaultHoverStyle: HoverStyle = {
-  effectType: 'automatic',
-};
+const defaultHoverEffect: HoverEffect = 'highlight';
 
 type TVProps = $ReadOnly<{|
   hasTVPreferredFocus?: ?boolean,
@@ -36,7 +34,7 @@ type TVProps = $ReadOnly<{|
 |}>;
 
 type VisionOSProps = $ReadOnly<{|
-  visionos_hoverStyle?: ?HoverStyle,
+  visionos_hoverEffect?: ?HoverEffect,
 |}>;
 
 type Props = $ReadOnly<{|
@@ -140,8 +138,8 @@ type State = $ReadOnly<{|
  *
  */
 class TouchableOpacity extends React.Component<Props, State> {
-  static defaultProps: {|visionos_hoverStyle: HoverStyle|} = {
-    visionos_hoverStyle: defaultHoverStyle,
+  static defaultProps: {|visionos_hoverEffect: HoverEffect|} = {
+    visionos_hoverEffect: defaultHoverEffect,
   };
 
   state: State = {
@@ -300,7 +298,7 @@ class TouchableOpacity extends React.Component<Props, State> {
         nextFocusUp={this.props.nextFocusUp}
         hasTVPreferredFocus={this.props.hasTVPreferredFocus}
         hitSlop={this.props.hitSlop}
-        visionos_hoverStyle={this.props.visionos_hoverStyle}
+        visionos_hoverEffect={this.props.visionos_hoverEffect}
         focusable={
           this.props.focusable !== false && this.props.onPress !== undefined
         }
