@@ -89,11 +89,8 @@ type Props = $ReadOnly<{|
 class InputAccessoryView extends React.Component<Props> {
   // TODO: once the 'visionos' is implemented as a platform, we can remove this
   componentDidMount() {
-    if (Platform.isVision) {
-      warnOnce(
-        'component-unavailable',
-        'InputAccessoryView is not available on visionOS platform.',
-      );
+    if (Platform.isVisionOS) {
+      console.warn('InputAccessoryView is not available on visionOS platform.');
     }
   }
 
