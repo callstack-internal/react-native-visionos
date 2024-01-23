@@ -36,7 +36,7 @@ Pod::Spec.new do |spec|
                   }
 
   spec.ios.vendored_frameworks = "destroot/Library/Frameworks/ios/hermes.framework"
-  spec.visionos.vendored_frameworks = "destroot/Library/Frameworks/xros/hermes.framework"
+  spec.visionos.vendored_frameworks = "destroot/Library/Frameworks/visionos/hermes.framework"
   spec.osx.vendored_frameworks = "destroot/Library/Frameworks/macosx/hermes.framework"
 
   if HermesEngineSourceType::isPrebuilt(source_type) then

@@ -40,7 +40,7 @@ def min_ios_version_supported
 end
 
 def min_visionos_version_supported
-  return Helpers::Constants.min_visionos_version_supported
+  return '1.0'
 end
 
 # This function returns the min supported OS versions supported by React Native
@@ -159,6 +159,7 @@ def use_react_native! (
   pod 'RCT-Folly', :podspec => "#{prefix}/third-party-podspecs/RCT-Folly.podspec", :modular_headers => true
   pod 'fmt', :podspec => "#{prefix}/third-party-podspecs/fmt.podspec", :modular_headers => true
   pod 'SocketRocket', :podspec => "#{prefix}/third-party-podspecs/SocketRocket.podspec", :modular_headers => true
+  # pod 'YogaKit', :podspec => "#{prefix}/third-party-podspecs/YogaKit.podspec", :modular_headers => true
 
 
   folly_config = get_folly_config()

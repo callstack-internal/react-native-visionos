@@ -45,7 +45,11 @@
 #if !TARGET_OS_VISION
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
-  return UIStatusBarStyleDefault;
+#if !TARGET_OS_VISION
+  return [RCTSharedApplication() statusBarStyle];
+#else
+    return UIStatusBarStyleDefault;
+#endif
 }
 #endif
 
@@ -58,7 +62,11 @@
 #if !TARGET_OS_VISION
 - (BOOL)prefersStatusBarHidden
 {
+#if !TARGET_OS_VISION
   return [RCTSharedApplication() isStatusBarHidden];
+#else
+    return false;
+#endif
 }
 #endif
 

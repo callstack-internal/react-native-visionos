@@ -93,8 +93,14 @@ RCT_ENUM_CONVERTER(
     integerValue)
 
 @end
+#else
+@interface RCTPushNotificationManager ()
+@end
+#endif // TARGET_OS_UIKITFORMAC
 
 @implementation RCTPushNotificationManager
+
+#if !TARGET_OS_UIKITFORMAC
 
 #if !TARGET_OS_VISION
 /** DEPRECATED. UILocalNotification was deprecated in iOS 10. Please don't add new callsites. */

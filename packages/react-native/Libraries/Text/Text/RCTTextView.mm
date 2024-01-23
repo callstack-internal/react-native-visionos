@@ -246,9 +246,11 @@
     if (_editMenuInteraction) {
       [_editMenuInteraction presentEditMenuWithConfiguration:config];
     }
-  } else {
+    return;
+  }
 #if !TARGET_OS_VISION
-    UIMenuController *menuController = [UIMenuController sharedMenuController];
+  // TODO: Adopt showMenuFromRect (necessary for UIKitForMac)
+  UIMenuController *menuController = [UIMenuController sharedMenuController];
 
     if (menuController.isMenuVisible) {
       return;
@@ -256,7 +258,7 @@
 
     [menuController showMenuFromView:self rect:self.bounds];
 #endif
-  }
+#endif
 }
 
 - (BOOL)canBecomeFirstResponder
