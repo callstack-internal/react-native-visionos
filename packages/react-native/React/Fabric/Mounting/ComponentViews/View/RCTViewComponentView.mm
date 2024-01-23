@@ -34,7 +34,7 @@ using namespace facebook::react;
   BOOL _removeClippedSubviews;
   NSMutableArray<UIView *> *_reactSubviews;
   NSSet<NSString *> *_Nullable _propKeysManagedByAnimated_DO_NOT_USE_THIS_IS_BROKEN;
-}
+  }
 
 #ifdef RCT_DYNAMIC_FRAMEWORKS
 + (void)load
@@ -291,10 +291,13 @@ using namespace facebook::react;
       oldViewProps.borderColors != newViewProps.borderColors) {
     needsInvalidateLayer = YES;
   }
-    
+    // 'borderRadii'
+  if (oldViewProps.borderRadii != newViewProps.borderRadii) {
+    needsInvalidateLayer = YES;
+    }
 #if TARGET_OS_VISION
   if (oldViewProps.visionos_hoverEffect != newViewProps.visionos_hoverEffect) {
-    [self updateHoverEffect:[NSString stringWithUTF8String:newViewProps.visionos_hoverEffect.c_str()]];
+      needsInvalidateLayer = YES;
   }
 #endif
 
@@ -514,21 +517,21 @@ using namespace facebook::react;
 }
 
 #if TARGET_OS_VISION
-- (void) updateHoverEffect:(NSString*)hoverEffect {
+- (void) updateHoverEffect:(NSString*)hoverEffect withPathRef:(CGPathRef)rectPathRef {
     if (hoverEffect == nil || [hoverEffect isEqualToString:@""]) {
         self.hoverStyle = nil;
         return;
     }
-    
-    UIShape *shape = [UIShape rectShapeWithCornerRadius:self.layer.cornerRadius];
     id<UIHoverEffect> effect;
+    UIBezierPath *bezierPath = [UIBezierPath bezierPathWithCGPath: rectPathRef];
+    UIShape *shape = [UIShape shapeWithBezierPath: bezierPath];
     
     if ([hoverEffect isEqualToString:@"lift"]) {
         effect = [UIHoverLiftEffect effect];
     } else if ([hoverEffect isEqualToString:@"highlight"]) {
         effect = [UIHoverHighlightEffect effect];
     }
-    
+
     if (hoverEffect != nil) {
         self.hoverStyle = [UIHoverStyle styleWithEffect:effect shape:shape];
     }
@@ -687,7 +690,15 @@ static RCTBorderStyle RCTBorderStyleFromBorderStyle(BorderStyle borderStyle)
         _borderLayer.contentsCenter = CGRect{CGPoint{0.0, 0.0}, CGSize{1.0, 1.0}};
       }
     }
-
+      // HoverEffect borderRadius for visionos
+      if(TARGET_OS_VISION){
+          const RCTCornerInsets cornerInsets =
+              RCTGetCornerInsets(RCTCornerRadiiFromBorderRadii(borderMetrics.borderRadii), UIEdgeInsetsZero);
+          CGPathRef cornerRadiusPath = RCTPathCreateWithRoundedRect(self.bounds, cornerInsets, nil);
+          const char *vision_hoverstyle = _props->visionos_hoverEffect.c_str();
+          [self updateHoverEffect:[NSString stringWithUTF8String:vision_hoverstyle] withPathRef:cornerRadiusPath];
+      }
+      
     // Stage 2.5. Custom Clipping Mask
     CAShapeLayer *maskLayer = nil;
     CGFloat cornerRadius = 0;
