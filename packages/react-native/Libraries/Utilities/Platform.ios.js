@@ -58,7 +58,7 @@ const Platform: PlatformType = {
     return this.constants.interfaceIdiom === 'tv';
   },
   // $FlowFixMe[unsafe-getters-setters]
-  get isVision(): boolean {
+  get isVisionOS(): boolean {
     // $FlowFixMe[object-this-reference]
     return this.constants.interfaceIdiom === 'vision';
   },

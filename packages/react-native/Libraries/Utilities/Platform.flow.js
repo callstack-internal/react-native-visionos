@@ -42,7 +42,7 @@ type IOSPlatform = {
   // $FlowFixMe[unsafe-getters-setters]
   get isTV(): boolean,
   // $FlowFixMe[unsafe-getters-setters]
-  get isVision(): boolean,
+  get isVisionOS(): boolean,
   // $FlowFixMe[unsafe-getters-setters]
   get isTesting(): boolean,
   // $FlowFixMe[unsafe-getters-setters]
