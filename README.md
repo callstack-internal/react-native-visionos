@@ -49,6 +49,7 @@ React native visionOS uses SwiftUI lifecycle. The app entry point is now `App.sw
 
 Here is a example from the template: 
 ```swift
+// App.swift
 @main
 struct HelloWorldApp: App {
   @UIApplicationDelegateAdaptor var delegate: AppDelegate
