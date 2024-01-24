@@ -45,7 +45,7 @@ It's important not to cover the translucent background with a solid color, as it
 ## API Reference
 
 ### App entry point
-React native visionOS uses SwiftUI lifecycle. The app entry point is now `App.swift` file (by default it is `main.m`). This change allows to use full capabilities of the visionOS SDK. 
+React native visionOS uses SwiftUI lifecycle. The app entry point is now `App.swift` file (by default it is `main.m`). This change allows us to use full capabilities of the visionOS SDK. 
 
 Here is a example from the template: 
 ```swift
