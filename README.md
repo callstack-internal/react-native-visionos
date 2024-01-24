@@ -62,7 +62,7 @@ struct HelloWorldApp: App {
 
 We are using `@UIApplicationDelegateAdaptor`, a property wrapper that allows us to use familiar `AppDelegate` in SwiftUI life cycle. 
 
-AppDelegate extends `RCTAppDelegate` which does most of React Native initialization.
+`AppDelegate` extends `RCTAppDelegate` which does most of React Native initialization.
 
 ### Hover effect API
 This is a prop on View component allowing to add hover effect. It's applied to all Touchable and Pressable components by default.
