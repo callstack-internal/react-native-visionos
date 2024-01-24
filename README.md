@@ -60,7 +60,7 @@ struct HelloWorldApp: App {
 }
 ```
 
-We are using `@UIApplicationDelegateAdaptor` a property wrapper that allows us to use familiar `AppDelegate` in SwiftUI life cycle. 
+We are using `@UIApplicationDelegateAdaptor`, a property wrapper that allows us to use familiar `AppDelegate` in SwiftUI life cycle. 
 
 AppDelegate extends `RCTAppDelegate` which does most of React Native initialization.
 
