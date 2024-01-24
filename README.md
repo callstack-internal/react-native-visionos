@@ -65,7 +65,7 @@ We are using `@UIApplicationDelegateAdaptor`, a property wrapper that allows us 
 `AppDelegate` extends `RCTAppDelegate` which does most of React Native initialization.
 
 ### Hover effect API
-This is a prop on View component allowing to add hover effect. It's applied to all Touchable and Pressable components by default.
+This is a prop on `<View />` component allowing to add hover effect. It's applied to all Touchable and Pressable components by default.
 
 If you want to customize it you can use the `visionos_hoverEffect` prop, like so:
 
