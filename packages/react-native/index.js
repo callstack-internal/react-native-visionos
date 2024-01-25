@@ -71,6 +71,7 @@ import typeof ReactNative from './Libraries/Renderer/shims/ReactNative';
 import type {HostComponent as _HostComponentInternal} from './Libraries/Renderer/shims/ReactNativeTypes';
 import typeof Settings from './Libraries/Settings/Settings';
 import typeof Share from './Libraries/Share/Share';
+import typeof Spatial from './Libraries/Spatial/Spatial';
 import typeof {PlatformColor} from './Libraries/StyleSheet/PlatformColorValueTypes';
 // Plugins
 import typeof {DynamicColorIOS} from './Libraries/StyleSheet/PlatformColorValueTypesIOS';
@@ -294,6 +295,9 @@ module.exports = {
   },
   get Share(): Share {
     return require('./Libraries/Share/Share');
+  },
+  get Spatial(): Spatial {
+    return require('./Libraries/Spatial/Spatial');
   },
   get StyleSheet(): StyleSheet {
     return require('./Libraries/StyleSheet/StyleSheet');

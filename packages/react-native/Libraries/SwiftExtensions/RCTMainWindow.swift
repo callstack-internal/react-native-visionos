@@ -1,4 +1,11 @@
 import SwiftUI
+import React
+
+
+extension NSNotification.Name {
+    static let openImmersiveSpace = NSNotification.Name("RCTOpenImmersiveSpaceNotification")
+    static let dismissImmersiveSpace = NSNotification.Name("RCTDismissImmersiveSpaceNotification")
+}
 
 /**
  This SwiftUI struct returns main React Native scene. It should be used only once as it conains setup code.
@@ -29,6 +36,24 @@ public struct RCTMainWindow: Scene {
   public var body: some Scene {
     WindowGroup {
       RCTRootViewRepresentable(moduleName: moduleName, initialProps: initialProps)
+        .modifier(EnvironmentListener())
     }
+  }
+}
+
+struct EnvironmentListener: ViewModifier {
+  @Environment(\.openImmersiveSpace) private var openImmersiveSpace
+  @Environment(\.dismissImmersiveSpace) private var dismissImmersiveSpace
+  
+  func body(content: Content) -> some View {
+    content
+      .onReceive(NotificationCenter.default.publisher(for: .openImmersiveSpace)) { data in
+        print("open immersive space")
+        Task { await openImmersiveSpace(id: "ImmersiveSpace") }
+      }
+      .onReceive(NotificationCenter.default.publisher(for: .dismissImmersiveSpace)) { data in
+        print("dismiss immersive space")
+        Task { await dismissImmersiveSpace() }
+      }
   }
 }

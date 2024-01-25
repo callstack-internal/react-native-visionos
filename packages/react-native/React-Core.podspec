@@ -37,6 +37,7 @@ header_subspecs = {
   'RCTSettingsHeaders'          => 'Libraries/Settings/*.h',
   'RCTTextHeaders'              => 'Libraries/Text/**/*.h',
   'RCTVibrationHeaders'         => 'Libraries/Vibration/*.h',
+  'RCTSpatialHeaders'           => 'Libraries/Spatial/*.h',
 }
 
 frameworks_search_paths = []
