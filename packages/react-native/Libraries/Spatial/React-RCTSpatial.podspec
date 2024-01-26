@@ -31,7 +31,7 @@ Pod::Spec.new do |s|
   s.platforms              = min_supported_versions
   s.compiler_flags         = folly_compiler_flags + ' -Wno-nullability-completeness'
   s.source                 = source
-  s.source_files           = "*.{m,mm}"
+  s.source_files           = "*.{m,mm,swift}"
   s.preserve_paths         = "package.json", "LICENSE", "LICENSE-docs"
   s.header_dir             = "RCTSpatial"
   s.pod_target_xcconfig    = {
