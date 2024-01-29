@@ -7,12 +7,17 @@
 'use strict';
 
 const forEachPackage = require('./monorepo/for-each-package');
+const newGithubReleaseUrl = require('./new-github-release-url');
 const {applyPackageVersions, publishPackage} = require('./npm-utils');
+const {failIfTagExists} = require('./release-utils');
 const updateTemplatePackage = require('./update-template-package');
+const {execSync} = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const {cat, echo, exit} = require('shelljs');
 const yargs = require('yargs');
+
+const REPO_ROOT = path.resolve(__dirname, '../');
 
 /**
  * This script updates core packages to the version of React Native that we are basing on,
@@ -89,6 +94,7 @@ function releaseOOT(
   oneTimePassword,
   tag = 'latest',
 ) {
+  const isNightly = tag === 'nightly';
   const allPackages = getPackages();
   const corePackages = Object.keys(allPackages).filter(packageName =>
     packageName.startsWith('@react-native/'),
@@ -102,24 +108,54 @@ function releaseOOT(
     {},
   );
 
+  const visionOSPackagesVersions = visionOSPackages.reduce(
+    (acc, pkg) => ({...acc, [pkg]: newVersion}),
+    {},
+  );
+
   // Update `packges/react-native` package.json and all visionOS packages
-  visionOSPackages.forEach(pkg => {
-    echo(`Setting ${pkg} version to ${newVersion} `);
-    setPackage(allPackages[pkg], newVersion, corePackagesVersions);
-  });
+  if (isNightly) {
+    visionOSPackages.forEach(pkg => {
+      echo(`Setting ${pkg} version to ${newVersion} `);
+      setPackage(allPackages[pkg], newVersion, corePackagesVersions);
+    });
+  } else {
+    visionOSPackages.forEach(pkg => {
+      echo(`Setting ${pkg} version to ${newVersion} `);
+      setPackage(allPackages[pkg], newVersion, visionOSPackagesVersions);
+    });
+  }
 
   // Update template package.json
   updateTemplatePackage({
     'react-native': reactNativeVersion,
-    ...corePackagesVersions,
-    ...visionOSPackages.reduce((acc, pkg) => ({...acc, [pkg]: newVersion}), {}),
+    ...visionOSPackagesVersions,
   });
+
+  if (isNightly) {
+    updateTemplatePackage(corePackagesVersions);
+  }
+
   echo(`Updating template and it's dependencies to ${reactNativeVersion}`);
+
+  echo('Building packages...\n');
+  execSync('node ./scripts/build/build.js', {
+    cwd: REPO_ROOT,
+    stdio: [process.stdin, process.stdout, process.stderr],
+  });
 
   // Release visionOS packages only if OTP is passed
   if (!oneTimePassword) {
     return;
   }
+
+  const gitTag = `v${newVersion}-visionos`;
+  failIfTagExists(gitTag, 'release');
+  // Create git tag
+  execSync(`git tag -a ${gitTag} -m "Release ${newVersion}"`, {
+    cwd: REPO_ROOT,
+    stdio: [process.stdin, process.stdout, process.stderr],
+  });
 
   const results = visionOSPackages
     .map(npmPackage => {
@@ -144,6 +180,19 @@ function releaseOOT(
         ', ',
       )} to npm with version: ${newVersion}`,
     );
+
+    const releaseURL = newGithubReleaseUrl({
+      tag: gitTag,
+      title: `Release ${newVersion}`,
+      repo: 'react-native-visionos',
+      user: 'callstack',
+    });
+
+    echo('\n\n');
+    echo('-------------------------------------------\n');
+    echo(`Create a new release here: ${releaseURL}\n`);
+    echo('-------------------------------------------');
+
     return exit(0);
   }
 }
