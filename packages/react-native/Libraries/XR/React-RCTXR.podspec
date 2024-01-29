@@ -21,9 +21,9 @@ header_search_paths = [
 ]
 
 Pod::Spec.new do |s|
-  s.name                   = "React-RCTSpatial"
+  s.name                   = "React-RCTXR"
   s.version                = version
-  s.summary                = "Spatial module for React Native."
+  s.summary                = "XR module for React Native."
   s.homepage               = "https://reactnative.dev/"
   s.documentation_url      = "https://reactnative.dev/docs/settings"
   s.license                = package["license"]
@@ -33,7 +33,7 @@ Pod::Spec.new do |s|
   s.source                 = source
   s.source_files           = "*.{m,mm,swift}"
   s.preserve_paths         = "package.json", "LICENSE", "LICENSE-docs"
-  s.header_dir             = "RCTSpatial"
+  s.header_dir             = "RCTXR"
   s.pod_target_xcconfig    = {
                                "USE_HEADERMAP" => "YES",
                                "CLANG_CXX_LANGUAGE_STANDARD" => "c++20",
@@ -43,7 +43,7 @@ Pod::Spec.new do |s|
   s.dependency "RCT-Folly", folly_version
   s.dependency "RCTTypeSafety"
   s.dependency "React-jsi"
-  s.dependency "React-Core/RCTSpatialHeaders"
+  s.dependency "React-Core/RCTXRHeaders"
 
   add_dependency(s, "React-Codegen", :additional_framework_paths => ["build/generated/ios"])
   add_dependency(s, "ReactCommon", :subspec => "turbomodule/core", :additional_framework_paths => ["react/nativemodule/core"])

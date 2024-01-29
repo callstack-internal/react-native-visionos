@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 #import <React/RCTBridgeModule.h>
 
-@interface RCTSpatialManager : NSObject <RCTBridgeModule>
+@interface RCTXRModule : NSObject <RCTBridgeModule>
 
 @end

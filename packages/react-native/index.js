@@ -71,7 +71,6 @@ import typeof ReactNative from './Libraries/Renderer/shims/ReactNative';
 import type {HostComponent as _HostComponentInternal} from './Libraries/Renderer/shims/ReactNativeTypes';
 import typeof Settings from './Libraries/Settings/Settings';
 import typeof Share from './Libraries/Share/Share';
-import typeof Spatial from './Libraries/Spatial/Spatial';
 import typeof {PlatformColor} from './Libraries/StyleSheet/PlatformColorValueTypes';
 // Plugins
 import typeof {DynamicColorIOS} from './Libraries/StyleSheet/PlatformColorValueTypesIOS';
@@ -90,6 +89,7 @@ import typeof Platform from './Libraries/Utilities/Platform';
 import typeof useColorScheme from './Libraries/Utilities/useColorScheme';
 import typeof useWindowDimensions from './Libraries/Utilities/useWindowDimensions';
 import typeof Vibration from './Libraries/Vibration/Vibration';
+import typeof XR from './Libraries/XR/XR';
 import typeof YellowBox from './Libraries/YellowBox/YellowBoxDeprecated';
 
 const warnOnce = require('./Libraries/Utilities/warnOnce');
@@ -296,8 +296,8 @@ module.exports = {
   get Share(): Share {
     return require('./Libraries/Share/Share');
   },
-  get Spatial(): Spatial {
-    return require('./Libraries/Spatial/Spatial');
+  get XR(): XR {
+    return require('./Libraries/XR/XR');
   },
   get StyleSheet(): StyleSheet {
     return require('./Libraries/StyleSheet/StyleSheet');

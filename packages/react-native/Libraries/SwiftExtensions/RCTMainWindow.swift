@@ -1,6 +1,4 @@
 import SwiftUI
-import React
-
 
 /**
  This SwiftUI struct returns main React Native scene. It should be used only once as it conains setup code.

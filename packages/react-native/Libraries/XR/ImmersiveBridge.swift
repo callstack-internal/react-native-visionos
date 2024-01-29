@@ -9,6 +9,11 @@ import SwiftUI
 
 public typealias CompletionHandlerType = (_ result: ImmersiveSpaceResult) -> Void
 
+/**
+ * Utility view used to bridge the gap between SwiftUI environment and UIKit.
+ *
+ * Calls `openImmersiveSpace` when view appears in the UIKit hierarchy and `dismissImmersiveSpace` when removed.
+ */
 struct ImmersiveBridgeView: View {
   @Environment(\.openImmersiveSpace) private var openImmersiveSpace
   @Environment(\.dismissImmersiveSpace) private var dismissImmersiveSpace
