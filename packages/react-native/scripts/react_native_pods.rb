@@ -136,6 +136,7 @@ def use_react_native! (
   pod 'RCTDeprecation', :path => "#{prefix}/ReactApple/Libraries/RCTFoundation/RCTDeprecation"
   pod 'React-RCTFBReactNativeSpec', :path => "#{prefix}/React"
   pod 'React-RCTSwiftExtensions', :path => "#{prefix}/Libraries/SwiftExtensions"
+  pod 'React-RCTXR', :path => "#{prefix}/Libraries/XR"
 
   if hermes_enabled
     setup_hermes!(:react_native_path => prefix)

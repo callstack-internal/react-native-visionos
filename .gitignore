@@ -155,6 +155,7 @@ vendor/
 
 # CircleCI
 .circleci/generated_config.yml
-
 # Jest Integration
 /jest/integration/build/
+.circleci/storage
+.yarn
