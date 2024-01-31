@@ -253,11 +253,11 @@ using namespace facebook::react;
   }
 
     [menuController showMenuFromView:self rect:self.bounds];
+    [menuController setTargetRect:self.bounds inView:self];
+    [menuController setMenuVisible:YES animated:YES];
 #endif
   }
 
-  [menuController setTargetRect:self.bounds inView:self];
-  [menuController setMenuVisible:YES animated:YES];
 #endif
 }
 

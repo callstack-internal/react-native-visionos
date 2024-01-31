@@ -154,3 +154,6 @@ package-lock.json
 
 # CircleCI
 .circleci/generated_config.yml
+
+.circleci/storage/
+.yarn/cache

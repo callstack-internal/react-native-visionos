@@ -13,7 +13,6 @@ extern NSString *const RCTRemoteNotificationReceived;
 
 typedef void (^RCTRemoteNotificationCallback)(UIBackgroundFetchResult result);
 
-#if !TARGET_OS_UIKITFORMAC
 + (void)didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken;
 + (void)didReceiveRemoteNotification:(NSDictionary *)notification;
 + (void)didReceiveRemoteNotification:(NSDictionary *)notification
@@ -21,8 +20,8 @@ typedef void (^RCTRemoteNotificationCallback)(UIBackgroundFetchResult result);
 #if !TARGET_OS_VISION
 /** DEPRECATED. Use didReceiveNotification instead. */
 + (void)didReceiveLocalNotification:(UILocalNotification *)notification RCT_DEPRECATED;
-#endif
 /** DEPRECATED. Use didReceiveNotification instead. */
 + (void)didReceiveRemoteNotification:(NSDictionary *)notification RCT_DEPRECATED;
+#endif
 
 @end

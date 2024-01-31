@@ -136,7 +136,9 @@
 - (BOOL)bridgelessEnabled;
 
 /// Return the bundle URL for the main bundle.
-- (NSURL *__nullable)bundleURL;
+- (NSURL *__nullable)getBundleURL;
+
+#endif
 
 /// Don't use this method, it's going to be removed soon.
 - (UIView *)viewWithModuleName:(NSString *)moduleName

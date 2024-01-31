@@ -176,7 +176,6 @@ static NSString *RCTFormatNotificationDateFromNSDate(NSDate *date)
   return [formatter stringFromDate:date];
 }
 
-#endif // TARGET_OS_UIKITFORMAC
 
 RCT_EXPORT_MODULE()
 
@@ -268,14 +267,6 @@ RCT_EXPORT_MODULE()
 }
 #endif
 
-// Deprecated
-+ (void)didReceiveRemoteNotification:(NSDictionary *)notification
-{
-  NSDictionary *userInfo = @{@"notification" : notification};
-  [[NSNotificationCenter defaultCenter] postNotificationName:RCTRemoteNotificationReceived
-                                                      object:self
-                                                    userInfo:userInfo];
-}
 
 - (void)handleLocalNotificationReceived:(NSNotification *)notification
 {

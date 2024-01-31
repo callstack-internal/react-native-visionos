@@ -73,7 +73,7 @@ class JSEngineTests < Test::Unit::TestCase
         assert_equal(hermes_engine_pod_invocation[:podspec], "../../sdks/hermes-engine/hermes-engine.podspec")
         assert_equal(hermes_engine_pod_invocation[:tag], "")
         assert_equal($podInvocation["React-hermes"][:path], "../../ReactCommon/hermes")
-        assert_equal($podInvocation["libevent"][:version], "~> 2.1.12")
+        assert_equal($podInvocation["libevent"][:version], "~> 2.1.12.1")
     end
 
 end
