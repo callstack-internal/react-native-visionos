@@ -29,7 +29,6 @@ module.exports = {
     bundleCommand,
     ramBundleCommand,
     startCommand,
-    codegenCommand,
     ...localCommands,
   ],
   platforms: {
