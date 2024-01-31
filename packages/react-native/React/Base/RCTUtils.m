@@ -577,6 +577,13 @@ UIWindow *__nullable RCTKeyWindow(void)
       continue;
     }
 
+    #if TARGET_OS_VISION
+    /// Presenting scenes over Immersive Spaces leads to crash: "Presentations are not permitted within volumetric window scenes."
+    if (scene.session.role == UISceneSessionRoleImmersiveSpaceApplication) {
+      continue;
+    }
+#endif
+
     if (scene.activationState == UISceneActivationStateForegroundActive) {
       foregroundActiveScene = scene;
       break;
