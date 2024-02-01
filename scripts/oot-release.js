@@ -149,9 +149,8 @@ function releaseOOT(
     return;
   }
 
-  const gitTag = `v${newVersion}`;
-  failIfTagExists(gitTag, tag);
-
+  const gitTag = `v${newVersion}-visionos`;
+  failIfTagExists(gitTag, 'release');
   // Create git tag
   execSync(`git tag -a ${gitTag} -m "Release ${newVersion}"`, {
     cwd: REPO_ROOT,

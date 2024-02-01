@@ -48,6 +48,8 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 }
 @end
 
+#endif
+
 static NSDictionary *updateInitialProps(NSDictionary *initialProps, BOOL isFabricEnabled)
 {
 #ifdef RCT_NEW_ARCH_ENABLED
@@ -269,6 +271,8 @@ static NSDictionary *updateInitialProps(NSDictionary *initialProps, BOOL isFabri
   return NO;
 }
 
+#if RCT_NEW_ARCH_ENABLED
+
 #pragma mark - New Arch Utilities
 
 - (void)unstable_registerLegacyComponents
@@ -355,3 +359,4 @@ static NSDictionary *updateInitialProps(NSDictionary *initialProps, BOOL isFabri
 #endif
 
 @end
+
