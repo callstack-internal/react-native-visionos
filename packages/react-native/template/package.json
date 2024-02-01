@@ -7,7 +7,7 @@
     "ios": "react-native run-ios",
     "visionos": "react-native run-visionos",
     "lint": "eslint .",
-    "start": "react-native start",
+    "start": "npx @callstack/react-native-visionos start",
     "test": "jest"
   },
   "dependencies": {
