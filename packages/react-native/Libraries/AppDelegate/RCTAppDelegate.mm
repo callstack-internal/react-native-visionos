@@ -126,7 +126,7 @@ static NSDictionary *updateInitialProps(NSDictionary *initialProps, BOOL isFabri
     
     [self createReactHost];
     [RCTComponentViewFactory currentComponentViewFactory].thirdPartyFabricComponentsProvider = self;
-    RCTFabricSurface *surface = [_reactHost createSurfaceWithModuleName:self.moduleName initialProperties:initProps];
+    RCTFabricSurface *surface = [_reactHost createSurfaceWithModuleName:moduleName initialProperties:initProps];
     
     RCTSurfaceHostingProxyRootView *surfaceHostingProxyRootView = [[RCTSurfaceHostingProxyRootView alloc]
                                                                    initWithSurface:surface
@@ -134,6 +134,8 @@ static NSDictionary *updateInitialProps(NSDictionary *initialProps, BOOL isFabri
     
     rootView = (RCTRootView *)surfaceHostingProxyRootView;
     rootView.backgroundColor = [UIColor systemBackgroundColor];
+    [self customizeRootView:(RCTRootView *)rootView];
+    return rootView;
   }
   if (!self.bridge) {
     self.bridge = [self createBridgeWithDelegate:self launchOptions:launchOptions];
