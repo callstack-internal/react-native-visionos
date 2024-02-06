@@ -96,9 +96,6 @@ RCT_EXTERN UIApplication *__nullable RCTSharedApplication(void);
 RCT_EXTERN UIWindow *__nullable RCTKeyWindow(void);
 
 #if TARGET_OS_VISION
-// Returns the current active UIWindow based on UIWindowScene
-RCT_EXTERN UIWindow *__nullable RCTForegroundWindow(void);
-
 // Returns UIStatusBarManager to get it's configuration info.
 RCT_EXTERN UIStatusBarManager *__nullable RCTUIStatusBarManager(void);
 #endif
