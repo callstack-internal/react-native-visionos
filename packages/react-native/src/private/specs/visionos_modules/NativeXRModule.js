@@ -14,8 +14,15 @@ export type XRModuleConstants = {|
 export interface Spec extends TurboModule {
   +getConstants: () => XRModuleConstants;
 
-  +requestSession: (sessionId?: string) => Promise<void>;
+  // $FlowIgnore[unclear-type]
+  +requestSession: (sessionId?: string, userInfo: Object) => Promise<void>;
   +endSession: () => Promise<void>;
+
+  // $FlowIgnore[unclear-type]
+  +openWindow: (windowId: string, userInfo: Object) => Promise<void>;
+  // $FlowIgnore[unclear-type]
+  +updateWindow: (windowId: string, userInfo: Object) => Promise<void>;
+  +closeWindow: (windowId: string) => Promise<void>;
 }
 
 export default (TurboModuleRegistry.get<Spec>('XRModule'): ?Spec);

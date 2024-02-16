@@ -32,9 +32,8 @@ const OpenXRSession = () => {
   };
 
   const closeXRSession = async () => {
-    if (isOpen) {
-      await XR.endSession();
-    }
+    await XR.endSession();
+    setIsOpen(false);
   };
 
   return (
@@ -42,6 +41,26 @@ const OpenXRSession = () => {
       <Text style={styles.title}>Is XR session open: {isOpen}</Text>
       <Button title="Open XR Session" onPress={openXRSession} />
       <Button title="Close XR Session" onPress={closeXRSession} />
+      <Button
+        title="Open Second Window"
+        onPress={async () => {
+          await XR.openWindow('SecondWindow');
+        }}
+      />
+      <Button
+        title="Update Second Window"
+        onPress={async () => {
+          await XR.updateWindow('SecondWindow', {
+            title: 'Updated React Native Window',
+          });
+        }}
+      />
+      <Button
+        title="Close Second Window"
+        onPress={async () => {
+          await XR.closeWindow('SecondWindow');
+        }}
+      />
     </View>
   );
 };

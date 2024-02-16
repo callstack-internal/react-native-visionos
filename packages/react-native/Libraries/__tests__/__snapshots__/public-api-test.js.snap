@@ -9178,8 +9178,11 @@ declare export default typeof NativeXRModule;
 
 exports[`public API should not change unintentionally Libraries/XR/XR.js 1`] = `
 "declare const XR: {
-  requestSession: (sessionId?: string) => Promise<void>,
+  requestSession: (sessionId: string, userInfo: ?Object) => Promise<void>,
   endSession: () => Promise<void>,
+  openWindow: (windowId: string, userInfo: ?Object) => Promise<void>,
+  updateWindow: (windowId: string, userInfo: ?Object) => Promise<void>,
+  closeWindow: (windowId: string) => Promise<void>,
   get supportsMultipleScenes(): boolean,
 };
 declare module.exports: XR;
