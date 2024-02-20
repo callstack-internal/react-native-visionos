@@ -281,15 +281,20 @@ static PointerEvent CreatePointerEventFromActivePointer(
     UIView *rootComponentView)
 {
   PointerEvent event = {};
-#if !TARGET_OS_VISION
   event.pointerId = activePointer.identifier;
   event.pointerType = PointerTypeCStringFromUITouchType(activePointer.touchType);
 
   if (eventType == RCTPointerEventTypeCancel) {
     event.clientPoint = RCTPointFromCGPoint(CGPointZero);
+#if TARGET_OS_VISION
+    event.screenPoint =
+        RCTPointFromCGPoint([rootComponentView convertPoint:CGPointZero
+                                          toCoordinateSpace:rootComponentView.window.coordinateSpace]);
+#else
     event.screenPoint =
         RCTPointFromCGPoint([rootComponentView convertPoint:CGPointZero
                                           toCoordinateSpace:rootComponentView.window.screen.coordinateSpace]);
+#endif
     event.offsetPoint = RCTPointFromCGPoint([rootComponentView convertPoint:CGPointZero
                                                                      toView:activePointer.componentView]);
   } else {
@@ -330,7 +335,6 @@ static PointerEvent CreatePointerEventFromActivePointer(
   event.tangentialPressure = 0.0;
   event.twist = 0;
   event.isPrimary = activePointer.isPrimary;
-#endif
   return event;
 }
 
@@ -370,14 +374,18 @@ static void UpdateActivePointerWithUITouch(
     UIEvent *uiEvent,
     UIView *rootComponentView)
 {
-#if !TARGET_OS_VISION
   CGPoint location = [uiTouch locationInView:rootComponentView];
   UIView *hitTestedView = [rootComponentView hitTest:location withEvent:nil];
   activePointer.componentView = FindClosestFabricManagedTouchableView(hitTestedView);
 
   activePointer.clientPoint = [uiTouch locationInView:rootComponentView];
+#if TARGET_OS_VISION
+  activePointer.screenPoint = [rootComponentView convertPoint:activePointer.clientPoint
+                                            toCoordinateSpace:rootComponentView.window.coordinateSpace];
+#else
   activePointer.screenPoint = [rootComponentView convertPoint:activePointer.clientPoint
                                             toCoordinateSpace:rootComponentView.window.screen.coordinateSpace];
+#endif
   activePointer.offsetPoint = [uiTouch locationInView:activePointer.componentView];
 
   activePointer.timestamp = uiTouch.timestamp;
@@ -396,7 +404,6 @@ static void UpdateActivePointerWithUITouch(
   activePointer.button = ButtonMaskDiffToButton(activePointer.buttonMask, nextButtonMask);
   activePointer.buttonMask = nextButtonMask;
   activePointer.modifierFlags = uiEvent.modifierFlags;
-#endif
 }
 
 /**
@@ -743,12 +750,15 @@ RCT_NOT_IMPLEMENTED(-(instancetype)initWithTarget : (id)target action : (SEL)act
        pointerId:(int)pointerId
      pointerType:(std::string)pointerType API_AVAILABLE(ios(13.0))
 {
-#if !TARGET_OS_VISION
   UIView *listenerView = recognizer.view;
   CGPoint clientLocation = [recognizer locationInView:listenerView];
+#if TARGET_OS_VISION
+  CGPoint screenLocation = [listenerView convertPoint:clientLocation
+                                    toCoordinateSpace:listenerView.window.coordinateSpace];
+#else
   CGPoint screenLocation = [listenerView convertPoint:clientLocation
                                     toCoordinateSpace:listenerView.window.screen.coordinateSpace];
-
+#endif
   UIView *targetView = [listenerView hitTest:clientLocation withEvent:nil];
   targetView = FindClosestFabricManagedTouchableView(targetView);
 
@@ -770,7 +780,6 @@ RCT_NOT_IMPLEMENTED(-(instancetype)initWithTarget : (id)target action : (SEL)act
         eventEmitter->onPointerMove(event);
     }
   }
-#endif
 }
 
 @end
