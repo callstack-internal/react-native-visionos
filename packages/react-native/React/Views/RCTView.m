@@ -666,45 +666,6 @@ static CGFloat RCTDefaultIfNegativeTo(CGFloat defaultValue, CGFloat x)
   };
 }
 
-
-#if TARGET_OS_VISION
-- (void)setHoverEffect:(NSString *)hoverEffect {
-  _hoverEffect = hoverEffect;
-  
-  if (hoverEffect == nil) {
-    self.hoverStyle = nil;
-    return;
-  }
-  
-  CGFloat cornerRadius = 0.0;
-  RCTCornerRadii cornerRadii = [self cornerRadii];
-  
-  if (RCTCornerRadiiAreEqual(cornerRadii)) {
-    cornerRadius = cornerRadii.topLeft;
-    
-  } else {
-    // TODO: Handle a case when corner radius is different for each corner.
-    cornerRadius = cornerRadii.topLeft;
-  }
-  
-  UIShape *shape = [UIShape rectShapeWithCornerRadius:cornerRadius];
-  id<UIHoverEffect> effect;
-  
-  if ([hoverEffect isEqualToString:@"lift"]) {
-    effect = [UIHoverLiftEffect effect];
-  } else if ([hoverEffect isEqualToString:@"highlight"]) {
-    effect = [UIHoverHighlightEffect effect];
-  }
-  
-  if (effect == nil) {
-    self.hoverStyle = nil;
-    return;
-  }
-  
-  self.hoverStyle = [UIHoverStyle styleWithEffect:effect shape:shape];
-}
-#endif
-
 - (RCTCornerRadii)cornerRadii
 {
   const BOOL isRTL = _reactLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
