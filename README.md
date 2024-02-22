@@ -35,6 +35,8 @@ Prerequisites:
 
 Check out `rn-tester` [README.md](./packages/rn-tester/README.md) to build React Native from the source.
 
+Remember to use `RNTester-visionOS` target
+
 If `RNTester-visionOS` scheme is not showing up, click "New Scheme", which should be pre-populated with `RNTester-visionOS`. Build the app using Xcode.
 
 ## Release process
