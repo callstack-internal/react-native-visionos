@@ -29,8 +29,15 @@ The source for the React Native visionOS documentation and website is hosted on 
 
 ## Contributing
 
-1. Follow the same steps as in the `New project creation` section.
-2. Checkout `rn-tester` [README.md](./packages/rn-tester/README.md) to build React Native from source.
+Prerequisites: 
+- Download the latest Xcode (at least 15.2)
+- Install the latest version of CMake (at least v3.28.0)
+
+Check out `rn-tester` [README.md](./packages/rn-tester/README.md) to build React Native from the source.
+
+Remember to use `RNTester-visionOS` target
+
+If `RNTester-visionOS` scheme is not showing up, click "New Scheme", which should be pre-populated with `RNTester-visionOS`. Build the app using Xcode.
 
 ## Release process
 
