@@ -31,10 +31,10 @@ exports[`TouchableOpacity renders correctly 1`] = `
   onStartShouldSetResponder={[Function]}
   style={
     Object {
+      "cursor": "pointer",
       "opacity": 1,
     }
   }
-  visionos_hoverEffect="highlight"
 >
   <Text>
     Touchable
@@ -73,10 +73,10 @@ exports[`TouchableOpacity renders in disabled state when a disabled prop is pass
   onStartShouldSetResponder={[Function]}
   style={
     Object {
+      "cursor": "pointer",
       "opacity": 1,
     }
   }
-  visionos_hoverEffect="highlight"
 >
   <Text>
     Touchable
@@ -115,10 +115,10 @@ exports[`TouchableOpacity renders in disabled state when a key disabled in acces
   onStartShouldSetResponder={[Function]}
   style={
     Object {
+      "cursor": "pointer",
       "opacity": 1,
     }
   }
-  visionos_hoverEffect="highlight"
 >
   <Text>
     Touchable

@@ -1813,9 +1813,6 @@ exports[`public API should not change unintentionally Libraries/Components/Press
 export type StateCallbackType = $ReadOnly<{|
   pressed: boolean,
 |}>;
-type VisionOSProps = $ReadOnly<{|
-  visionos_hoverEffect?: ?HoverEffect,
-|}>;
 type Props = $ReadOnly<{|
   accessibilityActions?: ?$ReadOnlyArray<AccessibilityActionInfo>,
   accessibilityElementsHidden?: ?boolean,
@@ -1866,7 +1863,6 @@ type Props = $ReadOnly<{|
   testOnly_pressed?: ?boolean,
   unstable_pressDelay?: ?number,
   \\"aria-label\\"?: ?string,
-  ...VisionOSProps,
 |}>;
 declare export default React.AbstractComponent<
   Props,
@@ -3327,14 +3323,10 @@ exports[`public API should not change unintentionally Libraries/Components/Touch
 type IOSProps = $ReadOnly<{|
   hasTVPreferredFocus?: ?boolean,
 |}>;
-type VisionOSProps = $ReadOnly<{|
-  hoverEffect?: ?HoverEffect,
-|}>;
 type Props = $ReadOnly<{|
   ...React.ElementConfig<TouchableWithoutFeedback>,
   ...AndroidProps,
   ...IOSProps,
-  ...VisionOSProps,
   activeOpacity?: ?number,
   underlayColor?: ?ColorValue,
   style?: ?ViewStyleProp,
@@ -3360,13 +3352,9 @@ exports[`public API should not change unintentionally Libraries/Components/Touch
   nextFocusRight?: ?number,
   nextFocusUp?: ?number,
 |}>;
-type VisionOSProps = $ReadOnly<{|
-  visionos_hoverEffect?: ?HoverEffect,
-|}>;
 type Props = $ReadOnly<{|
   ...React.ElementConfig<TouchableWithoutFeedback>,
   ...TVProps,
-  ...VisionOSProps,
   activeOpacity?: ?number,
   style?: ?ViewStyleProp,
   hostRef?: ?React.Ref<typeof Animated.View>,
@@ -3665,7 +3653,6 @@ type AndroidDrawableRipple = $ReadOnly<{|
   borderless?: ?boolean,
   rippleRadius?: ?number,
 |}>;
-export type HoverEffect = \\"lift\\" | \\"highlight\\";
 type AndroidDrawable = AndroidDrawableThemeAttr | AndroidDrawableRipple;
 type AndroidViewProps = $ReadOnly<{|
   accessibilityLabelledBy?: ?string | ?Array<string>,
@@ -3693,7 +3680,6 @@ type IOSViewProps = $ReadOnly<{|
   accessibilityElementsHidden?: ?boolean,
   accessibilityLanguage?: ?Stringish,
   shouldRasterizeIOS?: ?boolean,
-  visionos_hoverEffect?: ?HoverEffect,
 |}>;
 export type ViewProps = $ReadOnly<{|
   ...DirectEventProps,
@@ -7439,6 +7425,7 @@ export type EdgeInsetsValue = {
   right: number,
   bottom: number,
 };
+export type CursorValue = ?(\\"auto\\" | \\"pointer\\");
 export type DimensionValue = number | string | \\"auto\\" | AnimatedNode | null;
 export type AnimatableNumericValue = number | AnimatedNode;
 type ____LayoutStyle_Internal = $ReadOnly<{
@@ -7591,6 +7578,7 @@ export type ____ViewStyle_InternalCore = $ReadOnly<{
   opacity?: AnimatableNumericValue,
   elevation?: number,
   pointerEvents?: \\"auto\\" | \\"none\\" | \\"box-none\\" | \\"box-only\\",
+  cursor?: CursorValue,
 }>;
 export type ____ViewStyle_Internal = $ReadOnly<{
   ...____ViewStyle_InternalCore,
