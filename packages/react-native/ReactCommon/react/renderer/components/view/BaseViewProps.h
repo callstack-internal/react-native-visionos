@@ -51,6 +51,8 @@ class BaseViewProps : public YogaStylableProps, public AccessibilityProps {
   Size shadowOffset{0, -3};
   Float shadowOpacity{};
   Float shadowRadius{3};
+  
+  Cursor cursor{};
 
   Cursor cursor{};
 
@@ -72,10 +74,6 @@ class BaseViewProps : public YogaStylableProps, public AccessibilityProps {
   PointerEventsMode pointerEvents{};
   EdgeInsets hitSlop{};
   bool onLayout{};
-    
-#if TARGET_OS_VISION
-  std::string visionos_hoverEffect{};
-#endif
 
   ViewEvents events{};
 

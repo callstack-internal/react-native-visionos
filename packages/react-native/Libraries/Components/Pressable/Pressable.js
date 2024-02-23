@@ -20,11 +20,11 @@ import type {
   AccessibilityState,
   AccessibilityValue,
 } from '../View/ViewAccessibility';
-import type {HoverEffect} from '../View/ViewPropTypes';
 
 import {PressabilityDebugView} from '../../Pressability/PressabilityDebug';
 import usePressability from '../../Pressability/usePressability';
 import {type RectOrSize} from '../../StyleSheet/Rect';
+import StyleSheet from '../../StyleSheet/StyleSheet';
 import useMergeRefs from '../../Utilities/useMergeRefs';
 import View from '../View/View';
 import useAndroidRippleForView, {
@@ -33,16 +33,10 @@ import useAndroidRippleForView, {
 import * as React from 'react';
 import {useMemo, useRef, useState} from 'react';
 
-const defaultHoverEffect: HoverEffect = 'highlight';
-
 type ViewStyleProp = $ElementType<React.ElementConfig<typeof View>, 'style'>;
 
 export type StateCallbackType = $ReadOnly<{|
   pressed: boolean,
-|}>;
-
-type VisionOSProps = $ReadOnly<{|
-  visionos_hoverEffect?: ?HoverEffect,
 |}>;
 
 type Props = $ReadOnly<{|
@@ -200,10 +194,6 @@ type Props = $ReadOnly<{|
    * https://github.com/facebook/react-native/issues/34424
    */
   'aria-label'?: ?string,
-  /**
-   * Props needed for visionOS.
-   */
-  ...VisionOSProps,
 |}>;
 
 /**
@@ -243,7 +233,6 @@ function Pressable(props: Props, forwardedRef): React.Node {
     style,
     testOnly_pressed,
     unstable_pressDelay,
-    visionos_hoverEffect = defaultHoverEffect,
     ...restProps
   } = props;
 
@@ -352,14 +341,22 @@ function Pressable(props: Props, forwardedRef): React.Node {
       {...restPropsWithDefaults}
       {...eventHandlers}
       ref={mergedRef}
-      style={typeof style === 'function' ? style({pressed}) : style}
-      collapsable={false}
-      visionos_hoverEffect={visionos_hoverEffect}>
+      style={[
+        styles.pressable,
+        typeof style === 'function' ? style({pressed}) : style,
+      ]}
+      collapsable={false}>
       {typeof children === 'function' ? children({pressed}) : children}
       {__DEV__ ? <PressabilityDebugView color="red" hitSlop={hitSlop} /> : null}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  pressable: {
+    cursor: 'pointer',
+  },
+});
 
 function usePressState(forcePressed: boolean): [boolean, (boolean) => void] {
   const [pressed, setPressed] = useState(false);

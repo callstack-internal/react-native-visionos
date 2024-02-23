@@ -9,7 +9,6 @@
  */
 
 import type {ViewStyleProp} from '../../StyleSheet/StyleSheet';
-import type {HoverEffect} from '../View/ViewPropTypes';
 import typeof TouchableWithoutFeedback from './TouchableWithoutFeedback';
 
 import Animated from '../../Animated/Animated';
@@ -19,10 +18,9 @@ import Pressability, {
 } from '../../Pressability/Pressability';
 import {PressabilityDebugView} from '../../Pressability/PressabilityDebug';
 import flattenStyle from '../../StyleSheet/flattenStyle';
+import StyleSheet from '../../StyleSheet/StyleSheet';
 import Platform from '../../Utilities/Platform';
 import * as React from 'react';
-
-const defaultHoverEffect: HoverEffect = 'highlight';
 
 type TVProps = $ReadOnly<{|
   hasTVPreferredFocus?: ?boolean,
@@ -33,14 +31,9 @@ type TVProps = $ReadOnly<{|
   nextFocusUp?: ?number,
 |}>;
 
-type VisionOSProps = $ReadOnly<{|
-  visionos_hoverEffect?: ?HoverEffect,
-|}>;
-
 type Props = $ReadOnly<{|
   ...React.ElementConfig<TouchableWithoutFeedback>,
   ...TVProps,
-  ...VisionOSProps,
 
   activeOpacity?: ?number,
   style?: ?ViewStyleProp,
@@ -138,10 +131,6 @@ type State = $ReadOnly<{|
  *
  */
 class TouchableOpacity extends React.Component<Props, State> {
-  static defaultProps: {|visionos_hoverEffect: HoverEffect|} = {
-    visionos_hoverEffect: defaultHoverEffect,
-  };
-
   state: State = {
     anim: new Animated.Value(this._getChildStyleOpacityWithDefault()),
     pressability: new Pressability(this._createPressabilityConfig()),
@@ -287,7 +276,7 @@ class TouchableOpacity extends React.Component<Props, State> {
         accessibilityElementsHidden={
           this.props['aria-hidden'] ?? this.props.accessibilityElementsHidden
         }
-        style={[this.props.style, {opacity: this.state.anim}]}
+        style={[styles.touchable, this.props.style, {opacity: this.state.anim}]}
         nativeID={this.props.id ?? this.props.nativeID}
         testID={this.props.testID}
         onLayout={this.props.onLayout}
@@ -298,7 +287,6 @@ class TouchableOpacity extends React.Component<Props, State> {
         nextFocusUp={this.props.nextFocusUp}
         hasTVPreferredFocus={this.props.hasTVPreferredFocus}
         hitSlop={this.props.hitSlop}
-        visionos_hoverEffect={this.props.visionos_hoverEffect}
         focusable={
           this.props.focusable !== false && this.props.onPress !== undefined
         }
@@ -335,6 +323,12 @@ class TouchableOpacity extends React.Component<Props, State> {
     this.state.pressability.reset();
   }
 }
+
+const styles = StyleSheet.create({
+  touchable: {
+    cursor: 'pointer',
+  },
+});
 
 const Touchable: React.AbstractComponent<
   Props,

@@ -32,10 +32,10 @@ exports[`<Button /> should be disabled and it should set accessibilityState to d
   onStartShouldSetResponder={[Function]}
   style={
     Object {
+      "cursor": "pointer",
       "opacity": 1,
     }
   }
-  visionos_hoverEffect="highlight"
 >
   <View
     style={
@@ -99,10 +99,10 @@ exports[`<Button /> should be disabled when disabled is empty and accessibilityS
   onStartShouldSetResponder={[Function]}
   style={
     Object {
+      "cursor": "pointer",
       "opacity": 1,
     }
   }
-  visionos_hoverEffect="highlight"
 >
   <View
     style={
@@ -166,10 +166,10 @@ exports[`<Button /> should be disabled when disabled={true} and accessibilitySta
   onStartShouldSetResponder={[Function]}
   style={
     Object {
+      "cursor": "pointer",
       "opacity": 1,
     }
   }
-  visionos_hoverEffect="highlight"
 >
   <View
     style={
@@ -234,10 +234,10 @@ exports[`<Button /> should be set importantForAccessibility={no-hide-descendants
   onStartShouldSetResponder={[Function]}
   style={
     Object {
+      "cursor": "pointer",
       "opacity": 1,
     }
   }
-  visionos_hoverEffect="highlight"
 >
   <View
     style={
@@ -297,10 +297,10 @@ exports[`<Button /> should be set importantForAccessibility={no-hide-descendants
   onStartShouldSetResponder={[Function]}
   style={
     Object {
+      "cursor": "pointer",
       "opacity": 1,
     }
   }
-  visionos_hoverEffect="highlight"
 >
   <View
     style={
@@ -359,10 +359,10 @@ exports[`<Button /> should not be disabled when disabled={false} and accessibili
   onStartShouldSetResponder={[Function]}
   style={
     Object {
+      "cursor": "pointer",
       "opacity": 1,
     }
   }
-  visionos_hoverEffect="highlight"
 >
   <View
     style={
@@ -422,10 +422,10 @@ exports[`<Button /> should not be disabled when disabled={false} and accessibili
   onStartShouldSetResponder={[Function]}
   style={
     Object {
+      "cursor": "pointer",
       "opacity": 1,
     }
   }
-  visionos_hoverEffect="highlight"
 >
   <View
     style={
@@ -485,10 +485,10 @@ exports[`<Button /> should overwrite accessibilityState with value of disabled p
   onStartShouldSetResponder={[Function]}
   style={
     Object {
+      "cursor": "pointer",
       "opacity": 1,
     }
   }
-  visionos_hoverEffect="highlight"
 >
   <View
     style={
@@ -552,10 +552,10 @@ exports[`<Button /> should render as expected 1`] = `
   onStartShouldSetResponder={[Function]}
   style={
     Object {
+      "cursor": "pointer",
       "opacity": 1,
     }
   }
-  visionos_hoverEffect="highlight"
 >
   <View
     style={

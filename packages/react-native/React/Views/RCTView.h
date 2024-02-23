@@ -9,6 +9,7 @@
 
 #import <React/RCTBorderCurve.h>
 #import <React/RCTBorderStyle.h>
+#import <React/RCTCursor.h>
 #import <React/RCTComponent.h>
 #import <React/RCTCursor.h>
 #import <React/RCTPointerEvents.h>

@@ -32,6 +32,7 @@ using namespace facebook::react;
   BOOL _needsInvalidateLayer;
   BOOL _isJSResponder;
   BOOL _removeClippedSubviews;
+  Cursor _cursor;
   NSMutableArray<UIView *> *_reactSubviews;
   NSSet<NSString *> *_Nullable _propKeysManagedByAnimated_DO_NOT_USE_THIS_IS_BROKEN;
 }
@@ -256,6 +257,12 @@ using namespace facebook::react;
   if (oldViewProps.backfaceVisibility != newViewProps.backfaceVisibility) {
     self.layer.doubleSided = newViewProps.backfaceVisibility == BackfaceVisibility::Visible;
   }
+  
+  // `cursor`
+  if (oldViewProps.cursor != newViewProps.cursor) {
+    _cursor = newViewProps.cursor;
+    needsInvalidateLayer = YES;
+  }
 
   // `cursor`
   if (oldViewProps.cursor != newViewProps.cursor) {
@@ -301,24 +308,10 @@ using namespace facebook::react;
   }
 
   // `border`
-  if (oldViewProps.borderStyles != newViewProps.borderStyles ||
+  if (oldViewProps.borderStyles != newViewProps.borderStyles || oldViewProps.borderRadii != newViewProps.borderRadii ||
       oldViewProps.borderColors != newViewProps.borderColors) {
     needsInvalidateLayer = YES;
   }
-    // 'borderRadii'
-  if (oldViewProps.borderRadii != newViewProps.borderRadii) {
-    needsInvalidateLayer = YES;
-#if TARGET_OS_VISION
-    CGFloat borderRadius = newViewProps.borderRadii.all ? newViewProps.borderRadii.all.value() : 0.0;
-    [self updateHoverEffect:[NSString stringWithUTF8String:newViewProps.visionos_hoverEffect.c_str()] withCornerRadius:borderRadius];
-#endif
-    }
-#if TARGET_OS_VISION
-  if (oldViewProps.visionos_hoverEffect != newViewProps.visionos_hoverEffect) {
-    CGFloat borderRadius = newViewProps.borderRadii.all ? newViewProps.borderRadii.all.value() : 0.0;
-    [self updateHoverEffect:[NSString stringWithUTF8String:newViewProps.visionos_hoverEffect.c_str()] withCornerRadius:borderRadius];
-  }
-#endif
 
   // `nativeId`
   if (oldViewProps.nativeId != newViewProps.nativeId) {
@@ -533,31 +526,6 @@ using namespace facebook::react;
   }
 }
 
-#if TARGET_OS_VISION
-- (void) updateHoverEffect:(NSString*)hoverEffect withCornerRadius:(CGFloat)cornerRadius {
-  if (hoverEffect == nil) {
-    self.hoverStyle = nil;
-    return;
-  }
-  
-  UIShape *shape = [UIShape rectShapeWithCornerRadius:cornerRadius];
-  id<UIHoverEffect> effect;
-  
-  if ([hoverEffect isEqualToString:@"lift"]) {
-    effect = [UIHoverLiftEffect effect];
-  } else if ([hoverEffect isEqualToString:@"highlight"]) {
-    effect = [UIHoverHighlightEffect effect];
-  }
-  
-  if (effect == nil) {
-    self.hoverStyle = nil;
-    return;
-  }
-  
-  self.hoverStyle = [UIHoverStyle styleWithEffect:effect shape:shape];
-}
-#endif
-
 static RCTCornerRadii RCTCornerRadiiFromBorderRadii(BorderRadii borderRadii)
 {
   return RCTCornerRadii{
@@ -634,6 +602,31 @@ static RCTBorderStyle RCTBorderStyleFromBorderStyle(BorderStyle borderStyle)
     }
   } else {
     layer.shadowPath = nil;
+  }
+  
+  // Stage 1.5. Cursor / Hover Effects
+  if (@available(iOS 17.0, *)) {
+    UIHoverStyle *hoverStyle = nil;
+    if (_cursor == Cursor::Pointer) {
+      const RCTCornerInsets cornerInsets =
+          RCTGetCornerInsets(RCTCornerRadiiFromBorderRadii(borderMetrics.borderRadii), UIEdgeInsetsZero);
+#if TARGET_OS_IOS
+      // Due to an Apple bug, it seems on iOS, UIShapes made with `[UIShape shapeWithBezierPath:]`
+      // evaluate their shape on the superviews' coordinate space. This leads to the hover shape
+      // rendering incorrectly on iOS, iOS apps in compatibility mode on visionOS, but not on visionOS.
+      // To work around this, for iOS, we can calculate the border path based on `view.frame` (the
+      // superview's coordinate space) instead of view.bounds.
+      CGPathRef borderPath = RCTPathCreateWithRoundedRect(self.frame, cornerInsets, NULL);
+#else // TARGET_OS_VISION
+      CGPathRef borderPath = RCTPathCreateWithRoundedRect(self.bounds, cornerInsets, NULL);
+#endif
+      UIBezierPath *bezierPath = [UIBezierPath bezierPathWithCGPath:borderPath];
+      CGPathRelease(borderPath);
+      UIShape *shape = [UIShape shapeWithBezierPath:bezierPath];
+      
+      hoverStyle = [UIHoverStyle styleWithEffect:[UIHoverAutomaticEffect effect] shape:shape];
+    }
+    [self setHoverStyle:hoverStyle];
   }
 
 #if defined(__IPHONE_OS_VERSION_MAX_ALLOWED) && __IPHONE_OS_VERSION_MAX_ALLOWED >= 170000 /* __IPHONE_17_0 */

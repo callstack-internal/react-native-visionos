@@ -34,6 +34,8 @@ export type EdgeInsetsValue = {
   bottom: number,
 };
 
+export type CursorValue = ?('auto' | 'pointer');
+
 export type DimensionValue = number | string | 'auto' | AnimatedNode | null;
 export type AnimatableNumericValue = number | AnimatedNode;
 

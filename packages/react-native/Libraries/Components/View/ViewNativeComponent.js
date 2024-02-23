@@ -103,9 +103,6 @@ export const __INTERNAL_VIEW_CONFIG: PartialViewConfig =
       }
     : {
         uiViewClassName: 'RCTView',
-        validAttributes: {
-          visionos_hoverEffect: true,
-        },
       };
 
 const ViewNativeComponent: HostComponent<Props> =
