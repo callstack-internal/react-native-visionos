@@ -200,6 +200,10 @@ const APIs: Array<RNTesterModuleInfo> = ([
     module: require('../examples/Crash/CrashExample'),
   },
   {
+    key: 'CursorExample',
+    module: require('../examples/Cursor/CursorExample'),
+  },
+  {
     key: 'DevSettings',
     module: require('../examples/DevSettings/DevSettingsExample'),
   },
