@@ -7,6 +7,10 @@
 #import <React/RCTUtils.h>
 #import "RCTXR-Swift.h"
 
+// Events
+static NSString *const RCTOpenImmersiveSpace = @"RCTOpenImmersiveSpace";
+static NSString *const RCTDismissImmersiveSpace = @"RCTDismissImmersiveSpace";
+
 @interface RCTXRModule () <NativeXRModuleSpec>
 @end
 
@@ -25,8 +29,7 @@ RCT_EXPORT_METHOD(endSession
   self->_immersiveBridgeView = nil;
   RCTExecuteOnMainQueue(^{
     if (self->_currentSessionId != nil) {
-      NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-      [notificationCenter postNotificationName:@"RCTDismissImmersiveSpace" object:self userInfo:@{@"id": self->_currentSessionId }];
+      [[NSNotificationCenter defaultCenter] postNotificationName:RCTDismissImmersiveSpace object:self userInfo:@{@"id": self->_currentSessionId}];
     }
   });
   _currentSessionId = nil;
@@ -41,6 +44,9 @@ RCT_EXPORT_METHOD(requestSession
                   : (RCTPromiseRejectBlock)reject)
 {
   RCTExecuteOnMainQueue(^{
+    if (!RCTSharedApplication().supportsMultipleScenes) {
+      reject(@"ERROR", @"Multiple scenes not supported", nil);
+    }
     UIWindow *keyWindow = RCTKeyWindow();
     UIViewController *rootViewController = keyWindow.rootViewController;
     
@@ -51,7 +57,7 @@ RCT_EXPORT_METHOD(requestSession
         [userInfoDict setValue:userInfo forKey:@"userInfo"];
       }
       NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-          [notificationCenter postNotificationName:@"RCTOpenImmersiveSpace" object:self userInfo:userInfoDict];
+          [notificationCenter postNotificationName:RCTOpenImmersiveSpace object:self userInfo:userInfoDict];
       self->_currentSessionId = sessionId;
       
       self->_immersiveBridgeView = [SwiftUIBridgeFactory makeImmersiveBridgeViewWithSpaceId:sessionId
@@ -77,73 +83,7 @@ RCT_EXPORT_METHOD(requestSession
     }
   });
 }
-RCT_EXPORT_METHOD(openWindow
-                  : (NSString *)windowId userInfo
-                  : (NSDictionary *)userInfo resolve
-                  : (RCTPromiseResolveBlock)resolve reject
-                  : (RCTPromiseRejectBlock)reject)
-{
-  RCTExecuteOnMainQueue(^{
-    if (!RCTSharedApplication().supportsMultipleScenes) {
-      reject(@"ERROR", @"Multiple scenes not supported", nil);
-    }
-    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-    NSMutableDictionary *userInfoDict = [[NSMutableDictionary alloc] init];
-    [userInfoDict setValue:windowId forKey:@"id"];
-    if (userInfo != nil) {
-      [userInfoDict setValue:userInfo forKey:@"userInfo"];
-    }
-    [notificationCenter postNotificationName:@"RCTOpenWindow" object:self userInfo:userInfoDict];
-    resolve(nil);
-  });
-}
 
-RCT_EXPORT_METHOD(closeWindow
-                  : (NSString *)windowId resolve
-                  : (RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
-{
-  RCTExecuteOnMainQueue(^{
-    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-    [notificationCenter postNotificationName:@"RCTDismissWindow" object:self userInfo:@{@"id": windowId}];
-    resolve(nil);
-  });
-}
-
-- (facebook::react::ModuleConstants<JS::NativeXRModule::Constants::Builder>)constantsToExport {
-  return [self getConstants];
-}
-
-- (facebook::react::ModuleConstants<JS::NativeXRModule::Constants>)getConstants {
-  __block facebook::react::ModuleConstants<JS::NativeXRModule::Constants> constants;
-  RCTUnsafeExecuteOnMainQueueSync(^{
-    constants = facebook::react::typedConstants<JS::NativeXRModule::Constants>({
-      .supportsMultipleScenes = RCTSharedApplication().supportsMultipleScenes
-    });
-  });
-  
-  return constants;
-}
-
-RCT_EXPORT_METHOD(updateWindow
-                  : (NSString *)windowId userInfo
-                  : (NSDictionary *)userInfo resolve
-                  : (RCTPromiseResolveBlock)resolve reject
-                  : (RCTPromiseRejectBlock)reject)
-{
-  RCTExecuteOnMainQueue(^{
-    if (!RCTSharedApplication().supportsMultipleScenes) {
-      reject(@"ERROR", @"Multiple scenes not supported", nil);
-    }
-    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-    NSMutableDictionary *userInfoDict = [[NSMutableDictionary alloc] init];
-    [userInfoDict setValue:windowId forKey:@"id"];
-    if (userInfo != nil) {
-      [userInfoDict setValue:userInfo forKey:@"userInfo"];
-    }
-    [notificationCenter postNotificationName:@"RCTUpdateWindow" object:self userInfo:userInfoDict];
-    resolve(nil);
-  });
-}
 
 - (void)removeViewController:(UIViewController*)viewController
 {

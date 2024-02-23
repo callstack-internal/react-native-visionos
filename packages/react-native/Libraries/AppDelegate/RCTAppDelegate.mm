@@ -81,22 +81,7 @@ static NSDictionary *updateInitialProps(NSDictionary *initialProps, BOOL isFabri
 
   RCTAppSetupPrepareApp(application, enableTM, *_reactNativeConfig);
     
-#if TARGET_OS_VISION
-  /// Bail out of UIWindow initializaiton to support multi-window scenarios in SwiftUI lifecycle.
   return YES;
-#else
-  UIView* rootView = [self viewWithModuleName:self.moduleName initialProperties:[self prepareInitialProps] launchOptions:launchOptions];
-    
-  self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-  
-  UIViewController *rootViewController = [self createRootViewController];
-  [self setRootView:rootView toRootViewController:rootViewController];
-  self.window.rootViewController = rootViewController;
-  self.window.windowScene.delegate = self;
-  [self.window makeKeyAndVisible];
-
-  return YES;
-#endif
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application

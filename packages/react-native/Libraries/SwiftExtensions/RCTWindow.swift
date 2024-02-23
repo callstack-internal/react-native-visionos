@@ -1,7 +1,8 @@
 import SwiftUI
+import React
 
 /**
-  `RCTWindow` is a SwiftUI struct that returns additional scenes.
+ `RCTWindow` is a SwiftUI struct that returns additional scenes.
  
  Example usage:
  ```
@@ -21,8 +22,15 @@ public struct RCTWindow : Scene {
   
   public var body: some Scene {
     WindowGroup(id: id) {
-      if let sceneData {
-        RCTRootViewRepresentable(moduleName: moduleName, initialProps: sceneData.props)
+      Group {
+        if let sceneData {
+          RCTRootViewRepresentable(moduleName: moduleName, initialProps: sceneData.props)
+        }
+      }
+      .onAppear {
+        if sceneData == nil {
+          RCTFatal(RCTErrorWithMessage("Passed scene data is nil, make sure to pass sceneContext to RCTWindow() in App.swift"))
+        }
       }
     }
   }
