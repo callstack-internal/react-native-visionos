@@ -8,8 +8,7 @@
 
 const forEachPackage = require('./monorepo/for-each-package');
 const newGithubReleaseUrl = require('./new-github-release-url');
-const {applyPackageVersions, publishPackage} = require('./npm-utils');
-const updateTemplatePackage = require('./releases/update-template-package');
+const {publishPackage} = require('./npm-utils');
 const {execSync} = require('child_process');
 const fs = require('fs');
 const path = require('path');
@@ -17,6 +16,37 @@ const {cat, echo, exit} = require('shelljs');
 const yargs = require('yargs');
 
 const REPO_ROOT = path.resolve(__dirname, '../');
+
+
+/**
+ * `package` is an object form of package.json
+ * `dependencies` is a map of dependency to version string
+ *
+ * This replaces both dependencies and devDependencies in package.json
+ */
+function applyPackageVersions(
+  originalPackageJson /*: PackageJSON */,
+  packageVersions /*: {[string]: string} */,
+) /*: PackageJSON */ {
+  const packageJson = {...originalPackageJson};
+
+  for (const name of Object.keys(packageVersions)) {
+    if (
+      packageJson.dependencies != null &&
+      packageJson.dependencies[name] != null
+    ) {
+      packageJson.dependencies[name] = packageVersions[name];
+    }
+
+    if (
+      packageJson.devDependencies != null &&
+      packageJson.devDependencies[name] != null
+    ) {
+      packageJson.devDependencies[name] = packageVersions[name];
+    }
+  }
+  return packageJson;
+}
 
 /**
  * This script updates core packages to the version of React Native that we are basing on,
@@ -125,18 +155,6 @@ function releaseOOT(
       setPackage(allPackages[pkg], newVersion, visionOSPackagesVersions);
     });
   }
-
-  // Update template package.json
-  updateTemplatePackage({
-    'react-native': reactNativeVersion,
-    ...visionOSPackagesVersions,
-  });
-
-  if (isNightly) {
-    updateTemplatePackage(corePackagesVersions);
-  }
-
-  echo(`Updating template and it's dependencies to ${reactNativeVersion}`);
 
   echo('Building packages...\n');
   execSync('node ./scripts/build/build.js', {

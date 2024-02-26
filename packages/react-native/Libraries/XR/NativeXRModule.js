@@ -3,6 +3,6 @@
  * @format
  */
 
-export * from '../../src/private/specs/visionos_modules/NativeXRModule';
-import NativeXRModule from '../../src/private/specs/visionos_modules/NativeXRModule';
+export * from '../../visionos_modules/NativeXRModule';
+import NativeXRModule from '../../visionos_modules/NativeXRModule';
 export default NativeXRModule;
