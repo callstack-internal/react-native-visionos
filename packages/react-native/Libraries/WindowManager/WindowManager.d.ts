@@ -1,6 +1,6 @@
 export interface WindowStatic {
   id: String;
-  open (props: Object): Promise<void>;
+  open (props?: Object): Promise<void>;
   update (props: Object): Promise<void>;
   close (): Promise<void>;
 }

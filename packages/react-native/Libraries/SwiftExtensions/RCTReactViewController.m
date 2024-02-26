@@ -61,9 +61,12 @@
 
 - (void)updateProps:(NSDictionary *)newProps {
   RCTRootView *rootView = (RCTRootView *)self.view;
-  if (![rootView.appProperties isEqualToDictionary:newProps]) {
+  if (rootView.appProperties == newProps) {
+    return;
+  }
+  
+  if (newProps != nil && ![rootView.appProperties isEqualToDictionary:newProps]) {
     [rootView setAppProperties:newProps];
   }
 }
-
 @end
