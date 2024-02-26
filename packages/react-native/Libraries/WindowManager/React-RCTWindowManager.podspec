@@ -21,11 +21,11 @@ header_search_paths = [
 ]
 
 Pod::Spec.new do |s|
-  s.name                   = "React-RCTXR"
+  s.name                   = "React-RCTWindowManager"
   s.version                = version
-  s.summary                = "XR module for React Native."
-  s.homepage               = "https://callstack.github.io/react-native-visionos-docs/"
-  s.documentation_url      = "https://callstack.github.io/react-native-visionos-docs/api/XR"
+  s.summary                = "Window manager module for React Native."
+  s.homepage               = "https://callstack.github.io/react-native-visionos-docs"
+  s.documentation_url      = "https://callstack.github.io/react-native-visionos-docs/api/windowmanager"
   s.license                = package["license"]
   s.author                 = "Callstack"
   s.platforms              = min_supported_versions
@@ -33,7 +33,7 @@ Pod::Spec.new do |s|
   s.source                 = source
   s.source_files           = "*.{m,mm,swift}"
   s.preserve_paths         = "package.json", "LICENSE", "LICENSE-docs"
-  s.header_dir             = "RCTXR"
+  s.header_dir             = "RCTWindowManager"
   s.pod_target_xcconfig    = {
                                "USE_HEADERMAP" => "YES",
                                "CLANG_CXX_LANGUAGE_STANDARD" => "c++20",
@@ -43,7 +43,7 @@ Pod::Spec.new do |s|
   s.dependency "RCT-Folly", folly_version
   s.dependency "RCTTypeSafety"
   s.dependency "React-jsi"
-  s.dependency "React-Core/RCTXRHeaders"
+  s.dependency "React-Core/RCTWindowManagerHeaders"
 
   add_dependency(s, "React-Codegen", :additional_framework_paths => ["build/generated/ios"])
   add_dependency(s, "ReactCommon", :subspec => "turbomodule/core", :additional_framework_paths => ["react/nativemodule/core"])
