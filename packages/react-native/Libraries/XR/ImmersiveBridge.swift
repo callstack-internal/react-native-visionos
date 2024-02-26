@@ -9,6 +9,7 @@ import SwiftUI
 
 public typealias CompletionHandlerType = (_ result: ImmersiveSpaceResult) -> Void
 
+#if os(visionOS)
 /**
  * Utility view used to bridge the gap between SwiftUI environment and UIKit.
  *
@@ -44,12 +45,17 @@ struct ImmersiveBridgeView: View {
       }
   }
 }
+#endif
 
-@objc public class ImmersiveBridgeFactory: NSObject {
+@objc public class SwiftUIBridgeFactory: NSObject {
   @objc public static func makeImmersiveBridgeView(
     spaceId: String,
     completionHandler: @escaping CompletionHandlerType
   ) -> UIViewController {
+#if os(visionOS)
     return UIHostingController(rootView: ImmersiveBridgeView(spaceId: spaceId, completionHandler: completionHandler))
+#else
+    return UIViewController()
+#endif
   }
 }
