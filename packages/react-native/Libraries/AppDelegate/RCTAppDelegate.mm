@@ -82,7 +82,11 @@
   BOOL enableFabric = self.fabricEnabled;
   UIView *rootView = RCTAppSetupDefaultRootView(bridge, moduleName, initProps, enableFabric);
 
+#if TARGET_OS_VISION
+  rootView.backgroundColor = [UIColor clearColor];
+#else
   rootView.backgroundColor = [UIColor systemBackgroundColor];
+#endif
 
   return rootView;
 }

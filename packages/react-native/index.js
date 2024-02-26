@@ -90,6 +90,7 @@ import typeof Platform from './Libraries/Utilities/Platform';
 import typeof useColorScheme from './Libraries/Utilities/useColorScheme';
 import typeof useWindowDimensions from './Libraries/Utilities/useWindowDimensions';
 import typeof Vibration from './Libraries/Vibration/Vibration';
+import typeof WindowManager from './Libraries/WindowManager/WindowManager';
 import typeof XR from './Libraries/XR/XR';
 import typeof YellowBox from './Libraries/YellowBox/YellowBoxDeprecated';
 
@@ -303,6 +304,9 @@ module.exports = {
   },
   get XR(): XR {
     return require('./Libraries/XR/XR');
+  },
+  get WindowManager(): WindowManager {
+    return require('./Libraries/WindowManager/WindowManager');
   },
   get StyleSheet(): StyleSheet {
     return require('./Libraries/StyleSheet/StyleSheet');

@@ -150,7 +150,11 @@ static NSDictionary *updateInitialProps(NSDictionary *initialProps, BOOL isFabri
         initWithSurface:surface
         sizeMeasureMode:RCTSurfaceSizeMeasureModeWidthExact | RCTSurfaceSizeMeasureModeHeightExact];
 
+#if TARGET_OS_VISION
+    surfaceHostingProxyRootView.backgroundColor = [UIColor clearColor];
+#else
     surfaceHostingProxyRootView.backgroundColor = [UIColor systemBackgroundColor];
+#endif
     return surfaceHostingProxyRootView;
   }
 
@@ -176,7 +180,11 @@ static NSDictionary *updateInitialProps(NSDictionary *initialProps, BOOL isFabri
   BOOL enableFabric = self->_configuration.fabricEnabled;
   UIView *rootView = RCTAppSetupDefaultRootView(bridge, moduleName, initProps, enableFabric);
 
+#if TARGET_OS_VISION
+  rootView.backgroundColor = [UIColor clearColor];
+#else
   rootView.backgroundColor = [UIColor systemBackgroundColor];
+#endif
 
   return rootView;
 }

@@ -25,4 +25,5 @@ Pod::Spec.new do |s|
 
   s.dependency "React-Core"
   s.dependency "React-RCTXR" 
+  s.dependency "React-RCTWindowManager" 
 end
