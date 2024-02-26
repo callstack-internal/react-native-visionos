@@ -31,7 +31,7 @@ The source for the React Native visionOS documentation and website is hosted on 
 
 Prerequisites: 
 - Download the latest Xcode (at least 15.2)
-- Install the latest version of CMake (at least v3.28.0)
+- Install the latest version of CMake (at least v3.29.0)
 
 Check out `rn-tester` [README.md](./packages/rn-tester/README.md) to build React Native from the source.
 

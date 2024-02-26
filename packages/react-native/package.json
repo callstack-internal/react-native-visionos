@@ -91,7 +91,9 @@
     "!template/package-lock.json",
     "!template/yarn.lock",
     "third-party-podspecs",
-    "types"
+    "types",
+    "visionos_modules",
+    "local-cli/localCommands.js"
   ],
   "scripts": {
     "prepack": "node ./scripts/prepack.js",
@@ -159,7 +161,7 @@
         "type": "modules",
         "ios": {},
         "android": {},
-        "jsSrcsDir": "src/private/specs/visionos_modules"
+        "jsSrcsDir": "visionos_modules"
       },
       {
         "name": "rncore",

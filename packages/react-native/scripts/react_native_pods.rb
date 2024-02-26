@@ -137,6 +137,7 @@ def use_react_native! (
   pod 'React-RCTFBReactNativeSpec', :path => "#{prefix}/React"
   pod 'React-RCTSwiftExtensions', :path => "#{prefix}/Libraries/SwiftExtensions"
   pod 'React-RCTXR', :path => "#{prefix}/Libraries/XR"
+  pod 'React-RCTWindowManager', :path => "#{prefix}/Libraries/WindowManager", :modular_headers => true
 
   if hermes_enabled
     setup_hermes!(:react_native_path => prefix)
@@ -167,8 +168,6 @@ def use_react_native! (
   pod 'fmt', :podspec => "#{prefix}/third-party-podspecs/fmt.podspec"
   pod 'RCT-Folly', :podspec => "#{prefix}/third-party-podspecs/RCT-Folly.podspec", :modular_headers => true
   pod 'fmt', :podspec => "#{prefix}/third-party-podspecs/fmt.podspec", :modular_headers => true
-  pod 'SocketRocket', :podspec => "#{prefix}/third-party-podspecs/SocketRocket.podspec", :modular_headers => true
-
 
   folly_config = get_folly_config()
   run_codegen!(

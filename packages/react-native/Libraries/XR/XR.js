@@ -7,9 +7,10 @@
 import NativeXRModule from './NativeXRModule';
 
 const XR = {
-  requestSession: (sessionId?: string): Promise<void> => {
+  // $FlowIgnore[unclear-type]
+  requestSession: (sessionId: string, userInfo: ?Object): Promise<void> => {
     if (NativeXRModule != null && NativeXRModule.requestSession != null) {
-      return NativeXRModule.requestSession(sessionId);
+      return NativeXRModule.requestSession(sessionId, userInfo);
     }
     return Promise.reject(new Error('NativeXRModule is not available'));
   },
@@ -18,15 +19,6 @@ const XR = {
       return NativeXRModule.endSession();
     }
     return Promise.reject(new Error('NativeXRModule is not available'));
-  },
-  // $FlowIgnore[unsafe-getters-setters]
-  get supportsMultipleScenes(): boolean {
-    if (NativeXRModule == null) {
-      return false;
-    }
-
-    const nativeConstants = NativeXRModule.getConstants();
-    return nativeConstants.supportsMultipleScenes || false;
   },
 };
 

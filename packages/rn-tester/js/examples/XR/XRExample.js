@@ -10,16 +10,18 @@
 
 'use strict';
 
-const {XR} = require('@callstack/react-native-visionos');
+const {WindowManager, XR} = require('@callstack/react-native-visionos');
 const React = require('react');
 const {Alert, Button, StyleSheet, Text, View} = require('react-native');
+
+const secondWindow = WindowManager.getWindow('SecondWindow');
 
 const OpenXRSession = () => {
   const [isOpen, setIsOpen] = React.useState(false);
 
   const openXRSession = async () => {
     try {
-      if (!XR.supportsMultipleScenes) {
+      if (!WindowManager.supportsMultipleScenes) {
         Alert.alert('Error', 'Multiple scenes are not supported');
         return;
       }
@@ -32,9 +34,24 @@ const OpenXRSession = () => {
   };
 
   const closeXRSession = async () => {
-    if (isOpen) {
-      await XR.endSession();
+    await XR.endSession();
+    setIsOpen(false);
+  };
+
+  const openWindow = async () => {
+    try {
+      await secondWindow.open({title: 'React Native Window'});
+    } catch (e) {
+      Alert.alert('Error', e.message);
     }
+  };
+
+  const updateWindow = async () => {
+    await secondWindow.update({title: 'Updated Window'});
+  };
+
+  const closeWindow = async () => {
+    await secondWindow.close();
   };
 
   return (
@@ -42,6 +59,9 @@ const OpenXRSession = () => {
       <Text style={styles.title}>Is XR session open: {isOpen}</Text>
       <Button title="Open XR Session" onPress={openXRSession} />
       <Button title="Close XR Session" onPress={closeXRSession} />
+      <Button title="Open Second Window" onPress={openWindow} />
+      <Button title="Update Second Window" onPress={updateWindow} />
+      <Button title="Close Second Window" onPress={closeWindow} />
     </View>
   );
 };
