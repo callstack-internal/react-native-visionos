@@ -107,7 +107,6 @@ static NSString *kBundlePath = @"js/RNTesterApp.ios";
   [RCTPushNotificationManager didFailToRegisterForRemoteNotificationsWithError:error];
 }
 
-#if !TARGET_OS_VISION
 #pragma mark - UNUserNotificationCenterDelegate
 
 // Required for the remoteNotificationReceived and localNotificationReceived events
@@ -137,7 +136,6 @@ static NSString *kBundlePath = @"js/RNTesterApp.ios";
   [RCTPushNotificationManager didReceiveNotification:notification];
   completionHandler();
 }
-#endif
 
 #pragma mark - New Arch Enabled settings
 

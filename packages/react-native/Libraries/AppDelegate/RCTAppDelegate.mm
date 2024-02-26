@@ -62,25 +62,7 @@
     [RCTComponentViewFactory currentComponentViewFactory].thirdPartyFabricComponentsProvider = self;
   }
 
-  if (self.automaticallyLoadReactNativeWindow) {
-    [self loadReactNativeWindow:launchOptions];
-  }
-
   return YES;
-}
-
-- (void)loadReactNativeWindow:(NSDictionary *)launchOptions
-{
-  UIView *rootView = [self.rootViewFactory viewWithModuleName:self.moduleName
-                                            initialProperties:self.initialProps
-                                                launchOptions:launchOptions];
-
-  self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-  UIViewController *rootViewController = [self createRootViewController];
-  [self setRootView:rootView toRootViewController:rootViewController];
-  _window.windowScene.delegate = self;
-  _window.rootViewController = rootViewController;
-  [_window makeKeyAndVisible];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
@@ -107,7 +89,11 @@
   BOOL enableFabric = self.fabricEnabled;
   UIView *rootView = RCTAppSetupDefaultRootView(bridge, moduleName, initProps, enableFabric);
 
+#if TARGET_OS_VISION
+  rootView.backgroundColor = [UIColor clearColor];
+#else
   rootView.backgroundColor = [UIColor systemBackgroundColor];
+#endif
 
   return rootView;
 }

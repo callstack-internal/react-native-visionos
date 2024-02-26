@@ -1,8 +1,7 @@
 
 export interface XRStatic {
-  requestSession(sessionId: string): Promise<void>;
+  requestSession(sessionId: string, userInfo: Object): Promise<void>;
   endSession(): Promise<void>;
-  supportsMultipleScenes: boolean;
 }
 
 export const XR: XRStatic;

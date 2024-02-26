@@ -97,9 +97,10 @@ const codegenCommand = {
 };
 
 commands.push(codegenCommand);
+commands.push(...localCommands);
 
 const config = {
-  commands: [bundleCommand, startCommand, codegenCommand, ...localCommands],
+  commands,
   platforms: {
     visionos: {
       npmPackageName: '@callstack/react-native-visionos',

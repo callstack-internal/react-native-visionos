@@ -59,7 +59,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// The window object, used to render the UViewControllers
 @property (nonatomic, strong, nonnull) UIWindow *window;
-@property (nonatomic, nullable) RCTBridge *bridge;
+/// Store last focused window to properly handle multi-window scenarios
+@property (nonatomic, weak, nullable) UIWindow *lastFocusedWindow;
+@property (nonatomic, strong, nullable) RCTBridge *bridge;
 @property (nonatomic, strong, nullable) NSString *moduleName;
 @property (nonatomic, strong, nullable) NSDictionary *initialProps;
 @property (nonatomic, strong, nonnull) RCTRootViewFactory *rootViewFactory;

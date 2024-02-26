@@ -27,7 +27,8 @@
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@react-native/babel-preset": "0.76.2",
-    "react-native": "0.76.2"
+    "react-native": "0.76.2",
+    "@callstack/react-native-visionos": "0.76.2"
   },
   "peerDependencies": {
     "react": "*",

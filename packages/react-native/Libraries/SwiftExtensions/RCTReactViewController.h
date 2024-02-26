@@ -13,4 +13,6 @@
 - (instancetype _Nonnull)initWithModuleName:(NSString *_Nonnull)moduleName
                                    initProps:(NSDictionary *_Nullable)initProps;
 
+-(void)updateProps:(NSDictionary *_Nullable)newProps;
+
 @end

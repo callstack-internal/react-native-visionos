@@ -31,9 +31,6 @@ function get_deployment_target {
     elif [[ $1 == "xrsimulator" || $1 == "xros" ]]; then
       echo "${XROS_DEPLOYMENT_TARGET}"
       return
-    elif [[ $1 == "xrsimulator" || $1 == "xros" ]]; then
-      echo ${XROS_DEPLOYMENT_TARGET}
-      return
     fi
 
     echo "${IPHONEOS_DEPLOYMENT_TARGET}"
