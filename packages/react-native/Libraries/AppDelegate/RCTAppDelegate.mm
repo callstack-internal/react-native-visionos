@@ -113,7 +113,11 @@ static NSDictionary *updateInitialProps(NSDictionary *initialProps, BOOL isFabri
                                                                    sizeMeasureMode:RCTSurfaceSizeMeasureModeWidthExact | RCTSurfaceSizeMeasureModeHeightExact];
     
     rootView = (RCTRootView *)surfaceHostingProxyRootView;
+#if TARGET_OS_VISION
+    rootView.backgroundColor = [UIColor clearColor];
+#else
     rootView.backgroundColor = [UIColor systemBackgroundColor];
+#endif
     [self customizeRootView:(RCTRootView *)rootView];
     return rootView;
   }
