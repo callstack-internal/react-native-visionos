@@ -2,6 +2,7 @@
 #import <React/RCTConstants.h>
 #import <React/RCTUtils.h>
 #import <React/RCTRootView.h>
+#import <React-RCTAppDelegate/RCTAppDelegate.h>
 
 @protocol RCTRootViewFactoryProtocol <NSObject>
 
@@ -29,12 +30,10 @@
   [[NSNotificationCenter defaultCenter] postNotificationName:RCTWindowFrameDidChangeNotification object:self];
 }
 
-// TODO: Temporary solution for creating RCTRootView on demand. This should be done through factory pattern, see here: https://github.com/facebook/react-native/pull/42263
 - (void)loadView {
-    id<UIApplicationDelegate> appDelegate = [UIApplication sharedApplication].delegate;
-    if ([appDelegate respondsToSelector:@selector(viewWithModuleName:initialProperties:launchOptions:)]) {
-        id<RCTRootViewFactoryProtocol> delegate = (id<RCTRootViewFactoryProtocol>)appDelegate;
-        self.view = [delegate viewWithModuleName:_moduleName initialProperties:_initialProps launchOptions:@{}];
+  RCTAppDelegate * appDelegate = (RCTAppDelegate *)[UIApplication sharedApplication].delegate;
+    if ([appDelegate respondsToSelector:@selector(rootViewFactory)]) {
+        self.view = [appDelegate.rootViewFactory viewWithModuleName:_moduleName initialProperties:_initialProps];
     } else {
         [NSException raise:@"UIApplicationDelegate:viewWithModuleName:initialProperties:launchOptions: not implemented"
                     format:@"Make sure you subclass RCTAppDelegate"];

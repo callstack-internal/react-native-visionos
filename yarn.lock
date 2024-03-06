@@ -2458,6 +2458,18 @@
     fast-xml-parser "^4.2.4"
     logkitty "^0.7.1"
 
+"@react-native-community/cli-platform-apple@13.5.1":
+  version "13.5.1"
+  resolved "https://registry.yarnpkg.com/@react-native-community/cli-platform-apple/-/cli-platform-apple-13.5.1.tgz#facd4a7c03f905fde1636ca1fbf21f4adf3ccdbb"
+  integrity sha512-vhS0RGR/q+XM0ycIcfsK2nWkcYLXifJj5thXRvZEhn800OorhRHf6qYaN/y6RV9ruZLkrevSg17/fBpXTibpdw==
+  dependencies:
+    "@react-native-community/cli-tools" "13.5.1"
+    chalk "^4.1.2"
+    execa "^5.0.0"
+    fast-xml-parser "^4.0.12"
+    glob "^7.1.3"
+    ora "^5.4.1"
+
 "@react-native-community/cli-platform-apple@13.6.1":
   version "13.6.1"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-platform-apple/-/cli-platform-apple-13.6.1.tgz#cd0d393e8328f439f453bf90fcfec48b350e2f3a"
@@ -2491,6 +2503,22 @@
     pretty-format "^26.6.2"
     serve-static "^1.13.1"
     ws "^7.5.1"
+
+"@react-native-community/cli-tools@13.5.1":
+  version "13.5.1"
+  resolved "https://registry.yarnpkg.com/@react-native-community/cli-tools/-/cli-tools-13.5.1.tgz#3e5b76e0083d106c5b0d06edf6fb5d6c9c456b23"
+  integrity sha512-IIC/xGjSJCKFnhedgP8FAL85IBYsEf80FNrPxmIcaHVTHxE4eXs5/Cc/d2NgL8BZGBT8QK3TV4XQuWbgDGBCoQ==
+  dependencies:
+    appdirsjs "^1.2.4"
+    chalk "^4.1.2"
+    find-up "^5.0.0"
+    mime "^2.4.1"
+    node-fetch "^2.6.0"
+    open "^6.2.0"
+    ora "^5.4.1"
+    semver "^7.5.2"
+    shell-quote "^1.7.3"
+    sudo-prompt "^9.0.0"
 
 "@react-native-community/cli-tools@13.6.1":
   version "13.6.1"

@@ -54,8 +54,6 @@ class BaseViewProps : public YogaStylableProps, public AccessibilityProps {
   
   Cursor cursor{};
 
-  Cursor cursor{};
-
   // Transform
   Transform transform{};
   TransformOrigin transformOrigin{

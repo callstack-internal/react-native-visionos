@@ -6,7 +6,7 @@
 require 'net/http'
 require 'rexml/document'
 
-HERMES_GITHUB_URL = "https://github.com/callstack/hermes-visionos.git"
+HERMES_GITHUB_URL = "https://github.com/facebook/hermes.git"
 ENV_BUILD_FROM_SOURCE = "RCT_BUILD_HERMES_FROM_SOURCE"
 
 module HermesEngineSourceType
