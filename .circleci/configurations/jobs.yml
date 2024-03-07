@@ -458,7 +458,7 @@ jobs:
             PACKAGE=$(cat build/react-native-package-version)
             PATH_TO_PACKAGE="$REPO_ROOT/build/$PACKAGE"
             node ./scripts/releases/update-template-package.js "{\"react-native\":\"file:$PATH_TO_PACKAGE\"}"
-            node ./scripts/template/initialize.js --reactNativeRootPath $REPO_ROOT --templateName $PROJECT_NAME --templateConfigPath "$REPO_ROOT/packages/react-native" --directory "/tmp/$PROJECT_NAME"
+            node ./scripts/e2e/init-template-e2e.js --projectName $PROJECT_NAME --templatePath "$REPO_ROOT/packages/react-native" --directory "/tmp/$PROJECT_NAME" --verbose
       - with_xcodebuild_cache:
           podfile_lock_path: << parameters.podfile_lock_path >>
           pods_build_folder: << parameters.pods_build_folder >>
@@ -1318,4 +1318,4 @@ jobs:
           command: echo "//registry.npmjs.org/:_authToken=${CIRCLE_NPM_TOKEN}" > ~/.npmrc
       - run:
           name: Find and publish all bumped packages
-          command: node ./scripts/monorepo/find-and-publish-all-bumped-packages.js
+          command: node ./scripts/releases-ci/publish-updated-packages.js
