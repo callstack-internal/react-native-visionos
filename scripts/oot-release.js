@@ -9,8 +9,7 @@
 const forEachPackage = require('./monorepo/for-each-package');
 const newGithubReleaseUrl = require('./new-github-release-url');
 const {applyPackageVersions, publishPackage} = require('./npm-utils');
-const {failIfTagExists} = require('./release-utils');
-const updateTemplatePackage = require('./update-template-package');
+const updateTemplatePackage = require('./releases/update-template-package');
 const {execSync} = require('child_process');
 const fs = require('fs');
 const path = require('path');
@@ -94,6 +93,7 @@ function releaseOOT(
   oneTimePassword,
   tag = 'latest',
 ) {
+  console.log('Releasing visionOS packages with tag: ', tag);
   const isNightly = tag === 'nightly';
   const allPackages = getPackages();
   const corePackages = Object.keys(allPackages).filter(packageName =>
@@ -150,7 +150,6 @@ function releaseOOT(
   }
 
   const gitTag = `v${newVersion}-visionos`;
-  failIfTagExists(gitTag, 'release');
   // Create git tag
   execSync(`git tag -a ${gitTag} -m "Release ${newVersion}"`, {
     cwd: REPO_ROOT,
@@ -164,7 +163,7 @@ function releaseOOT(
     .map(packagePath => {
       echo(`Releasing ${packagePath}`);
       const result = publishPackage(packagePath, {
-        tag,
+        tags: [tag],
         otp: oneTimePassword,
       });
 
