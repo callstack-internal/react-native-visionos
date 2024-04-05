@@ -37,7 +37,7 @@ public struct RCTMainWindow: Scene {
 /**
  Handles data sharing between React Native and SwiftUI views.
  */
-struct WindowHandlingModifier: ViewModifier {
+public struct WindowHandlingModifier: ViewModifier {
   typealias UserInfoType = Dictionary<String, AnyHashable>
   
   @Environment(\.reactContext) private var reactContext
@@ -45,7 +45,9 @@ struct WindowHandlingModifier: ViewModifier {
   @Environment(\.dismissWindow) private var dismissWindow
   @Environment(\.supportsMultipleWindows) private var supportsMultipleWindows
   
-  func body(content: Content) -> some View {
+  public init() {}
+  
+  public func body(content: Content) -> some View {
     // Attach listeners only if app supports multiple windows
     if supportsMultipleWindows {
       content
