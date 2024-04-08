@@ -81,6 +81,52 @@ RCT_EXPORT_MODULE()
   return YES;
 }
 
+// iOS 13+ - Corresponding apis for SceneDelegate
+
+// Both Deep Links and Universal Links - called when the app was previously NOT running
++ (BOOL)scene:(UIScene *)scene
+    willConnectTo:(UISceneSession *)session
+      options:(UISceneConnectionOptions *) connectionOptions
+{
+
+  // Deep Links
+  for (UIOpenURLContext *urlContext in connectionOptions.URLContexts) {
+    if (urlContext) {
+      postNotificationWithURL(urlContext.URL, self);
+    }
+  }
+
+  // Universal Links
+  for (NSUserActivity *userActivity in connectionOptions.userActivities) {
+    if ([userActivity.activityType isEqualToString:NSUserActivityTypeBrowsingWeb]) {
+      postNotificationWithURL(userActivity.webpageURL, self);
+    }
+  }
+
+  return YES;
+}
+
+// Deep Links - called when the app was previously running or suspended
++ (BOOL)scene:(UIScene *)scene
+openURLContexts:(NSSet<UIOpenURLContext *> *)URLContexts
+{
+  for (UIOpenURLContext *urlContext in URLContexts) {
+    if (urlContext) {
+      postNotificationWithURL(urlContext.URL, self);
+    }
+  }
+
+  return YES;
+}
+
+// Universal Links - called when the app was previously running or suspended
+// Called from SwiftUI's onOpenURL(perform:)
++ (BOOL)onOpenURL:(NSURL *)url
+{
+  postNotificationWithURL(url, self);
+  return YES;
+}
+
 - (void)handleOpenURLNotification:(NSNotification *)notification
 {
   [self sendEventWithName:@"url" body:notification.userInfo];

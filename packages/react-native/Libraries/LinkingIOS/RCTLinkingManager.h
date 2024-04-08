@@ -24,4 +24,13 @@
     continueUserActivity:(nonnull NSUserActivity *)userActivity
       restorationHandler:(nonnull void (^)(NSArray<id<UIUserActivityRestoring>> *_Nullable))restorationHandler;
 
++ (BOOL)scene:(nonnull UIScene *)scene
+    willConnectTo:(nonnull UISceneSession *)session
+      options:(nonnull UISceneConnectionOptions *)connectionOptions;
+
++ (BOOL)scene:(nonnull UIScene *)scene
+    openURLContexts:(nonnull NSSet<UIOpenURLContext *> *)URLContexts;
+
++ (BOOL)onOpenURL:(nonnull NSURL *)url;
+
 @end
