@@ -20,6 +20,7 @@ import SwiftUI
 public struct RCTMainWindow: Scene {
   var moduleName: String
   var initialProps: RCTRootViewRepresentable.InitialPropsType
+  var onOpenURLCallback: ((URL) -> ())?
   
   public init(moduleName: String, initialProps: RCTRootViewRepresentable.InitialPropsType = nil) {
     self.moduleName = moduleName
@@ -30,7 +31,18 @@ public struct RCTMainWindow: Scene {
     WindowGroup {
       RCTRootViewRepresentable(moduleName: moduleName, initialProps: initialProps)
         .modifier(WindowHandlingModifier())
+        .onOpenURL(perform: { url in
+          onOpenURLCallback?(url)
+        })
     }
+  }
+}
+
+extension RCTMainWindow {
+  public func onOpenURL(perform action: @escaping (URL) -> ()) -> some Scene {
+    var scene = self
+    scene.onOpenURLCallback = action
+    return scene
   }
 }
 
