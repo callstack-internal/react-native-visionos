@@ -1511,6 +1511,22 @@ PODS:
     - React-NativeModulesApple
     - ReactCodegen
     - ReactCommon
+  - React-RCTWindowManager (1000.0.0):
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTTypeSafety
+    - React-Core/RCTWindowManagerHeaders
+    - React-jsi
+    - React-NativeModulesApple
+    - ReactCodegen
+    - ReactCommon
+  - React-RCTXR (1000.0.0):
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTTypeSafety
+    - React-Core/RCTXRHeaders
+    - React-jsi
+    - React-NativeModulesApple
+    - ReactCodegen
+    - ReactCommon
   - React-rendererconsistency (1000.0.0)
   - React-rendererdebug (1000.0.0):
     - DoubleConversion
@@ -1737,6 +1753,8 @@ DEPENDENCIES:
   - React-RCTTest (from `./RCTTest`)
   - React-RCTText (from `../react-native/Libraries/Text`)
   - React-RCTVibration (from `../react-native/Libraries/Vibration`)
+  - React-RCTWindowManager (from `../react-native/Libraries/WindowManager`)
+  - React-RCTXR (from `../react-native/Libraries/XR`)
   - React-rendererconsistency (from `../react-native/ReactCommon/react/renderer/consistency`)
   - React-rendererdebug (from `../react-native/ReactCommon/react/renderer/debug`)
   - React-rncore (from `../react-native/ReactCommon`)
@@ -1867,6 +1885,10 @@ EXTERNAL SOURCES:
     :path: "../react-native/Libraries/Text"
   React-RCTVibration:
     :path: "../react-native/Libraries/Vibration"
+  React-RCTWindowManager:
+    :path: "../react-native/Libraries/WindowManager"
+  React-RCTXR:
+    :path: "../react-native/Libraries/XR"
   React-rendererconsistency:
     :path: "../react-native/ReactCommon/react/renderer/consistency"
   React-rendererdebug:
