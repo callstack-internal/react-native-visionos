@@ -11,6 +11,9 @@ struct RNTesterApp: App {
   
   var body: some Scene {
     RCTMainWindow(moduleName: "RNTesterApp")
+      .onOpenURL(perform: { url in
+        RCTLinkingManager.onOpenURL(url: url)
+      })
     
     RCTWindow(id: "SecondWindow", sceneData: reactContext.getSceneData(id: "SecondWindow"))
       .defaultSize(CGSize(width: 400, height: 700))
