@@ -61,6 +61,11 @@ RCT_EXPORT_MODULE()
                                                name:UIApplicationDidChangeStatusBarOrientationNotification
                                              object:nil];
 
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(interfaceFrameDidChange)
+                                               name:UIDeviceOrientationDidChangeNotification
+                                             object:nil];
+#endif
   _currentInterfaceDimensions = [self _exportedDimensions];
 
   [[NSNotificationCenter defaultCenter] addObserver:self
@@ -76,10 +81,6 @@ RCT_EXPORT_MODULE()
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(interfaceFrameDidChange)
                                                name:RCTWindowFrameDidChangeNotification
-                                             object:nil];
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(interfaceFrameDidChange)
-                                               name:UIDeviceOrientationDidChangeNotification
                                              object:nil];
 
   // TODO T175901725 - Registering the RCTDeviceInfo module to the notification is a short-term fix to unblock 0.73
@@ -111,6 +112,7 @@ RCT_EXPORT_MODULE()
   [[NSNotificationCenter defaultCenter] removeObserver:self
                                                   name:UIApplicationDidChangeStatusBarOrientationNotification
                                                 object:nil];
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
 #endif
   [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
 
@@ -120,7 +122,6 @@ RCT_EXPORT_MODULE()
 
   [[NSNotificationCenter defaultCenter] removeObserver:self name:RCTBridgeWillInvalidateModulesNotification object:nil];
 
-  [[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
 }
 
 static BOOL RCTIsIPhoneNotched()
