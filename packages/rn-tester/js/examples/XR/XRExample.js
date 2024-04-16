@@ -19,6 +19,17 @@ const secondWindow = WindowManager.getWindow('SecondWindow');
 const OpenXRSession = () => {
   const [isOpen, setIsOpen] = React.useState(false);
 
+  React.useEffect(() => {
+    const listener = WindowManager.addEventListener(
+      'windowStateDidChange',
+      data => {
+        console.log('Window state changed to:', data);
+      },
+    );
+    return () => {
+      listener?.remove();
+    };
+  }, []);
   const openXRSession = async () => {
     try {
       if (!WindowManager.supportsMultipleScenes) {
