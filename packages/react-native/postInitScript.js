@@ -17,6 +17,11 @@ function printInitScript(
 
   const instructions = `
     ${chalk.cyan(`Run instructions for ${chalk.bold('visionOS')}`)}:
+    • Install Cocoapods
+      • bundle install # you need to run this only once in your project.
+      • bundle exec pod install
+      • cd ..
+      
     • npx react-native run-visionos
     ${chalk.dim('- or -')}
     • Open ${relativeXcodeProjectPath} in Xcode or run "xed -b ${relativeXcodeProjectPath}"
