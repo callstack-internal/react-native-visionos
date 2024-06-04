@@ -19,10 +19,6 @@ export interface Spec extends TurboModule {
   // $FlowIgnore[unclear-type]
   +updateWindow: (windowId: string, userInfo: Object) => Promise<void>;
   +closeWindow: (windowId: string) => Promise<void>;
-
-  // RCTEventEmitter
-  +addListener: (eventName: string) => void;
-  +removeListeners: (count: number) => void;
 }
 
 export default (TurboModuleRegistry.get<Spec>('WindowManager'): ?Spec);

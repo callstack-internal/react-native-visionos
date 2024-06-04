@@ -13,8 +13,6 @@ public struct RCTWindow : Scene {
   var id: String
   var sceneData: RCTSceneData?
   var moduleName: String
-  @Environment(\.scenePhase) private var scenePhase
-
   
   public init(id: String, moduleName: String, sceneData: RCTSceneData?) {
     self.id = id
@@ -27,9 +25,6 @@ public struct RCTWindow : Scene {
       Group {
         if let sceneData {
           RCTRootViewRepresentable(moduleName: moduleName, initialProps: sceneData.props)
-            .onChange(of: scenePhase) { _, newValue in
-              postWindowStateNotification(windowId: id, state: newValue)
-            }
         }
       }
       .onAppear {

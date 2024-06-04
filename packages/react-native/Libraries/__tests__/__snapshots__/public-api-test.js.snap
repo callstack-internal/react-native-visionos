@@ -9035,17 +9035,16 @@ declare export default typeof NativeWindowManager;
 `;
 
 exports[`public API should not change unintentionally Libraries/WindowManager/WindowManager.js 1`] = `
-"export type WindowStateValues = \\"inactive\\" | \\"background\\" | \\"active\\";
-type WindowManagerEventDefinitions = {
-  windowStateDidChange: [{ state: WindowStateValues, windowId: string }],
+"declare const WindowManager: {
+  getWindow: (id: string) => Window,
+  get supportsMultipleScenes(): boolean,
 };
-declare class WindowManager {
-  static getWindow: $FlowFixMe;
-  static addEventListener<K: $Keys<WindowManagerEventDefinitions>>(
-    type: K,
-    handler: (...$ElementType<WindowManagerEventDefinitions, K>) => void
-  ): ?EventSubscription;
-  static get supportsMultipleScenes(): boolean;
+declare class Window {
+  id: string;
+  constructor(id: string): void;
+  open(props: ?Object): Promise<void>;
+  close(): Promise<void>;
+  update(props: ?Object): Promise<void>;
 }
 declare module.exports: WindowManager;
 "
