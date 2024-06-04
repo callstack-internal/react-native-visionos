@@ -9,14 +9,18 @@
 
 import chalk from 'chalk';
 import {logger} from '@react-native-community/cli-tools';
+import path from 'path';
 
 function printInitScript(
   projectName: string,
 ) {
   const relativeXcodeProjectPath = `visionos/${projectName}.xcworkspace`;
+  const projectDir = path.resolve();
 
   const instructions = `
     ${chalk.cyan(`Run instructions for ${chalk.bold('visionOS')}`)}:
+    • cd "${projectDir}/ios"
+
     • Install Cocoapods
       • bundle install # you need to run this only once in your project.
       • bundle exec pod install
