@@ -1,12 +1,14 @@
 name: Test All
 
-on:
-  workflow_dispatch:
-  pull_request:
-  push:
-    branches:
-      - main
-      - "*-stable"
+# on:
+#     workflow_dispatch:
+#     pull_request:
+#     push:
+#       tags:
+#         - 'v*'
+#     # nightly build @ 2:15 AM UTC
+#     schedule:
+#       - cron: '15 2 * * *'
 
 jobs:
   set_release_type:
