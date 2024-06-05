@@ -10,40 +10,13 @@
 static NSString *const RCTOpenWindow = @"RCTOpenWindow";
 static NSString *const RCTDismissWindow = @"RCTDismissWindow";
 static NSString *const RCTUpdateWindow = @"RCTUpdateWindow";
-static NSString *const RCTWindowStateDidChangeEvent = @"windowStateDidChange";
 
-static NSString *const RCTWindowStateDidChange = @"RCTWindowStateDidChange";
-
-@interface RCTWindowManager () <NativeWindowManagerSpec> {
-  BOOL _hasAnyListeners;
-}
+@interface RCTWindowManager () <NativeWindowManagerSpec>
 @end
 
 @implementation RCTWindowManager
 
 RCT_EXPORT_MODULE(WindowManager)
-
-- (void)initialize {
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(handleWindowStateChanges:)
-                                               name:RCTWindowStateDidChange
-                                             object:nil];
-}
-
-- (void)invalidate {
-  [super invalidate];
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
--(void)startObserving
-{
-  _hasAnyListeners = YES;
-}
-
-- (void)stopObserving
-{
-  _hasAnyListeners = NO;
-}
 
 RCT_EXPORT_METHOD(openWindow
                   : (NSString *)windowId userInfo
@@ -95,17 +68,6 @@ RCT_EXPORT_METHOD(updateWindow
   });
 }
 
-- (void) handleWindowStateChanges:(NSNotification *)notification {
-  
-  if (_hasAnyListeners) {
-   [self sendEventWithName:RCTWindowStateDidChangeEvent body:notification.userInfo];
-  }
-}
-
-- (NSArray<NSString *> *)supportedEvents {
-  return @[RCTWindowStateDidChangeEvent];
-}
-
 - (facebook::react::ModuleConstants<JS::NativeWindowManager::Constants::Builder>)constantsToExport {
   return [self getConstants];
 }
@@ -123,15 +85,6 @@ RCT_EXPORT_METHOD(updateWindow
 
 - (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:(const facebook::react::ObjCTurboModule::InitParams &)params {
   return std::make_shared<facebook::react::NativeWindowManagerSpecJSI>(params);
-}
-
-+ (BOOL)requiresMainQueueSetup {
-  return YES;
-}
-
-- (dispatch_queue_t)methodQueue
-{
-  return dispatch_get_main_queue();
 }
 
 @end

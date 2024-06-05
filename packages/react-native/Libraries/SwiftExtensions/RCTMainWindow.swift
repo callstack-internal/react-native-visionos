@@ -21,10 +21,6 @@ public struct RCTMainWindow: Scene {
   var moduleName: String
   var initialProps: RCTRootViewRepresentable.InitialPropsType
   var onOpenURLCallback: ((URL) -> ())?
-  let windowId: String = "0"
-  
-  @Environment(\.scenePhase) private var scenePhase
-  
   
   public init(moduleName: String, initialProps: RCTRootViewRepresentable.InitialPropsType = nil) {
     self.moduleName = moduleName
@@ -35,25 +31,11 @@ public struct RCTMainWindow: Scene {
     WindowGroup {
       RCTRootViewRepresentable(moduleName: moduleName, initialProps: initialProps)
         .modifier(WindowHandlingModifier())
-        .onChange(of: scenePhase, { _, newValue in
-          postWindowStateNotification(windowId: windowId, state: newValue)
-        })
         .onOpenURL(perform: { url in
           onOpenURLCallback?(url)
         })
     }
   }
-}
-
-public func postWindowStateNotification(windowId: String, state: SwiftUI.ScenePhase) {
-  NotificationCenter.default.post(
-    name: NSNotification.Name(rawValue: "RCTWindowStateDidChange"),
-    object: nil,
-    userInfo: [
-      "windowId": windowId,
-      "state": "\(state)"
-    ]
-  )
 }
 
 extension RCTMainWindow {

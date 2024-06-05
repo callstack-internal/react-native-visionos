@@ -1,50 +1,26 @@
 /**
  * @format
- * @flow strict-local
+ * @flow strict
  * @jsdoc
  */
 
-import NativeEventEmitter from '../EventEmitter/NativeEventEmitter';
-import Platform from '../Utilities/Platform';
-import {type EventSubscription} from '../vendor/emitter/EventEmitter';
 import NativeWindowManager from './NativeWindowManager';
 
-export type WindowStateValues = 'inactive' | 'background' | 'active';
-
-type WindowManagerEventDefinitions = {
-  windowStateDidChange: [{state: WindowStateValues, windowId: string}],
-};
-
-let emitter: ?NativeEventEmitter<WindowManagerEventDefinitions>;
-
-if (NativeWindowManager != null) {
-  emitter = new NativeEventEmitter<WindowManagerEventDefinitions>(
-    Platform.OS !== 'ios' ? null : NativeWindowManager,
-  );
-}
-
-class WindowManager {
-  static getWindow = function (id: string): Window {
+const WindowManager = {
+  getWindow: function (id: string): Window {
     return new Window(id);
-  };
-
-  static addEventListener<K: $Keys<WindowManagerEventDefinitions>>(
-    type: K,
-    handler: (...$ElementType<WindowManagerEventDefinitions, K>) => void,
-  ): ?EventSubscription {
-    return emitter?.addListener(type, handler);
-  }
+  },
 
   // $FlowIgnore[unsafe-getters-setters]
-  static get supportsMultipleScenes(): boolean {
+  get supportsMultipleScenes(): boolean {
     if (NativeWindowManager == null) {
       return false;
     }
 
     const nativeConstants = NativeWindowManager.getConstants();
     return nativeConstants.supportsMultipleScenes || false;
-  }
-}
+  },
+};
 
 class Window {
   id: string;
