@@ -592,6 +592,7 @@ UIWindow *__nullable RCTKeyWindow(void)
     if (scene.session.role == UISceneSessionRoleImmersiveSpaceApplication) {
       continue;
     }
+    
 #endif
 
     if (scene.activationState == UISceneActivationStateForegroundActive) {
@@ -608,6 +609,24 @@ UIWindow *__nullable RCTKeyWindow(void)
   UIScene *sceneToUse = foregroundActiveScene ? foregroundActiveScene : foregroundInactiveScene;
   UIWindowScene *windowScene = (UIWindowScene *)sceneToUse;
 
+#if TARGET_OS_VISION
+    // Ornaments are supported only on visionOS.
+    // When clicking on an ornament it becomes the keyWindow.
+    // Presenting a RN modal from ornament leads to a crash.
+    UIWindow* keyWindow = windowScene.keyWindow;
+    BOOL isOrnament = [keyWindow.debugDescription containsString:@"Ornament"];
+    if (isOrnament) {
+      for (UIWindow *window in windowScene.windows) {
+        BOOL isOrnament = [window.debugDescription containsString:@"Ornament"];
+        if (window != keyWindow && !isOrnament) {
+          return window;
+        }
+      }
+    }
+    
+    return keyWindow;
+#endif
+  
   if (@available(iOS 15.0, *)) {
     return windowScene.keyWindow;
   }
