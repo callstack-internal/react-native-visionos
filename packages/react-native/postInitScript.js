@@ -19,7 +19,7 @@ function printInitScript(
 
   const instructions = `
     ${chalk.cyan(`Run instructions for ${chalk.bold('visionOS')}`)}:
-    • cd "${projectDir}/ios"
+    • cd "${projectDir}/visionos"
 
     • Install Cocoapods
       • bundle install # you need to run this only once in your project.
