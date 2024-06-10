@@ -15,7 +15,14 @@ struct RNTesterApp: App {
         RCTLinkingManager.onOpenURL(url: url)
       })
     
-    RCTWindow(id: "SecondWindow", sceneData: reactContext.getSceneData(id: "SecondWindow"))
+    RCTWindow(id: "SecondWindow", sceneData: reactContext.getSceneData(id: "SecondWindow")) { rootView in
+      rootView.ornament(attachmentAnchor: .scene(.bottom)) {
+        VStack {
+          Button("Hey!") {}
+        }
+        .glassBackgroundEffect()
+      }
+    }
       .defaultSize(CGSize(width: 400, height: 700))
     
     ImmersiveSpace(id: "TestImmersiveSpace") {}
