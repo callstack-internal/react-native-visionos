@@ -64,8 +64,12 @@
     return;
   }
   
+  
+  
   if (newProps != nil && ![rootView.appProperties isEqualToDictionary:newProps]) {
-    [rootView setAppProperties:newProps];
+    NSMutableDictionary *newProperties = [rootView.appProperties mutableCopy];
+    [newProperties setValuesForKeysWithDictionary:newProps];
+    [rootView setAppProperties:newProperties];
   }
 }
 @end

@@ -13,19 +13,16 @@ public struct RCTWindow : Scene {
   var id: String
   var sceneData: RCTSceneData?
   var moduleName: String
-  
-  public init(id: String, moduleName: String, sceneData: RCTSceneData?) {
-    self.id = id
-    self.moduleName = moduleName
-    self.sceneData = sceneData
+  var contentView: AnyView?
+
+  func getRootView(sceneData: RCTSceneData?) -> RCTRootViewRepresentable {
+    return RCTRootViewRepresentable(moduleName: moduleName, initialProps: sceneData?.props ?? [:])
   }
   
   public var body: some Scene {
     WindowGroup(id: id) {
       Group {
-        if let sceneData {
-          RCTRootViewRepresentable(moduleName: moduleName, initialProps: sceneData.props)
-        }
+        contentView
       }
       .onAppear {
         if sceneData == nil {
@@ -37,9 +34,64 @@ public struct RCTWindow : Scene {
 }
 
 extension RCTWindow {
+  /// Creates new RCTWindow.
+  ///
+  /// - Parameters:
+  ///   - id: Unique identifier of the window.
+  ///   - moduleName: Name of the module registered using `AppRegistry.registerComponent()`
+  ///   - sceneData: Data of the scene. Used to sync JS state between windows.
+  public init(id: String, moduleName: String, sceneData: RCTSceneData?) {
+    self.id = id
+    self.moduleName = moduleName
+    self.sceneData = sceneData
+    self.contentView = AnyView(getRootView(sceneData: sceneData))
+  }
+  
+  /// Creates new RCTWindow with additional closure to allow applying modifiers to rootView.
+  ///
+  /// - Parameters:
+  ///   - id: Unique identifier of the window.
+  ///   - moduleName: Name of the module registered using `AppRegistry.registerComponent()`
+  ///   - sceneData: Data of the scene. Used to sync JS state between windows.
+  ///   - contentView: Closure which accepts rootView, allows to apply additional modifiers to React Native rootView.
+  public init<Content: View>(
+    id: String,
+    moduleName: String,
+    sceneData: RCTSceneData?,
+    @ViewBuilder contentView: @escaping (_ view: RCTRootViewRepresentable) -> Content
+  ) {
+    self.id = id
+    self.moduleName = moduleName
+    self.sceneData = sceneData
+    self.contentView = AnyView(contentView(getRootView(sceneData: sceneData)))
+  }
+  
+  /// Creates new RCTWindow with additional closure to allow applying modifiers to rootView.
+  ///
+  /// - Parameters:
+  ///   - id: Unique identifier of the window. Same id will be used for moduleName.
+  ///   - sceneData: Data of the scene. Used to sync JS state between windows.
+  ///   - contentView: Closure which accepts rootView, allows to apply additional modifiers to React Native rootView.
+  public init<Content: View>(
+    id: String,
+    sceneData: RCTSceneData?,
+    @ViewBuilder contentView: @escaping (_ view: RCTRootViewRepresentable) -> Content
+  ) {
+    self.id = id
+    self.moduleName = id
+    self.sceneData = sceneData
+    self.contentView = AnyView(contentView(getRootView(sceneData: sceneData)))
+  }
+  
+  /// Creates new RCTWindow.
+  ///
+  /// - Parameters:
+  ///   - id: Unique identifier of the window. Same id will be used for moduleName.
+  ///   - sceneData: Data of the scene. Used to sync JS state between windows.
   public init(id: String, sceneData: RCTSceneData?) {
     self.id = id
     self.moduleName = id
     self.sceneData = sceneData
+    self.contentView = AnyView(getRootView(sceneData: sceneData))
   }
 }
