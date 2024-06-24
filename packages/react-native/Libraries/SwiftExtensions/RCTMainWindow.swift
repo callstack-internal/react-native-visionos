@@ -1,5 +1,4 @@
 import SwiftUI
-import React
 
 /**
  This SwiftUI struct returns main React Native scene. It should be used only once as it conains setup code.
@@ -22,11 +21,11 @@ public struct RCTMainWindow: Scene {
   var moduleName: String
   var initialProps: RCTRootViewRepresentable.InitialPropsType
   var onOpenURLCallback: ((URL) -> ())?
-  var devMenuPlacement: ToolbarPlacement = .bottomOrnament
+  var devMenuSceneAnchor: UnitPoint?
   var contentView: AnyView?
   
   var rootView: RCTRootViewRepresentable {
-    RCTRootViewRepresentable(moduleName: moduleName, initialProps: initialProps)
+    RCTRootViewRepresentable(moduleName: moduleName, initialProps: initialProps, devMenuSceneAnchor: devMenuSceneAnchor)
   }
 
   /// Creates new RCTMainWindowWindow.
@@ -38,11 +37,11 @@ public struct RCTMainWindow: Scene {
   public init(
     moduleName: String,
     initialProps: RCTRootViewRepresentable.InitialPropsType = nil,
-    devMenuPlacement: ToolbarPlacement = .bottomOrnament
+    devMenuSceneAnchor: UnitPoint? = .bottom
   ) {
     self.moduleName = moduleName
     self.initialProps = initialProps
-    self.devMenuPlacement = devMenuPlacement
+    self.devMenuSceneAnchor = devMenuSceneAnchor
     self.contentView = AnyView(rootView)
   }
   
@@ -56,12 +55,12 @@ public struct RCTMainWindow: Scene {
   public init<Content: View>(
     moduleName: String,
     initialProps: RCTRootViewRepresentable.InitialPropsType = nil,
-    devMenuPlacement: ToolbarPlacement = .bottomOrnament,
+    devMenuSceneAnchor: UnitPoint? = .bottom,
     @ViewBuilder contentView: @escaping (_ view: RCTRootViewRepresentable) -> Content
   ) {
     self.moduleName = moduleName
     self.initialProps = initialProps
-    self.devMenuPlacement = devMenuPlacement
+    self.devMenuSceneAnchor = devMenuSceneAnchor
     self.contentView = AnyView(contentView(rootView))
   }
   
@@ -72,11 +71,6 @@ public struct RCTMainWindow: Scene {
         .onOpenURL(perform: { url in
           onOpenURLCallback?(url)
         })
-#if DEBUG
-        .toolbar {
-          DevMenuView(placement: .bottomOrnament)
-        }
-#endif
     }
   }
 }
@@ -139,29 +133,3 @@ public struct WindowHandlingModifier: ViewModifier {
   }
 }
 
-/**
- Toolbar which displays additional controls to easily open dev menu and trigger reload command.
- */
-struct DevMenuView: ToolbarContent {
-  let placement: ToolbarItemPlacement
-  
-  var body: some ToolbarContent {
-    ToolbarItem(placement: placement) {
-      Button(action: {
-        RCTTriggerReloadCommandListeners("User Reload")
-      }, label: {
-        Image(systemName: "arrow.clockwise")
-      })
-    }
-    ToolbarItem(placement: placement) {
-      Button(action: {
-        NotificationCenter.default.post(
-          Notification(name: Notification.Name("RCTShowDevMenuNotification"), object: nil)
-        )
-      },
-             label: {
-        Image(systemName: "filemenu.and.selection")
-      })
-    }
-  }
-}

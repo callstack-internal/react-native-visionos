@@ -16,7 +16,7 @@ public struct RCTWindow : Scene {
   var contentView: AnyView?
 
   func getRootView(sceneData: RCTSceneData?) -> RCTRootViewRepresentable {
-    return RCTRootViewRepresentable(moduleName: moduleName, initialProps: sceneData?.props ?? [:])
+    return RCTRootViewRepresentable(moduleName: moduleName, initialProps: sceneData?.props ?? [:], devMenuSceneAnchor: nil)
   }
   
   public var body: some Scene {
