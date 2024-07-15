@@ -52,7 +52,6 @@ RCT_EXPORT_MODULE()
                                                name:RCTAccessibilityManagerDidUpdateMultiplierNotification
                                              object:[_moduleRegistry moduleForName:"AccessibilityManager"]];
     
-#if !TARGET_OS_VISION
 
   _currentInterfaceDimensions = [self _exportedDimensions];
 

@@ -162,7 +162,7 @@
         "type": "modules",
         "ios": {},
         "android": {},
-        "jsSrcsDir": "src/private/specs/visionos_modules"
+        "jsSrcsDir": "visionos_modules"
       },
       {
         "name": "rncore",

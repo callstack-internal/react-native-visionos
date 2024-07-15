@@ -68,6 +68,9 @@
   }
 
   return _supportedInterfaceOrientations;
+#else
+  return UIInterfaceOrientationUnknown;
+#endif
 }
 #endif // RCT_DEV
 
