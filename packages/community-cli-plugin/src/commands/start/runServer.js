@@ -122,6 +122,7 @@ async function runServer(
   let reportEvent: (event: TerminalReportableEvent) => void;
   const terminal = new Terminal(process.stdout);
   const ReporterImpl = getReporterImpl(args.customLogReporterPath);
+  // $FlowIgnore fix this
   const terminalReporter = new ReporterImpl(terminal);
   const reporter: Reporter = {
     update(event: TerminalReportableEvent) {
