@@ -1,14 +1,12 @@
 name: Test All
 
-# on:
-#     workflow_dispatch:
-#     pull_request:
-#     push:
-#       tags:
-#         - 'v*'
-#     # nightly build @ 2:15 AM UTC
-#     schedule:
-#       - cron: '15 2 * * *'
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+      - "*-stable"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -16,6 +14,7 @@ concurrency:
 
 jobs:
   set_release_type:
+    if: github.repository == 'facebook/react-native'
     runs-on: ubuntu-latest
     outputs:
       RELEASE_TYPE: ${{ steps.set_release_type.outputs.RELEASE_TYPE }}
@@ -37,6 +36,7 @@ jobs:
           fi
 
   prepare_hermes_workspace:
+    if: github.repository == 'facebook/react-native'
     runs-on: ubuntu-latest
     env:
       HERMES_WS_DIR: /tmp/hermes
@@ -55,6 +55,7 @@ jobs:
           hermes-version-file: ${{ env.HERMES_VERSION_FILE }}
 
   build_hermesc_apple:
+    if: github.repository == 'facebook/react-native'
     runs-on: macos-13
     needs: prepare_hermes_workspace
     env:
@@ -69,6 +70,7 @@ jobs:
           react-native-version: ${{ needs.prepare_hermes_workspace.outputs.react-native-version }}
 
   build_apple_slices_hermes:
+    if: github.repository == 'facebook/react-native'
     runs-on: macos-14
     needs: [build_hermesc_apple, prepare_hermes_workspace]
     env:
@@ -95,6 +97,7 @@ jobs:
           react-native-version: ${{ needs.prepare_hermes_workspace.outputs.react-native-version }}
 
   build_hermes_macos:
+    if: github.repository == 'facebook/react-native'
     runs-on: macos-13
     needs: [build_apple_slices_hermes, prepare_hermes_workspace]
     env:
@@ -116,6 +119,7 @@ jobs:
           flavor: ${{ matrix.flavor }}
 
   test_ios_rntester_ruby_3_2_0:
+    if: github.repository == 'facebook/react-native'
     runs-on: macos-13
     needs:
       [build_apple_slices_hermes, prepare_hermes_workspace, build_hermes_macos]
@@ -133,6 +137,7 @@ jobs:
           react-native-version: ${{ needs.prepare_hermes_workspace.outputs.react-native-version }}
 
   test_ios_rntester_dynamic_frameworks:
+    if: github.repository == 'facebook/react-native'
     runs-on: macos-13
     needs:
       [build_apple_slices_hermes, prepare_hermes_workspace, build_hermes_macos]
@@ -156,6 +161,7 @@ jobs:
           react-native-version: ${{ needs.prepare_hermes_workspace.outputs.react-native-version }}
 
   test_ios_rntester:
+    if: github.repository == 'facebook/react-native'
     runs-on: macos-13
     needs:
       [build_apple_slices_hermes, prepare_hermes_workspace, build_hermes_macos]
@@ -166,13 +172,32 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        jsengine: [Hermes, JSC]
         architecture: [NewArch, OldArch]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Run it
         uses: ./.github/actions/test-ios-rntester
+        with:
+          jsengine: ${{ matrix.jsengine }}
+          architecture: ${{ matrix.architecture }}
+          run-unit-tests: "false"
+          use-frameworks: StaticLibraries
+          hermes-version: ${{ needs.prepare_hermes_workspace.outputs.hermes-version }}
+          react-native-version: ${{ needs.prepare_hermes_workspace.outputs.react-native-version }}
+
+  test_visionos_rntester:
+    runs-on: macos-14-xlarge
+    continue-on-error: true
+    strategy:
+      fail-fast: false
+      matrix:
+        architecture: [NewArch, OldArch]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run it
+        uses: ./.github/actions/test-visionos-rntester
         with:
           jsengine: ${{ matrix.jsengine }}
           architecture: ${{ matrix.architecture }}
@@ -238,7 +263,7 @@ jobs:
       - name: Run yarn
         uses: ./.github/actions/yarn-install-with-cache
       - name: Setup ruby
-        uses: ruby/setup-ruby@v1.170.0
+        uses: ruby/setup-ruby@v1.171.0
         with:
           ruby-version: 2.6.10
       - name: Download Hermes
@@ -342,6 +367,7 @@ jobs:
           install-java: 'false'
 
   build_hermesc_linux:
+    if: github.repository == 'facebook/react-native'
     runs-on: ubuntu-latest
     needs: prepare_hermes_workspace
     env:
@@ -357,6 +383,7 @@ jobs:
           react-native-version: ${{ needs.prepare_hermes_workspace.outputs.react-native-version }}
 
   build_hermesc_windows:
+    if: github.repository == 'facebook/react-native'
     runs-on: windows-2019
     needs: prepare_hermes_workspace
     env:
@@ -376,6 +403,7 @@ jobs:
           react-native-version: ${{ needs.prepare_hermes_workspace.outputs.react-native-version }}
 
   build_android:
+    if: github.repository == 'facebook/react-native'
     runs-on: 8-core-ubuntu
     needs: [set_release_type]
     container:
@@ -516,6 +544,7 @@ jobs:
           compression-level: 0
 
   test_ios_helloworld_with_ruby_3_2_0:
+    if: github.repository == 'facebook/react-native'
     runs-on: macos-13
     needs: [prepare_hermes_workspace, build_hermes_macos] # prepare_hermes_workspace must be there because we need its reference to retrieve a couple of outputs
     env:
@@ -534,6 +563,7 @@ jobs:
           react-native-version: ${{ needs.prepare_hermes_workspace.outputs.react-native-version }}
 
   test_ios_helloworld:
+    if: github.repository == 'facebook/react-native'
     runs-on: macos-13
     needs: [prepare_hermes_workspace, build_hermes_macos] # prepare_hermes_workspace must be there because we need its reference to retrieve a couple of outputs
     strategy:
@@ -577,6 +607,7 @@ jobs:
 
   lint:
     runs-on: ubuntu-latest
+    if: github.repository == 'facebook/react-native'
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
