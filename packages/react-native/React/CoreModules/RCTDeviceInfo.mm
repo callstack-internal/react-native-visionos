@@ -51,7 +51,6 @@ RCT_EXPORT_MODULE()
                                            selector:@selector(didReceiveNewContentSizeMultiplier)
                                                name:RCTAccessibilityManagerDidUpdateMultiplierNotification
                                              object:[_moduleRegistry moduleForName:"AccessibilityManager"]];
-    
 
   _currentInterfaceDimensions = [self _exportedDimensions];
 
@@ -105,12 +104,7 @@ RCT_EXPORT_MODULE()
   [[NSNotificationCenter defaultCenter] removeObserver:self
                                                   name:RCTAccessibilityManagerDidUpdateMultiplierNotification
                                                 object:[_moduleRegistry moduleForName:"AccessibilityManager"]];
-#if !TARGET_OS_VISION
-  [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                  name:UIApplicationDidChangeStatusBarOrientationNotification
-                                                object:nil];
-  [[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
-#endif
+
   [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
 
   [[NSNotificationCenter defaultCenter] removeObserver:self name:RCTUserInterfaceStyleDidChangeNotification object:nil];
@@ -127,8 +121,7 @@ RCT_EXPORT_MODULE()
 static BOOL RCTIsIPhoneNotched()
 {
   static BOOL isIPhoneNotched = NO;
-#if !TARGET_OS_VISION
-    static dispatch_once_t onceToken;
+  static dispatch_once_t onceToken;
 
 #if TARGET_OS_IOS
   dispatch_once(&onceToken, ^{
@@ -139,10 +132,6 @@ static BOOL RCTIsIPhoneNotched()
   });
 #endif
 
-      // 20pt is the top safeArea value in non-notched devices
-      isIPhoneNotched = RCTSharedApplication().keyWindow.safeAreaInsets.top > 20;
-    });
-#endif
   return isIPhoneNotched;
 }
 
