@@ -1,0 +1,66 @@
+name: test-visionos-rntester
+description: Build visionOS RNTester using JSC
+inputs:
+  use-frameworks:
+    description: The dependency building and linking strategy to use. Must be one of "StaticLibraries", "DynamicFrameworks"
+    default: StaticLibraries
+  architecture:
+    description: The React Native architecture to Test. RNTester has always Fabric enabled, but we want to run integration test with the old arch setup
+    default: NewArch
+  ruby-version:
+    description: The version of ruby that must be used
+    default: 2.6.10
+  flavor:
+    description: The flavor of the build. Must be one of "Debug", "Release".
+    default: Debug
+  react-native-version:
+    description: The version of react-native
+    required: true
+  run-e2e-tests:
+    description: Whether we want to run E2E tests or not
+    required: false
+    default: false
+
+runs:
+  using: composite
+  steps:
+    - name: Setup xcode
+      uses: ./.github/actions/setup-xcode
+      with:
+        xcode-version: "15.4"
+    - name: Setup node.js
+      uses: ./.github/actions/setup-node
+    - name: Run yarn
+      uses: ./.github/actions/yarn-install-with-cache
+    - name: Setup ruby
+      uses: ruby/setup-ruby@v1.171.0
+      with:
+        ruby-version: ${{ inputs.ruby-version }}
+    - name: Setup xcode build cache
+      uses: ./.github/actions/setup-xcode-build-cache
+    - name: Install CocoaPods dependencies
+      shell: bash
+      run: |
+        export USE_HERMES=0
+
+        if [[ ${{ inputs.use-frameworks }} == "DynamicFrameworks" ]]; then
+          export USE_FRAMEWORKS=dynamic
+        fi
+
+        if [[ ${{ inputs.architecture }} == "NewArch" ]]; then
+          export RCT_NEW_ARCH_ENABLED=1
+        fi
+
+        cd packages/rn-tester
+
+        bundle install
+        bundle exec pod install
+    - name: Build RNTester for visionOS
+      if: ${{ inputs.run-e2e-tests == 'false' }}
+      shell: bash
+      run: |
+        xcodebuild build \
+          -workspace packages/rn-tester/RNTesterPods.xcworkspace \
+          -scheme RNTester-visionOS \
+          -sdk xrsimulator \
+          -destination "platform=visionOS Simulator,name=Apple Vision Pro"

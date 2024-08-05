@@ -9735,7 +9735,7 @@ exports[`public API should not change unintentionally Libraries/WebSocket/WebSoc
 exports[`public API should not change unintentionally Libraries/WebSocket/WebSocketInterceptor.js 1`] = `"UNTYPED MODULE"`;
 
 exports[`public API should not change unintentionally Libraries/WindowManager/NativeWindowManager.js 1`] = `
-"export * from \\"../../src/private/specs/visionos_modules/NativeWindowManager\\";
+"export * from \\"../../visionos_modules/NativeWindowManager\\";
 declare export default typeof NativeWindowManager;
 "
 `;
@@ -9757,7 +9757,7 @@ declare module.exports: WindowManager;
 `;
 
 exports[`public API should not change unintentionally Libraries/XR/NativeXRModule.js 1`] = `
-"export * from \\"../../src/private/specs/visionos_modules/NativeXRModule\\";
+"export * from \\"../../visionos_modules/NativeXRModule\\";
 declare export default typeof NativeXRModule;
 "
 `;
