@@ -61,7 +61,6 @@
 #if RCT_DEV && TARGET_OS_IOS
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
-#if !TARGET_OS_VISION
   UIInterfaceOrientationMask appSupportedOrientationsMask =
       [RCTSharedApplication() supportedInterfaceOrientationsForWindow:RCTKeyWindow()];
   if (!(_supportedInterfaceOrientations & appSupportedOrientationsMask)) {
@@ -75,9 +74,6 @@
   }
 
   return _supportedInterfaceOrientations;
-#else
-  return UIInterfaceOrientationUnknown;
-#endif
 }
 #endif // RCT_DEV
 

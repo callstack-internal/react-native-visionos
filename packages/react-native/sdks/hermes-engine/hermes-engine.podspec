@@ -18,8 +18,6 @@ rescue => e
   react_native_path = File.join(__dir__, "..", "..")
 end
 
-puts "React Native path: #{react_native_path}"
-
 # package.json
 package = JSON.parse(File.read(File.join(react_native_path, "package.json")))
 version = package['version']

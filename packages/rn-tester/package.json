@@ -32,7 +32,7 @@
     "flow-enums-runtime": "^0.0.6",
     "invariant": "^2.2.4",
     "nullthrows": "^1.1.1",
-    "@callstack/out-of-tree-platforms": "0.76.0-main"
+    "@callstack/out-of-tree-platforms": "0.77.0-main"
   },
   "peerDependencies": {
     "react": "18.3.1",
@@ -55,6 +55,7 @@
   "devDependencies": {
     "@react-native-community/cli": "15.0.0-alpha.2",
     "@react-native-community/cli-platform-android": "15.0.0-alpha.2",
+    "@react-native-community/cli-platform-apple": "15.0.0-alpha.2",
     "@react-native-community/cli-platform-ios": "15.0.0-alpha.2"
   }
 }
