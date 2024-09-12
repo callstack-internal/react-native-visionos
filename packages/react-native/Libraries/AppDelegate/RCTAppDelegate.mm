@@ -18,7 +18,6 @@
 #import <react/renderer/graphics/ColorComponents.h>
 #import "RCTAppDelegate+Protected.h"
 #import "RCTAppSetupUtils.h"
-#import <objc/runtime.h>
 
 #if RN_DISABLE_OSS_PLUGIN_HEADER
 #import <RCTTurboModulePlugin/RCTTurboModulePlugin.h>

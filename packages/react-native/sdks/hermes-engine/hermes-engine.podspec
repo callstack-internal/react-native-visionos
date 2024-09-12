@@ -18,8 +18,6 @@ rescue => e
   react_native_path = File.join(__dir__, "..", "..")
 end
 
-puts "React Native path: #{react_native_path}"
-
 # package.json
 package = JSON.parse(File.read(File.join(react_native_path, "package.json")))
 version = package['version']
@@ -48,7 +46,6 @@ Pod::Spec.new do |spec|
                   }
 
   spec.ios.vendored_frameworks = "destroot/Library/Frameworks/ios/hermes.framework"
-  spec.visionos.vendored_frameworks = "destroot/Library/Frameworks/xros/hermes.framework"
   spec.osx.vendored_frameworks = "destroot/Library/Frameworks/macosx/hermes.framework"
   spec.visionos.vendored_frameworks = "destroot/Library/Frameworks/xros/hermes.framework"
 

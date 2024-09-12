@@ -1,6 +1,6 @@
 {
   "name": "@callstack/out-of-tree-platforms",
-  "version": "0.76.0-main",
+  "version": "0.77.0-main",
   "description": "Utils for React Native out of tree platforms.",
   "keywords": ["out-of-tree", "react-native"],
   "homepage": "https://github.com/callstack/react-native-visionos/tree/HEAD/packages/out-of-tree-platforms#readme",
@@ -19,7 +19,7 @@
     "dist"
   ],
   "devDependencies": { 
-    "metro-resolver": "^0.80.0"
+    "metro-resolver": "^0.81.0-alpha.0"
   },
   "engines": {
     "node": ">=18"

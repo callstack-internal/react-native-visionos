@@ -127,11 +127,7 @@ RCT_NOT_IMPLEMENTED(-(instancetype)init)
   if ([event respondsToSelector:@selector(_isKeyDown)]) {
     isKeyDown = [event _isKeyDown];
   }
-#if !TARGET_OS_VISION
-  BOOL interactionEnabled = !RCTSharedApplication().isIgnoringInteractionEvents;
-#else
-  BOOL interactionEnabled = true;
-#endif
+
   BOOL hasFirstResponder = NO;
   if (isKeyDown && modifiedInput.length > 0) {
     UIResponder *firstResponder = nil;
