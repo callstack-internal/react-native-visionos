@@ -123,7 +123,7 @@ RCT_EXPORT_MODULE()
 #if TARGET_OS_MACCATALYST
       self->_window.frame = CGRectMake(0, window.safeAreaInsets.top, windowWidth, 20);
       self->_label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, windowWidth, 20)];
-#elseif TARGET_OS_VISION
+#elif TARGET_OS_VISION
       self->_window.frame = CGRectMake(0, 0, windowWidth, window.safeAreaInsets.top + 30);
       self->_label =
           [[UILabel alloc] initWithFrame:CGRectMake(0, window.safeAreaInsets.top + 5, windowWidth, 20)];
