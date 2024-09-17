@@ -18,7 +18,6 @@ import Pressability, {
 } from '../../Pressability/Pressability';
 import {PressabilityDebugView} from '../../Pressability/PressabilityDebug';
 import flattenStyle from '../../StyleSheet/flattenStyle';
-import StyleSheet from '../../StyleSheet/StyleSheet';
 import Platform from '../../Utilities/Platform';
 import * as React from 'react';
 
@@ -276,7 +275,7 @@ class TouchableOpacity extends React.Component<Props, State> {
         accessibilityElementsHidden={
           this.props['aria-hidden'] ?? this.props.accessibilityElementsHidden
         }
-        style={[styles.touchable, this.props.style, {opacity: this.state.anim}]}
+        style={[this.props.style, {opacity: this.state.anim}]}
         nativeID={this.props.id ?? this.props.nativeID}
         testID={this.props.testID}
         onLayout={this.props.onLayout}
@@ -326,12 +325,6 @@ class TouchableOpacity extends React.Component<Props, State> {
     this.state.anim.resetAnimation();
   }
 }
-
-const styles = StyleSheet.create({
-  touchable: {
-    cursor: 'pointer',
-  },
-});
 
 const Touchable: React.AbstractComponent<
   Props,

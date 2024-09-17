@@ -24,7 +24,6 @@ import type {
 import {PressabilityDebugView} from '../../Pressability/PressabilityDebug';
 import usePressability from '../../Pressability/usePressability';
 import {type RectOrSize} from '../../StyleSheet/Rect';
-import StyleSheet from '../../StyleSheet/StyleSheet';
 import useMergeRefs from '../../Utilities/useMergeRefs';
 import View from '../View/View';
 import useAndroidRippleForView, {
@@ -348,22 +347,13 @@ function Pressable(
       {...restPropsWithDefaults}
       {...eventHandlers}
       ref={mergedRef}
-      style={[
-        styles.pressable,
-        typeof style === 'function' ? style({pressed}) : style,
-      ]}
+      style={typeof style === 'function' ? style({pressed}) : style}
       collapsable={false}>
       {typeof children === 'function' ? children({pressed}) : children}
       {__DEV__ ? <PressabilityDebugView color="red" hitSlop={hitSlop} /> : null}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  pressable: {
-    cursor: 'pointer',
-  },
-});
 
 function usePressState(forcePressed: boolean): [boolean, (boolean) => void] {
   const [pressed, setPressed] = useState(false);
