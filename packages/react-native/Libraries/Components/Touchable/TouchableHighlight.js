@@ -329,13 +329,10 @@ class TouchableHighlight extends React.Component<Props, State> {
         accessibilityElementsHidden={
           this.props['aria-hidden'] ?? this.props.accessibilityElementsHidden
         }
-        style={[
-          styles.touchable,
-          StyleSheet.compose(
-            this.props.style,
-            this.state.extraStyles?.underlay,
-          ),
-        ]}
+        style={StyleSheet.compose(
+          this.props.style,
+          this.state.extraStyles?.underlay,
+        )}
         onLayout={this.props.onLayout}
         hitSlop={this.props.hitSlop}
         hasTVPreferredFocus={this.props.hasTVPreferredFocus}

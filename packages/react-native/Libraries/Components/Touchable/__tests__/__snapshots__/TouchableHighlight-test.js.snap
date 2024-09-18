@@ -19,14 +19,7 @@ exports[`TouchableHighlight renders correctly 1`] = `
   onResponderTerminate={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
-  style={
-    Array [
-      Object {
-        "cursor": "pointer",
-      },
-      Object {},
-    ]
-  }
+  style={Object {}}
 >
   <Text>
     Touchable
@@ -58,14 +51,6 @@ exports[`TouchableHighlight with disabled state should be disabled when disabled
   onResponderTerminate={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
-  style={
-    Array [
-      Object {
-        "cursor": "pointer",
-      },
-      undefined,
-    ]
-  }
 >
   <View />
 </View>
@@ -95,14 +80,6 @@ exports[`TouchableHighlight with disabled state should be disabled when disabled
   onResponderTerminate={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
-  style={
-    Array [
-      Object {
-        "cursor": "pointer",
-      },
-      undefined,
-    ]
-  }
 >
   <View />
 </View>
@@ -132,14 +109,6 @@ exports[`TouchableHighlight with disabled state should disable button when acces
   onResponderTerminate={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
-  style={
-    Array [
-      Object {
-        "cursor": "pointer",
-      },
-      undefined,
-    ]
-  }
 >
   <View />
 </View>
@@ -170,14 +139,6 @@ exports[`TouchableHighlight with disabled state should keep accessibilityState w
   onResponderTerminate={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
-  style={
-    Array [
-      Object {
-        "cursor": "pointer",
-      },
-      undefined,
-    ]
-  }
 >
   <View />
 </View>
@@ -207,14 +168,6 @@ exports[`TouchableHighlight with disabled state should overwrite accessibilitySt
   onResponderTerminate={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
-  style={
-    Array [
-      Object {
-        "cursor": "pointer",
-      },
-      undefined,
-    ]
-  }
 >
   <View />
 </View>
