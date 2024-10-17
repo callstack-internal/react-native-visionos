@@ -38,6 +38,14 @@ runs:
         ruby-version: ${{ inputs.ruby-version }}
     - name: Setup xcode build cache
       uses: ./.github/actions/setup-xcode-build-cache
+    - name: Download visionOS SDK
+      run: |
+        # https://github.com/actions/runner-images/issues/10559
+        sudo xcodebuild -runFirstLaunch
+        sudo xcrun simctl list
+        sudo xcodebuild -downloadPlatform visionOS
+        sudo xcodebuild -runFirstLaunch
+      shell: bash
     - name: Install CocoaPods dependencies
       shell: bash
       run: |
