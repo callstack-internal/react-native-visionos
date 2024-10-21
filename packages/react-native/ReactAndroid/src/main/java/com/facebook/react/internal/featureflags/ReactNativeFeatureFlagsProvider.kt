@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<0f6129ccbcf7857785724f14b41edb2d>>
+ * @generated SignedSource<<193bb7803261004003d9009b44810c2c>>
  */
 
 /**
@@ -31,15 +31,11 @@ public interface ReactNativeFeatureFlagsProvider {
 
   @DoNotStrip public fun completeReactInstanceCreationOnBgThreadOnAndroid(): Boolean
 
-  @DoNotStrip public fun destroyFabricSurfacesInReactInstanceManager(): Boolean
-
   @DoNotStrip public fun enableAlignItemsBaselineOnFabricIOS(): Boolean
 
   @DoNotStrip public fun enableAndroidLineHeightCentering(): Boolean
 
-  @DoNotStrip public fun enableAndroidMixBlendModeProp(): Boolean
-
-  @DoNotStrip public fun enableBackgroundStyleApplicator(): Boolean
+  @DoNotStrip public fun enableBridgelessArchitecture(): Boolean
 
   @DoNotStrip public fun enableCleanTextInputYogaNode(): Boolean
 
@@ -51,11 +47,15 @@ public interface ReactNativeFeatureFlagsProvider {
 
   @DoNotStrip public fun enableFabricLogs(): Boolean
 
+  @DoNotStrip public fun enableFabricRenderer(): Boolean
+
   @DoNotStrip public fun enableFabricRendererExclusively(): Boolean
 
   @DoNotStrip public fun enableGranularShadowTreeStateReconciliation(): Boolean
 
   @DoNotStrip public fun enableIOSViewClipToPaddingBox(): Boolean
+
+  @DoNotStrip public fun enableLayoutAnimationsOnAndroid(): Boolean
 
   @DoNotStrip public fun enableLayoutAnimationsOnIOS(): Boolean
 
@@ -111,17 +111,13 @@ public interface ReactNativeFeatureFlagsProvider {
 
   @DoNotStrip public fun useNativeViewConfigsInBridgelessMode(): Boolean
 
-  @DoNotStrip public fun useNewReactImageViewBackgroundDrawing(): Boolean
-
   @DoNotStrip public fun useOptimisedViewPreallocationOnAndroid(): Boolean
 
   @DoNotStrip public fun useOptimizedEventBatchingOnAndroid(): Boolean
 
   @DoNotStrip public fun useRuntimeShadowNodeReferenceUpdate(): Boolean
 
-  @DoNotStrip public fun useRuntimeShadowNodeReferenceUpdateOnLayout(): Boolean
-
-  @DoNotStrip public fun useStateAlignmentMechanism(): Boolean
-
   @DoNotStrip public fun useTurboModuleInterop(): Boolean
+
+  @DoNotStrip public fun useTurboModules(): Boolean
 }

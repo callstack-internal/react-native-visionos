@@ -175,7 +175,7 @@ const validAttributesForNonEventProps = {
   filter: {
     process: require('../StyleSheet/processFilter').default,
   },
-  experimental_mixBlendMode: true,
+  mixBlendMode: true,
   isolation: true,
   opacity: true,
   elevation: true,
@@ -227,6 +227,7 @@ const validAttributesForNonEventProps = {
   justifyContent: true,
   overflow: true,
   display: true,
+  boxSizing: true,
 
   margin: true,
   marginBlock: true,

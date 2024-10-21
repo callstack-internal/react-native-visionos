@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<3ba99bf8dd5f7e146e3488dbc8bc59c8>>
+ * @generated SignedSource<<a88154d1c074b2fdab8704d2b209d204>>
  */
 
 /**
@@ -43,10 +43,6 @@ class ReactNativeFeatureFlagsDefaults : public ReactNativeFeatureFlagsProvider {
     return false;
   }
 
-  bool destroyFabricSurfacesInReactInstanceManager() override {
-    return false;
-  }
-
   bool enableAlignItemsBaselineOnFabricIOS() override {
     return true;
   }
@@ -55,12 +51,8 @@ class ReactNativeFeatureFlagsDefaults : public ReactNativeFeatureFlagsProvider {
     return false;
   }
 
-  bool enableAndroidMixBlendModeProp() override {
+  bool enableBridgelessArchitecture() override {
     return false;
-  }
-
-  bool enableBackgroundStyleApplicator() override {
-    return true;
   }
 
   bool enableCleanTextInputYogaNode() override {
@@ -83,6 +75,10 @@ class ReactNativeFeatureFlagsDefaults : public ReactNativeFeatureFlagsProvider {
     return false;
   }
 
+  bool enableFabricRenderer() override {
+    return false;
+  }
+
   bool enableFabricRendererExclusively() override {
     return false;
   }
@@ -92,6 +88,10 @@ class ReactNativeFeatureFlagsDefaults : public ReactNativeFeatureFlagsProvider {
   }
 
   bool enableIOSViewClipToPaddingBox() override {
+    return false;
+  }
+
+  bool enableLayoutAnimationsOnAndroid() override {
     return false;
   }
 
@@ -180,7 +180,7 @@ class ReactNativeFeatureFlagsDefaults : public ReactNativeFeatureFlagsProvider {
   }
 
   bool setAndroidLayoutDirection() override {
-    return false;
+    return true;
   }
 
   bool traceTurboModulePromiseRejectionsOnAndroid() override {
@@ -203,10 +203,6 @@ class ReactNativeFeatureFlagsDefaults : public ReactNativeFeatureFlagsProvider {
     return false;
   }
 
-  bool useNewReactImageViewBackgroundDrawing() override {
-    return false;
-  }
-
   bool useOptimisedViewPreallocationOnAndroid() override {
     return false;
   }
@@ -219,15 +215,11 @@ class ReactNativeFeatureFlagsDefaults : public ReactNativeFeatureFlagsProvider {
     return false;
   }
 
-  bool useRuntimeShadowNodeReferenceUpdateOnLayout() override {
-    return false;
-  }
-
-  bool useStateAlignmentMechanism() override {
-    return false;
-  }
-
   bool useTurboModuleInterop() override {
+    return false;
+  }
+
+  bool useTurboModules() override {
     return false;
   }
 };

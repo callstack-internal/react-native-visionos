@@ -106,6 +106,10 @@ val preparePrefab by
                       Pair("../ReactCommon/cxxreact/", "cxxreact/"),
                       // react_featureflags
                       Pair("../ReactCommon/react/featureflags/", "react/featureflags/"),
+                      // react_devtoolsruntimesettings
+                      Pair(
+                          "../ReactCommon/react/devtoolsruntimesettings/",
+                          "react/devtoolsruntimesettings/"),
                       // react_render_animations
                       Pair(
                           "../ReactCommon/react/renderer/animations/",
@@ -252,6 +256,7 @@ val downloadBoost by
       onlyIfModified(true)
       overwrite(false)
       retries(5)
+      quiet(true)
       dest(File(downloadsDir, "boost_${BOOST_VERSION}.tar.gz"))
     }
 
@@ -271,6 +276,7 @@ val downloadDoubleConversion by
       onlyIfModified(true)
       overwrite(false)
       retries(5)
+      quiet(true)
       dest(File(downloadsDir, "double-conversion-${DOUBLE_CONVERSION_VERSION}.tar.gz"))
     }
 
@@ -291,6 +297,7 @@ val downloadFolly by
       onlyIfModified(true)
       overwrite(false)
       retries(5)
+      quiet(true)
       dest(File(downloadsDir, "folly-${FOLLY_VERSION}.tar.gz"))
     }
 
@@ -312,6 +319,7 @@ val downloadFmt by
       onlyIfModified(true)
       overwrite(false)
       retries(5)
+      quiet(true)
       dest(File(downloadsDir, "fmt-${FMT_VERSION}.tar.gz"))
     }
 
@@ -333,6 +341,7 @@ val downloadGlog by
       onlyIfModified(true)
       overwrite(false)
       retries(5)
+      quiet(true)
       dest(File(downloadsDir, "glog-${GLOG_VERSION}.tar.gz"))
     }
 
@@ -343,6 +352,7 @@ val downloadGtest by
       onlyIfModified(true)
       overwrite(false)
       retries(5)
+      quiet(true)
       dest(File(downloadsDir, "gtest.tar.gz"))
     }
 
@@ -354,8 +364,6 @@ val prepareGtest by
       into(File(thirdPartyNdkDir, "googletest"))
     }
 
-// Prepare glog sources to be compiled, this task will perform steps that normally should've been
-// executed by automake. This way we can avoid dependencies on make/automake
 val prepareGlog by
     tasks.registering(PrepareGlogTask::class) {
       dependsOn(if (dependenciesPath != null) emptyList() else listOf(downloadGlog))

@@ -71,15 +71,6 @@ const definitions: FeatureFlagDefinitions = {
         purpose: 'experimentation',
       },
     },
-    destroyFabricSurfacesInReactInstanceManager: {
-      defaultValue: false,
-      metadata: {
-        dateAdded: '2024-04-23',
-        description:
-          'When enabled, ReactInstanceManager will clean up Fabric surfaces on destroy().',
-        purpose: 'experimentation',
-      },
-    },
     enableAlignItemsBaselineOnFabricIOS: {
       defaultValue: true,
       metadata: {
@@ -98,21 +89,12 @@ const definitions: FeatureFlagDefinitions = {
         purpose: 'experimentation',
       },
     },
-    enableAndroidMixBlendModeProp: {
+    enableBridgelessArchitecture: {
       defaultValue: false,
       metadata: {
-        dateAdded: '2024-08-16',
-        description: 'Enables mix-blend-mode prop on Android.',
-        purpose: 'experimentation',
-      },
-    },
-    enableBackgroundStyleApplicator: {
-      defaultValue: true,
-      metadata: {
-        dateAdded: '2024-07-29',
         description:
-          'Use BackgroundStyleApplicator in place of other background/border drawing code',
-        purpose: 'experimentation',
+          'Feature flag to enable the new bridgeless architecture. Note: Enabling this will force enable the following flags: `useTurboModules` & `enableFabricRenderer.',
+        purpose: 'release',
       },
     },
     enableCleanTextInputYogaNode: {
@@ -157,6 +139,13 @@ const definitions: FeatureFlagDefinitions = {
         purpose: 'operational',
       },
     },
+    enableFabricRenderer: {
+      defaultValue: false,
+      metadata: {
+        description: 'Enables the use of the Fabric renderer in the whole app.',
+        purpose: 'release',
+      },
+    },
     enableFabricRendererExclusively: {
       defaultValue: false,
       metadata: {
@@ -180,6 +169,14 @@ const definitions: FeatureFlagDefinitions = {
         dateAdded: '2024-08-30',
         description: 'iOS Views will clip to their padding box vs border box',
         purpose: 'experimentation',
+      },
+    },
+    enableLayoutAnimationsOnAndroid: {
+      defaultValue: false,
+      metadata: {
+        description:
+          'When enabled, LayoutAnimations API will animate state changes on Android.',
+        purpose: 'release',
       },
     },
     enableLayoutAnimationsOnIOS: {
@@ -366,7 +363,7 @@ const definitions: FeatureFlagDefinitions = {
       },
     },
     setAndroidLayoutDirection: {
-      defaultValue: false,
+      defaultValue: true,
       metadata: {
         dateAdded: '2024-05-17',
         description: 'Propagate layout direction to Android views.',
@@ -415,15 +412,6 @@ const definitions: FeatureFlagDefinitions = {
         purpose: 'experimentation',
       },
     },
-    useNewReactImageViewBackgroundDrawing: {
-      defaultValue: false,
-      metadata: {
-        dateAdded: '2024-07-11',
-        description:
-          'Use shared background drawing code for ReactImageView instead of using Fresco to manipulate the bitmap',
-        purpose: 'experimentation',
-      },
-    },
     useOptimisedViewPreallocationOnAndroid: {
       defaultValue: false,
       metadata: {
@@ -451,24 +439,6 @@ const definitions: FeatureFlagDefinitions = {
         purpose: 'experimentation',
       },
     },
-    useRuntimeShadowNodeReferenceUpdateOnLayout: {
-      defaultValue: false,
-      metadata: {
-        dateAdded: '2024-06-03',
-        description:
-          'When enabled, cloning shadow nodes during layout will update the reference held by the current JS fiber tree.',
-        purpose: 'experimentation',
-      },
-    },
-    useStateAlignmentMechanism: {
-      defaultValue: false,
-      metadata: {
-        dateAdded: '2024-04-12',
-        description:
-          'When enabled, it uses optimised state reconciliation algorithm.',
-        purpose: 'experimentation',
-      },
-    },
     useTurboModuleInterop: {
       defaultValue: false,
       metadata: {
@@ -476,6 +446,14 @@ const definitions: FeatureFlagDefinitions = {
         description:
           'In Bridgeless mode, should legacy NativeModules use the TurboModule system?',
         purpose: 'experimentation',
+      },
+    },
+    useTurboModules: {
+      defaultValue: false,
+      metadata: {
+        description:
+          'When enabled, NativeModules will be executed by using the TurboModule system',
+        purpose: 'release',
       },
     },
   },
@@ -553,6 +531,15 @@ const definitions: FeatureFlagDefinitions = {
         purpose: 'release',
       },
     },
+    scheduleAnimatedEndCallbackInMicrotask: {
+      defaultValue: false,
+      metadata: {
+        dateAdded: '2024-09-27',
+        description:
+          'Changes the completion callback supplied via `Animation#start` to be scheduled in a microtask instead of synchronously executed.',
+        purpose: 'experimentation',
+      },
+    },
     shouldSkipStateUpdatesForLoopingAnimations: {
       defaultValue: false,
       metadata: {
@@ -618,4 +605,5 @@ const definitions: FeatureFlagDefinitions = {
   },
 };
 
-export default definitions;
+// Keep it as a CommonJS module so we can easily import it from Node.js
+module.exports = definitions;

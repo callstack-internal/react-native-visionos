@@ -80,7 +80,6 @@ import com.facebook.react.common.ReactConstants;
 import com.facebook.react.common.SurfaceDelegateFactory;
 import com.facebook.react.common.annotations.StableReactNativeAPI;
 import com.facebook.react.common.annotations.VisibleForTesting;
-import com.facebook.react.config.ReactFeatureFlags;
 import com.facebook.react.devsupport.DevSupportManagerFactory;
 import com.facebook.react.devsupport.InspectorFlags;
 import com.facebook.react.devsupport.ReactInstanceDevHelper;
@@ -355,7 +354,7 @@ public class ReactInstanceManager {
         Activity currentActivity = getCurrentActivity();
         if (currentActivity != null) {
           ReactRootView rootView = new ReactRootView(currentActivity);
-          boolean isFabric = ReactFeatureFlags.enableFabricRenderer;
+          boolean isFabric = ReactNativeFeatureFlags.enableFabricRenderer();
           rootView.setIsFabric(isFabric);
           rootView.startReactApplication(ReactInstanceManager.this, appKey, new Bundle());
           return rootView;
@@ -793,12 +792,10 @@ public class ReactInstanceManager {
     synchronized (mAttachedReactRoots) {
       synchronized (mReactContextLock) {
         if (mCurrentReactContext != null) {
-          if (ReactNativeFeatureFlags.destroyFabricSurfacesInReactInstanceManager()) {
-            for (ReactRoot reactRoot : mAttachedReactRoots) {
-              // Fabric surfaces must be cleaned up when React Native is destroyed.
-              if (reactRoot.getUIManagerType() == UIManagerType.FABRIC) {
-                detachRootViewFromInstance(reactRoot, mCurrentReactContext);
-              }
+          for (ReactRoot reactRoot : mAttachedReactRoots) {
+            // Fabric surfaces must be cleaned up when React Native is destroyed.
+            if (reactRoot.getUIManagerType() == UIManagerType.FABRIC) {
+              detachRootViewFromInstance(reactRoot, mCurrentReactContext);
             }
           }
 
@@ -943,22 +940,23 @@ public class ReactInstanceManager {
   @ThreadConfined(UI)
   public void attachRootView(ReactRoot reactRoot) {
     UiThreadUtil.assertOnUiThread();
+    synchronized (mAttachedReactRoots) {
+      // Calling clearReactRoot is necessary to initialize the Id on reactRoot
+      // This is necessary independently if the RN Bridge has been initialized or not.
+      // Ideally reactRoot should be initialized with id == NO_ID
+      if (mAttachedReactRoots.add(reactRoot)) {
+        clearReactRoot(reactRoot);
+      } else {
+        FLog.e(ReactConstants.TAG, "ReactRoot was attached multiple times");
+      }
 
-    // Calling clearReactRoot is necessary to initialize the Id on reactRoot
-    // This is necessary independently if the RN Bridge has been initialized or not.
-    // Ideally reactRoot should be initialized with id == NO_ID
-    if (mAttachedReactRoots.add(reactRoot)) {
-      clearReactRoot(reactRoot);
-    } else {
-      FLog.e(ReactConstants.TAG, "ReactRoot was attached multiple times");
-    }
-
-    // If react context is being created in the background, JS application will be started
-    // automatically when creation completes, as reactRoot is part of the attached
-    // reactRoot list.
-    ReactContext currentContext = getCurrentReactContext();
-    if (mCreateReactContextThread == null && currentContext != null) {
-      attachRootViewToInstance(reactRoot);
+      // If react context is being created in the background, JS application will be started
+      // automatically when creation completes, as reactRoot is part of the attached
+      // reactRoot list.
+      ReactContext currentContext = getCurrentReactContext();
+      if (mCreateReactContextThread == null && currentContext != null) {
+        attachRootViewToInstance(reactRoot);
+      }
     }
   }
 
@@ -1393,14 +1391,14 @@ public class ReactInstanceManager {
             new RuntimeException(
                 "detachRootViewFromInstance called with ReactRootView with invalid id"));
       }
+
+      clearReactRoot(reactRoot);
     } else {
       reactContext
           .getCatalystInstance()
           .getJSModule(AppRegistry.class)
           .unmountApplicationComponentAtRootTag(reactRoot.getRootViewTag());
     }
-
-    clearReactRoot(reactRoot);
   }
 
   @ThreadConfined(UI)
@@ -1470,7 +1468,7 @@ public class ReactInstanceManager {
     // architecture so it will always be there.
     catalystInstance.getRuntimeScheduler();
 
-    if (ReactFeatureFlags.useTurboModules && mTMMDelegateBuilder != null) {
+    if (ReactNativeFeatureFlags.useTurboModules() && mTMMDelegateBuilder != null) {
       TurboModuleManagerDelegate tmmDelegate =
           mTMMDelegateBuilder
               .setPackages(mPackages)

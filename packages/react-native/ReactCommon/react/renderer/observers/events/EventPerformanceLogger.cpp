@@ -103,7 +103,8 @@ EventPerformanceLogger::EventPerformanceLogger(
 
 EventTag EventPerformanceLogger::onEventStart(
     std::string_view name,
-    SharedEventTarget target) {
+    SharedEventTarget target,
+    DOMHighResTimeStamp eventStartTimeStamp) {
   auto performanceEntryReporter = performanceEntryReporter_.lock();
   if (performanceEntryReporter == nullptr) {
     return EMPTY_EVENT_TAG;
@@ -119,7 +120,11 @@ EventTag EventPerformanceLogger::onEventStart(
 
   auto eventTag = createEventTag();
 
-  auto timeStamp = performanceEntryReporter->getCurrentTimeStamp();
+  // The event start timestamp may be provided by the caller in order to
+  // specify the platform specific event start time.
+  auto timeStamp = eventStartTimeStamp == DOM_HIGH_RES_TIME_STAMP_UNSET
+      ? performanceEntryReporter->getCurrentTimeStamp()
+      : eventStartTimeStamp;
   {
     std::lock_guard lock(eventsInFlightMutex_);
     eventsInFlight_.emplace(
@@ -169,7 +174,7 @@ void EventPerformanceLogger::onEventProcessingEnd(EventTag tag) {
 
     const auto& name = entry.name;
 
-    performanceEntryReporter->logEventEntry(
+    performanceEntryReporter->reportEvent(
         std::string(name),
         entry.startTime,
         timeStamp - entry.startTime,
@@ -205,7 +210,7 @@ void EventPerformanceLogger::dispatchPendingEventTimingEntries(
       entry.isWaitingForMount = true;
       ++it;
     } else {
-      performanceEntryReporter->logEventEntry(
+      performanceEntryReporter->reportEvent(
           std::string(entry.name),
           entry.startTime,
           performanceEntryReporter->getCurrentTimeStamp() - entry.startTime,
@@ -235,7 +240,7 @@ void EventPerformanceLogger::shadowTreeDidMount(
     const auto& entry = it->second;
     if (entry.isWaitingForMount &&
         isTargetInRootShadowNode(entry.target, rootShadowNode)) {
-      performanceEntryReporter->logEventEntry(
+      performanceEntryReporter->reportEvent(
           std::string(entry.name),
           entry.startTime,
           mountTime - entry.startTime,

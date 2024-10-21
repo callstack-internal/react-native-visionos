@@ -12,7 +12,7 @@ import type {
   TScrollViewNativeComponentInstance,
   TScrollViewNativeImperativeHandle,
 } from '../../../src/private/components/useSyncOnScroll';
-import type {HostComponent} from '../../Renderer/shims/ReactNativeTypes';
+import type {HostInstance} from '../../Renderer/shims/ReactNativeTypes';
 import type {EdgeInsetsProp} from '../../StyleSheet/EdgeInsetsPropType';
 import type {PointProp} from '../../StyleSheet/PointPropType';
 import type {ViewStyleProp} from '../../StyleSheet/StyleSheet';
@@ -963,12 +963,12 @@ class ScrollView extends React.Component<Props, State> {
    * @param {bool} preventNegativeScrolling Whether to allow pulling the content
    *        down to make it meet the keyboard's top. Default is false.
    */
-  scrollResponderScrollNativeHandleToKeyboard: <T>(
-    nodeHandle: number | React.ElementRef<HostComponent<T>>,
+  scrollResponderScrollNativeHandleToKeyboard: (
+    nodeHandle: number | HostInstance,
     additionalOffset?: number,
     preventNegativeScrollOffset?: boolean,
-  ) => void = <T>(
-    nodeHandle: number | React.ElementRef<HostComponent<T>>,
+  ) => void = (
+    nodeHandle: number | HostInstance,
     additionalOffset?: number,
     preventNegativeScrollOffset?: boolean,
   ) => {
@@ -1937,7 +1937,10 @@ function createRefForwarder<TNativeInstance, TPublicInstance>(
 // NOTE: This wrapper component is necessary because `ScrollView` is a class
 // component and we need to map `ref` to a differently named prop. This can be
 // removed when `ScrollView` is a functional component.
-const Wrapper = React.forwardRef(function Wrapper(
+const Wrapper: component(
+  ref: React.RefSetter<PublicScrollViewInstance>,
+  ...props: Props
+) = React.forwardRef(function Wrapper(
   props: Props,
   ref: ?React.RefSetter<PublicScrollViewInstance>,
 ): React.Node {
@@ -1951,8 +1954,5 @@ Wrapper.displayName = 'ScrollView';
 // $FlowExpectedError[prop-missing]
 Wrapper.Context = ScrollViewContext;
 
-module.exports = ((Wrapper: $FlowFixMe): React.AbstractComponent<
-  React.ElementConfig<typeof ScrollView>,
-  PublicScrollViewInstance,
-> &
+module.exports = ((Wrapper: $FlowFixMe): typeof Wrapper &
   ScrollViewComponentStatics);

@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<72e3e7b5a53e64f8f48310d8b07cdf76>>
+ * @generated SignedSource<<9e0db1a47596fec77c29122620b8f633>>
  */
 
 /**
@@ -31,15 +31,11 @@ public open class ReactNativeFeatureFlagsDefaults : ReactNativeFeatureFlagsProvi
 
   override fun completeReactInstanceCreationOnBgThreadOnAndroid(): Boolean = false
 
-  override fun destroyFabricSurfacesInReactInstanceManager(): Boolean = false
-
   override fun enableAlignItemsBaselineOnFabricIOS(): Boolean = true
 
   override fun enableAndroidLineHeightCentering(): Boolean = false
 
-  override fun enableAndroidMixBlendModeProp(): Boolean = false
-
-  override fun enableBackgroundStyleApplicator(): Boolean = true
+  override fun enableBridgelessArchitecture(): Boolean = false
 
   override fun enableCleanTextInputYogaNode(): Boolean = false
 
@@ -51,11 +47,15 @@ public open class ReactNativeFeatureFlagsDefaults : ReactNativeFeatureFlagsProvi
 
   override fun enableFabricLogs(): Boolean = false
 
+  override fun enableFabricRenderer(): Boolean = false
+
   override fun enableFabricRendererExclusively(): Boolean = false
 
   override fun enableGranularShadowTreeStateReconciliation(): Boolean = false
 
   override fun enableIOSViewClipToPaddingBox(): Boolean = false
+
+  override fun enableLayoutAnimationsOnAndroid(): Boolean = false
 
   override fun enableLayoutAnimationsOnIOS(): Boolean = true
 
@@ -99,7 +99,7 @@ public open class ReactNativeFeatureFlagsDefaults : ReactNativeFeatureFlagsProvi
 
   override fun removeNestedCallsToDispatchMountItemsOnAndroid(): Boolean = false
 
-  override fun setAndroidLayoutDirection(): Boolean = false
+  override fun setAndroidLayoutDirection(): Boolean = true
 
   override fun traceTurboModulePromiseRejectionsOnAndroid(): Boolean = false
 
@@ -111,17 +111,13 @@ public open class ReactNativeFeatureFlagsDefaults : ReactNativeFeatureFlagsProvi
 
   override fun useNativeViewConfigsInBridgelessMode(): Boolean = false
 
-  override fun useNewReactImageViewBackgroundDrawing(): Boolean = false
-
   override fun useOptimisedViewPreallocationOnAndroid(): Boolean = false
 
   override fun useOptimizedEventBatchingOnAndroid(): Boolean = false
 
   override fun useRuntimeShadowNodeReferenceUpdate(): Boolean = false
 
-  override fun useRuntimeShadowNodeReferenceUpdateOnLayout(): Boolean = false
-
-  override fun useStateAlignmentMechanism(): Boolean = false
-
   override fun useTurboModuleInterop(): Boolean = false
+
+  override fun useTurboModules(): Boolean = false
 }

@@ -71,7 +71,10 @@ import typeof I18nManager from './Libraries/ReactNative/I18nManager';
 import typeof {RootTagContext} from './Libraries/ReactNative/RootTag';
 import typeof UIManager from './Libraries/ReactNative/UIManager';
 import typeof ReactNative from './Libraries/Renderer/shims/ReactNative';
-import type {HostComponent as _HostComponentInternal} from './Libraries/Renderer/shims/ReactNativeTypes';
+import type {
+  HostComponent,
+  HostInstance,
+} from './Libraries/Renderer/shims/ReactNativeTypes';
 import typeof Settings from './Libraries/Settings/Settings';
 import typeof Share from './Libraries/Share/Share';
 import typeof {PlatformColor} from './Libraries/StyleSheet/PlatformColorValueTypes';
@@ -85,6 +88,7 @@ import typeof UTFSequence from './Libraries/UTFSequence';
 import typeof * as Appearance from './Libraries/Utilities/Appearance';
 import typeof BackHandler from './Libraries/Utilities/BackHandler';
 import typeof DeviceInfo from './Libraries/Utilities/DeviceInfo';
+import typeof DevMenu from './src/private/devmenu/DevMenu';
 import typeof DevSettings from './Libraries/Utilities/DevSettings';
 import typeof Dimensions from './Libraries/Utilities/Dimensions';
 import typeof PixelRatio from './Libraries/Utilities/PixelRatio';
@@ -99,7 +103,7 @@ import typeof YellowBox from './Libraries/YellowBox/YellowBoxDeprecated';
 const warnOnce = require('./Libraries/Utilities/warnOnce');
 const invariant = require('invariant');
 
-export type HostComponent<T> = _HostComponentInternal<T>;
+export type {HostComponent, HostInstance};
 
 module.exports = {
   get registerCallableModule(): RegisterCallableModule {
@@ -239,6 +243,9 @@ module.exports = {
   },
   get DeviceInfo(): DeviceInfo {
     return require('./Libraries/Utilities/DeviceInfo');
+  },
+  get DevMenu(): DevMenu {
+    return require('./src/private/devmenu/DevMenu');
   },
   get DevSettings(): DevSettings {
     return require('./Libraries/Utilities/DevSettings');

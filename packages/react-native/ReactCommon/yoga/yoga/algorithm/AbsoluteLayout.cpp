@@ -324,8 +324,12 @@ void layoutAbsoluteChild(
       FlexDirection::Column, containingBlockWidth);
 
   if (child->hasDefiniteLength(Dimension::Width, containingBlockWidth)) {
-    childWidth = child->getResolvedDimension(Dimension::Width)
-                     .resolve(containingBlockWidth)
+    childWidth = child
+                     ->getResolvedDimension(
+                         direction,
+                         Dimension::Width,
+                         containingBlockWidth,
+                         containingBlockWidth)
                      .unwrap() +
         marginRow;
   } else {
@@ -359,8 +363,12 @@ void layoutAbsoluteChild(
   }
 
   if (child->hasDefiniteLength(Dimension::Height, containingBlockHeight)) {
-    childHeight = child->getResolvedDimension(Dimension::Height)
-                      .resolve(containingBlockHeight)
+    childHeight = child
+                      ->getResolvedDimension(
+                          direction,
+                          Dimension::Height,
+                          containingBlockHeight,
+                          containingBlockWidth)
                       .unwrap() +
         marginColumn;
   } else {

@@ -84,7 +84,7 @@ ReactInstance::ReactInstance(
             }
           }
         } catch (jsi::JSError& originalError) {
-          jsErrorHandler->handleFatalError(jsiRuntime, originalError);
+          jsErrorHandler->handleError(jsiRuntime, originalError, true);
         }
       });
     }
@@ -129,7 +129,7 @@ ReactInstance::ReactInstance(
       RuntimeSchedulerClock::now,
       [jsErrorHandler = jsErrorHandler_](
           jsi::Runtime& runtime, jsi::JSError& error) {
-        jsErrorHandler->handleFatalError(runtime, error);
+        jsErrorHandler->handleError(runtime, error, true);
       });
   runtimeScheduler_->setPerformanceEntryReporter(
       // FIXME: Move creation of PerformanceEntryReporter to here and guarantee
@@ -137,7 +137,7 @@ ReactInstance::ReactInstance(
       PerformanceEntryReporter::getInstance().get());
 
   bufferedRuntimeExecutor_ = std::make_shared<BufferedRuntimeExecutor>(
-      [runtimeScheduler = runtimeScheduler_](
+      [runtimeScheduler = runtimeScheduler_.get()](
           std::function<void(jsi::Runtime & runtime)>&& callback) {
         runtimeScheduler->scheduleWork(std::move(callback));
       });
@@ -156,7 +156,7 @@ void ReactInstance::unregisterFromInspector() {
 }
 
 RuntimeExecutor ReactInstance::getUnbufferedRuntimeExecutor() noexcept {
-  return [runtimeScheduler = runtimeScheduler_](
+  return [runtimeScheduler = runtimeScheduler_.get()](
              std::function<void(jsi::Runtime & runtime)>&& callback) {
     runtimeScheduler->scheduleWork(std::move(callback));
   };
@@ -167,14 +167,12 @@ RuntimeExecutor ReactInstance::getUnbufferedRuntimeExecutor() noexcept {
 // getUnbufferedRuntimeExecutor() instead if you do not need the main JS bundle
 // to have finished. e.g. setting global variables into JS runtime.
 RuntimeExecutor ReactInstance::getBufferedRuntimeExecutor() noexcept {
-  // FIXME: we don't really need a weak reference here, bufferedRuntimeExecutor
-  // retains a strong reference to runtimeScheduler, which in turns retains weak
-  // references to the runtime
-  return [weakBufferedRuntimeExecutor =
+  return [weakBufferedRuntimeExecutor_ =
               std::weak_ptr<BufferedRuntimeExecutor>(bufferedRuntimeExecutor_)](
              std::function<void(jsi::Runtime & runtime)>&& callback) {
-    if (auto bufferedRuntimeExecutor = weakBufferedRuntimeExecutor.lock()) {
-      bufferedRuntimeExecutor->execute(std::move(callback));
+    if (auto strongBufferedRuntimeExecutor_ =
+            weakBufferedRuntimeExecutor_.lock()) {
+      strongBufferedRuntimeExecutor_->execute(std::move(callback));
     }
   };
 }
@@ -211,8 +209,12 @@ void ReactInstance::loadScript(
   std::string scriptName = simpleBasename(sourceURL);
 
   runtimeScheduler_->scheduleWork(
-      [this, scriptName, sourceURL, buffer = std::move(buffer)](
-          jsi::Runtime& runtime) {
+      [this,
+       scriptName,
+       sourceURL,
+       buffer = std::move(buffer),
+       weakBufferedRuntimeExecuter = std::weak_ptr<BufferedRuntimeExecutor>(
+           bufferedRuntimeExecutor_)](jsi::Runtime& runtime) {
         SystraceSection s("ReactInstance::loadScript");
         bool hasLogger(ReactMarker::logTaggedMarkerBridgelessImpl);
         if (hasLogger) {
@@ -238,8 +240,10 @@ void ReactInstance::loadScript(
               ReactMarker::INIT_REACT_RUNTIME_STOP);
           ReactMarker::logMarkerBridgeless(ReactMarker::APP_STARTUP_STOP);
         }
-
-        bufferedRuntimeExecutor_->flush();
+        if (auto strongBufferedRuntimeExecuter =
+                weakBufferedRuntimeExecuter.lock()) {
+          strongBufferedRuntimeExecuter->flush();
+        }
       });
 }
 
@@ -251,6 +255,12 @@ void ReactInstance::callFunctionOnModule(
     const std::string& moduleName,
     const std::string& methodName,
     folly::dynamic&& args) {
+  if (bufferedRuntimeExecutor_ == nullptr) {
+    LOG(ERROR)
+        << "Calling callFunctionOnModule with null BufferedRuntimeExecutor";
+    return;
+  }
+
   bufferedRuntimeExecutor_->execute([this,
                                      moduleName = moduleName,
                                      methodName = methodName,
@@ -355,6 +365,17 @@ bool isTruthy(jsi::Runtime& runtime, const jsi::Value& value) {
   return Boolean.call(runtime, value).getBool();
 }
 
+jsi::Value wrapInErrorIfNecessary(
+    jsi::Runtime& runtime,
+    const jsi::Value& value) {
+  auto Error = runtime.global().getPropertyAsFunction(runtime, "Error");
+  auto isError =
+      value.isObject() && value.asObject(runtime).instanceOf(runtime, Error);
+  auto error = isError ? value.getObject(runtime)
+                       : Error.callAsConstructor(runtime, value);
+  return jsi::Value(runtime, error);
+}
+
 } // namespace
 
 void ReactInstance::initializeRuntime(
@@ -401,14 +422,52 @@ void ReactInstance::initializeRuntime(
                 return jsi::Value(false);
               }
 
-              if (isFatal) {
-                auto jsError =
-                    jsi::JSError(runtime, jsi::Value(runtime, args[0]));
-                jsErrorHandler->handleFatalError(runtime, jsError);
-                return jsi::Value(true);
+              auto jsError = jsi::JSError(
+                  runtime, wrapInErrorIfNecessary(runtime, args[0]));
+              jsErrorHandler->handleError(runtime, jsError, isFatal);
+
+              return jsi::Value(true);
+            }));
+
+    defineReadOnlyGlobal(
+        runtime,
+        "RN$registerExceptionListener",
+        jsi::Function::createFromHostFunction(
+            runtime,
+            jsi::PropNameID::forAscii(runtime, "registerExceptionListener"),
+            1,
+            [errorListeners = std::vector<std::shared_ptr<jsi::Function>>(),
+             jsErrorHandler = jsErrorHandler_](
+                jsi::Runtime& runtime,
+                const jsi::Value& /*unused*/,
+                const jsi::Value* args,
+                size_t count) mutable {
+              if (count < 1) {
+                throw jsi::JSError(
+                    runtime,
+                    "registerExceptionListener: requires 1 argument: fn");
               }
 
-              return jsi::Value(false);
+              if (!args[0].isObject() ||
+                  !args[0].getObject(runtime).isFunction(runtime)) {
+                throw jsi::JSError(
+                    runtime,
+                    "registerExceptionListener: The first argument must be a function");
+              }
+
+              auto errorListener = std::make_shared<jsi::Function>(
+                  args[0].getObject(runtime).getFunction(runtime));
+              errorListeners.emplace_back(errorListener);
+
+              jsErrorHandler->registerErrorListener(
+                  [weakErrorListener = std::weak_ptr<jsi::Function>(
+                       errorListener)](jsi::Runtime& runtime, jsi::Value data) {
+                    if (auto strongErrorListener = weakErrorListener.lock()) {
+                      strongErrorListener->call(runtime, data);
+                    }
+                  });
+
+              return jsi::Value::undefined();
             }));
 
     defineReadOnlyGlobal(

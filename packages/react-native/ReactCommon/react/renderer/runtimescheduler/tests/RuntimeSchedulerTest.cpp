@@ -82,19 +82,17 @@ class RuntimeSchedulerTest : public testing::TestWithParam<bool> {
       return stubClock_->getNow();
     };
 
-    performanceEntryReporter_ = PerformanceEntryReporter::getInstance().get();
-
-    performanceEntryReporter_->startReporting(PerformanceEntryType::LONGTASK);
+    performanceEntryReporter_ = std::make_unique<PerformanceEntryReporter>();
 
     runtimeScheduler_ =
         std::make_unique<RuntimeScheduler>(runtimeExecutor, stubNow);
 
-    runtimeScheduler_->setPerformanceEntryReporter(performanceEntryReporter_);
+    runtimeScheduler_->setPerformanceEntryReporter(
+        performanceEntryReporter_.get());
   }
 
   void TearDown() override {
     ReactNativeFeatureFlags::dangerouslyReset();
-    performanceEntryReporter_->popPendingEntries();
   }
 
   jsi::Function createHostFunctionFromLambda(
@@ -121,7 +119,7 @@ class RuntimeSchedulerTest : public testing::TestWithParam<bool> {
   std::unique_ptr<StubQueue> stubQueue_;
   std::unique_ptr<RuntimeScheduler> runtimeScheduler_;
   std::shared_ptr<StubErrorUtils> stubErrorUtils_;
-  PerformanceEntryReporter* performanceEntryReporter_{};
+  std::unique_ptr<PerformanceEntryReporter> performanceEntryReporter_{};
 };
 
 TEST_P(RuntimeSchedulerTest, now) {
@@ -1244,8 +1242,8 @@ TEST_P(RuntimeSchedulerTest, reportsLongTasks) {
 
   EXPECT_EQ(didRunTask1, 1);
   EXPECT_EQ(stubQueue_->size(), 0);
-  auto pendingEntries = performanceEntryReporter_->popPendingEntries();
-  EXPECT_EQ(pendingEntries.entries.size(), 0);
+  auto pendingEntries = performanceEntryReporter_->getEntries();
+  EXPECT_EQ(pendingEntries.size(), 0);
 
   bool didRunTask2 = false;
   stubClock_->setTimePoint(100ms);
@@ -1265,12 +1263,11 @@ TEST_P(RuntimeSchedulerTest, reportsLongTasks) {
 
   EXPECT_EQ(didRunTask2, 1);
   EXPECT_EQ(stubQueue_->size(), 0);
-  pendingEntries = performanceEntryReporter_->popPendingEntries();
-  EXPECT_EQ(pendingEntries.entries.size(), 1);
-  EXPECT_EQ(
-      pendingEntries.entries[0].entryType, PerformanceEntryType::LONGTASK);
-  EXPECT_EQ(pendingEntries.entries[0].startTime, 100);
-  EXPECT_EQ(pendingEntries.entries[0].duration, 50);
+  pendingEntries = performanceEntryReporter_->getEntries();
+  EXPECT_EQ(pendingEntries.size(), 1);
+  EXPECT_EQ(pendingEntries[0].entryType, PerformanceEntryType::LONGTASK);
+  EXPECT_EQ(pendingEntries[0].startTime, 100);
+  EXPECT_EQ(pendingEntries[0].duration, 50);
 }
 
 TEST_P(RuntimeSchedulerTest, reportsLongTasksWithYielding) {
@@ -1311,8 +1308,8 @@ TEST_P(RuntimeSchedulerTest, reportsLongTasksWithYielding) {
 
   EXPECT_EQ(didRunTask1, 1);
   EXPECT_EQ(stubQueue_->size(), 0);
-  auto pendingEntries = performanceEntryReporter_->popPendingEntries();
-  EXPECT_EQ(pendingEntries.entries.size(), 0);
+  auto pendingEntries = performanceEntryReporter_->getEntries();
+  EXPECT_EQ(pendingEntries.size(), 0);
 
   bool didRunTask2 = false;
   stubClock_->setTimePoint(100ms);
@@ -1346,12 +1343,11 @@ TEST_P(RuntimeSchedulerTest, reportsLongTasksWithYielding) {
 
   EXPECT_EQ(didRunTask2, 1);
   EXPECT_EQ(stubQueue_->size(), 0);
-  pendingEntries = performanceEntryReporter_->popPendingEntries();
-  EXPECT_EQ(pendingEntries.entries.size(), 1);
-  EXPECT_EQ(
-      pendingEntries.entries[0].entryType, PerformanceEntryType::LONGTASK);
-  EXPECT_EQ(pendingEntries.entries[0].startTime, 100);
-  EXPECT_EQ(pendingEntries.entries[0].duration, 120);
+  pendingEntries = performanceEntryReporter_->getEntries();
+  EXPECT_EQ(pendingEntries.size(), 1);
+  EXPECT_EQ(pendingEntries[0].entryType, PerformanceEntryType::LONGTASK);
+  EXPECT_EQ(pendingEntries[0].startTime, 100);
+  EXPECT_EQ(pendingEntries[0].duration, 120);
 }
 
 INSTANTIATE_TEST_SUITE_P(

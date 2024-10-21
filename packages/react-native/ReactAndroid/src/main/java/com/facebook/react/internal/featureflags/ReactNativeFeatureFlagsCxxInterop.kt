@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<0d2f5427661ce67e468aea47bdd29802>>
+ * @generated SignedSource<<3cf8639dfd8a92a954a055c3ebdc749c>>
  */
 
 /**
@@ -36,15 +36,11 @@ public object ReactNativeFeatureFlagsCxxInterop {
 
   @DoNotStrip @JvmStatic public external fun completeReactInstanceCreationOnBgThreadOnAndroid(): Boolean
 
-  @DoNotStrip @JvmStatic public external fun destroyFabricSurfacesInReactInstanceManager(): Boolean
-
   @DoNotStrip @JvmStatic public external fun enableAlignItemsBaselineOnFabricIOS(): Boolean
 
   @DoNotStrip @JvmStatic public external fun enableAndroidLineHeightCentering(): Boolean
 
-  @DoNotStrip @JvmStatic public external fun enableAndroidMixBlendModeProp(): Boolean
-
-  @DoNotStrip @JvmStatic public external fun enableBackgroundStyleApplicator(): Boolean
+  @DoNotStrip @JvmStatic public external fun enableBridgelessArchitecture(): Boolean
 
   @DoNotStrip @JvmStatic public external fun enableCleanTextInputYogaNode(): Boolean
 
@@ -56,11 +52,15 @@ public object ReactNativeFeatureFlagsCxxInterop {
 
   @DoNotStrip @JvmStatic public external fun enableFabricLogs(): Boolean
 
+  @DoNotStrip @JvmStatic public external fun enableFabricRenderer(): Boolean
+
   @DoNotStrip @JvmStatic public external fun enableFabricRendererExclusively(): Boolean
 
   @DoNotStrip @JvmStatic public external fun enableGranularShadowTreeStateReconciliation(): Boolean
 
   @DoNotStrip @JvmStatic public external fun enableIOSViewClipToPaddingBox(): Boolean
+
+  @DoNotStrip @JvmStatic public external fun enableLayoutAnimationsOnAndroid(): Boolean
 
   @DoNotStrip @JvmStatic public external fun enableLayoutAnimationsOnIOS(): Boolean
 
@@ -116,21 +116,19 @@ public object ReactNativeFeatureFlagsCxxInterop {
 
   @DoNotStrip @JvmStatic public external fun useNativeViewConfigsInBridgelessMode(): Boolean
 
-  @DoNotStrip @JvmStatic public external fun useNewReactImageViewBackgroundDrawing(): Boolean
-
   @DoNotStrip @JvmStatic public external fun useOptimisedViewPreallocationOnAndroid(): Boolean
 
   @DoNotStrip @JvmStatic public external fun useOptimizedEventBatchingOnAndroid(): Boolean
 
   @DoNotStrip @JvmStatic public external fun useRuntimeShadowNodeReferenceUpdate(): Boolean
 
-  @DoNotStrip @JvmStatic public external fun useRuntimeShadowNodeReferenceUpdateOnLayout(): Boolean
-
-  @DoNotStrip @JvmStatic public external fun useStateAlignmentMechanism(): Boolean
-
   @DoNotStrip @JvmStatic public external fun useTurboModuleInterop(): Boolean
+
+  @DoNotStrip @JvmStatic public external fun useTurboModules(): Boolean
 
   @DoNotStrip @JvmStatic public external fun override(provider: Any)
 
   @DoNotStrip @JvmStatic public external fun dangerouslyReset()
+
+  @DoNotStrip @JvmStatic public external fun dangerouslyForceOverride(provider: Any): String?
 }
