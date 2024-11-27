@@ -157,6 +157,7 @@
     surfaceHostingProxyRootView.backgroundColor = [UIColor clearColor];
 #else
     surfaceHostingProxyRootView.backgroundColor = [UIColor systemBackgroundColor];
+#endif
     if (_configuration.customizeRootView != nil) {
       _configuration.customizeRootView(surfaceHostingProxyRootView);
     }

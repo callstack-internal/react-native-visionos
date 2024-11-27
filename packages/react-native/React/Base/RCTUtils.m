@@ -610,6 +610,7 @@ UIWindow *__nullable RCTKeyWindow(void)
   }
 
   UIScene *sceneToUse = foregroundActiveScene ? foregroundActiveScene : foregroundInactiveScene;
+  UIWindowScene *windowScene = (UIWindowScene *)sceneToUse;
 
 #if TARGET_OS_VISION
     // Ornaments are supported only on visionOS.
