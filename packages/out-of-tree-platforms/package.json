@@ -19,7 +19,7 @@
     "dist"
   ],
   "devDependencies": { 
-    "metro-resolver": "^0.81.0-alpha.0"
+    "metro-resolver": "^0.81.0"
   },
   "engines": {
     "node": ">=18"
